@@ -1,25 +1,19 @@
 
 import java.util.*;
 
-/**
- * 
- */
-public abstract class AutoJugador extends Auto {
 
-    /**
-     * Default constructor
-     */
-    public AutoJugador() {
+public class AutoJugador extends Auto {
+
+
+	protected String nombreJugador;
+	public AutoJugador(String nombreJugador) {
+    	this.nombreJugador = nombreJugador;
     }
-
-    /**
-     * 
-     */
-    protected void nombreJugador;
-
-    /**
-     * 
-     */
-    public abstract void habilidadEspecial();
+    public void habilidadEspecial() {
+    	this.velMax+=20;
+    }
+    public String getNombreJugador() {
+    	return nombreJugador;
+    }
 
 }
