@@ -1,6 +1,6 @@
 import java.util.*;
 
-public abstract class Auto {
+public  class Auto {
 
 	protected final int ACELERACION = 20; /// placeholder
 	protected double x, y;
