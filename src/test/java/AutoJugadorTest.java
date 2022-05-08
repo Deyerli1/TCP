@@ -141,16 +141,72 @@ public class AutoJugadorTest {
     	assertEquals(auto.getY(), 70, 0.0);
     	assertEquals(auto.getVelActual(),0, 0.0);
     }
-  
-    /*this.velActual = 0;
-    this.x = 50;
-    this.y = 50;
-    this.desestabilizado = false;
-    this.explotado = false;
-    this.doblarIzquierda = false;
-    this.doblarDerecha = false;
-    this.decremento=20;
-    this.velActual=20;
-    this.velMax = 200;*/
+    
+    @Test
+    public void verificarExplotar() {
+    	AutoJugador auto = new AutoJugador("Pepito");
+    	auto.setAcelerar(true);
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getVelActual(), 20, 0.0);
+    	assertEquals(auto.getY(), 70, 0.0);
+    	auto.explotar(deltaTime);
+    	auto.setDoblarDerecha(true);
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getX(), 50, 0.0);
+    	assertEquals(auto.getVelActual(), 0, 0.0);
+    	assertEquals(auto.getY(), 70, 0.0);
+    	assertFalse(auto.isAcelerar());
+    	auto.setAcelerar(true);
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getVelActual(), 0, 0.0);
+    	assertEquals(auto.getY(), 70, 0.0);
+    	auto.setDoblarDerecha(true);
+    	auto.updateAuto(deltaTime+10);
+    	assertEquals(auto.getX(), 61, 0.0);
+    	assertEquals(auto.getVelActual(), 200, 0.0);
+    	assertEquals(auto.getY(), 2270, 0.0);
+    	
+    	
+    }
+    
+    @Test
+    public void verificarDesestabilizado() {
+    	AutoJugador auto = new AutoJugador("Pepito");
+    	auto.setAcelerar(true);
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getVelActual(), 20, 0.0);
+    	assertEquals(auto.getY(), 70, 0.0);
+    	auto.desestabilizar(deltaTime);
+    	auto.setDoblarIzquierda(true);
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getVelActual(), 20, 0.0);
+    	assertEquals(auto.getY(), 90, 0.0);
+    	assertEquals(auto.getX(), 51, 0.0);
+    	assertTrue(auto.isAcelerar());
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getVelActual(), 20, 0.0);
+    	assertEquals(auto.getY(), 110, 0.0);
+    	assertEquals(auto.getX(), 52, 0.0);
+    	
+    }
+    
+    @Test
+    public void habilidadEspecial() {
+    	AutoJugador auto = new AutoJugador("Pepito");
+    	auto.setAcelerar(true);
+    	while (auto.getVelActual()<auto.getVelMax()) {
+			auto.updateAuto(deltaTime);
+		}
+    	assertEquals(auto.getVelActual(), auto.getVelMax(), 0.0);
+    	assertEquals(auto.getY(), 1150, 0.0);
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getVelActual(), auto.getVelMax(), 0.0);
+    	assertEquals(auto.getY(), 1350, 0.0);
+    	auto.habilidadEspecial();
+    	assertEquals(auto.getVelMax(), 220 , 0.0);
+    	auto.updateAuto(deltaTime);
+    	assertEquals(auto.getVelActual(), auto.getVelMax(), 0.0);
+    }
+    
 
 }

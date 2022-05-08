@@ -45,7 +45,7 @@ public abstract class Auto {
 		this.acelerar = false;
 	}
 
-	public void setAcelerar(boolean acelerar) {
+	public void setAcelerar(boolean acelerar) { ///Quiza sea mejor ponerle acelerando y mas verboso todos estos metodos
 		this.acelerar = acelerar;
 	}
 
@@ -82,20 +82,20 @@ public abstract class Auto {
 	}
 
 	public void updateAuto(double deltaTime) {
-		updateHorizontal(deltaTime);
-		updateVertical(deltaTime);
 		updateDesestabilizado(deltaTime);
 		updateExplotado(deltaTime);
+		updateHorizontal(deltaTime);
+		updateVertical(deltaTime);
 	}
 
 	private void updateDesestabilizado(double deltaTime) {
-		if (desestabilizado && this.ultimoDeltaTimeMalo + this.DURACION_MALA > deltaTime) {
+		if (desestabilizado && this.ultimoDeltaTimeMalo + this.DURACION_MALA < deltaTime) {
 			desestabilizado = false;
 		}
 	}
 
 	private void updateExplotado(double deltaTime) {
-		if (explotado && this.ultimoDeltaTimeMalo + this.DURACION_MALA > deltaTime) {
+		if (explotado && this.ultimoDeltaTimeMalo + this.DURACION_MALA < deltaTime) {
 			explotado = false;
 		}
 	}
@@ -151,4 +151,9 @@ public abstract class Auto {
 	public double getVelMax() {
 		return velMax;
 	}
+	
+	public boolean isAcelerar() {
+		return acelerar;
+	}
+
 }
