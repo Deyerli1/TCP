@@ -93,6 +93,7 @@ public abstract class Auto {
 			desestabilizado = false;
 		}
 	}
+	//oli
 
 	private void updateExplotado(double deltaTime) {
 		if (explotado && this.ultimoDeltaTimeMalo + this.DURACION_MALA < deltaTime) {
