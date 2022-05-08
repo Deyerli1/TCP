@@ -1,16 +1,14 @@
-
 import java.util.*;
 
-/**
- * 
- */
 public abstract class Auto {
 
-	protected double velMax, velActual, x, y;
+	protected final int ACELERACION = 20; /// placeholder
+	protected double x, y;
+	protected double decremento,velMax, velActual, velDoblar;
 	// protected void modificacionDeVelocidad;
 	// protected void apariencia;
-	protected boolean desestabilizado, explotado, doblarIzquierda, acelerar;
-	protected Direccion teclaDireccion;
+	protected boolean desestabilizado, explotado; 
+	protected boolean doblarIzquierda, doblarDerecha;
 
 	public Auto() {
 		this.velActual = 0;
@@ -19,78 +17,66 @@ public abstract class Auto {
 		this.desestabilizado = false;
 		this.explotado = false;
 		this.doblarIzquierda = false;
-		this.acelerar = false;
+		this.doblarDerecha = false;
+		this.decremento=20;
+		this.velActual=20;
 	}
 
-	/**
-	 * @param teclaDireccion
-	 */
-	public void doblar() {
-		// TODO implement here
-		if (!desestabilizado && !explotado && this.velActual > 0) {
-			if (doblarIzquierda) { // Izquierda
-				this.x--;
-				// render.setScaleX(-1);
-				// runningAnimation.play();
-			} else { // Derecha
-				this.x++;
-				// render.setScaleX(1);
-				// runningAnimation.play();
-			}
+///////////////////// METODOS DE SETEO DE BOOLEANOS INTENROS 
+	public void setAcelerar(int input, double deltaTime) {
+		if (!desestabilizado && !explotado) {
+			this.setVelActual(ACELERACION*input*deltaTime);
 		}
 	}
 
-	/**
-	 * @param dv
-	 */
-	public void acelerar() {
-		// TODO implement here
-		if (!desestabilizado && !explotado && this.velMax > this.velActual && acelerar) {
-			this.velActual++;
-			// Implementar un metodo para moverse
-			moverse();
-			// render.setScaleX(-1);
-			// runningAnimation.play();
-		}
-	}
-
-	public void desacelerar() {
-		// TODO implement here
-		if (!explotado && this.velActual > 0) {
-			this.velActual--;
-			// Implementar un metodo para moverse
-			moverse();
-			// render.setScaleX(-1);
-			// runningAnimation.play();
-		}
-	}
-
-	/**
-	 * 
-	 */
 	public void desestabilizar() {
-		// TODO implement here
 		this.desestabilizado = true;
-		desacelerar();
 	}
 
-	/**
-	 * 
-	 */
 	public void explotar() {
-		// TODO implement here
 		this.explotado = true;
 	}
-
-	public void moverse() {
-		setY();
+		
+	public void setDoblarIzquierda(boolean doblarIzquierda) {
+		this.doblarIzquierda = doblarIzquierda;
 	}
 
+	public void setDoblarDerecha(boolean doblarDerecha) {
+		this.doblarDerecha = doblarDerecha;
+	}
+///////////////////////////////////////////////////////////
+	
+/// METODOS DE UPDATEO DE POSICION INTERNA //////
+	
+	public void updateHorizontal(double deltaTime) {//doblar
+		if(!explotado) {
+			int direction = doblarIzquierda ? -1 : (doblarDerecha ? 1 : 0);
+			this.setX(x + direction * this.velDoblar * deltaTime);
+		}
+	}
+	
+	public void updateVertical(double deltaTime) {
+		if(!explotado) {
+			this.setY(deltaTime);
+		}
+	}
+	
+	public void setY(double deltaTime) {
+		//ver que pasa cuando cruzas la meta
+		this.y+=deltaTime*this.velActual;
+	}
+	
 	public void setX(double x) {
-		this.x = x;
+		//ver que pasa al chocar con los cordones
+		this.x+=x;
 	}
+	
+	public void setVelActual(double aceleracion) {
+		double aceleracionFinal = this.velActual + aceleracion;
+		if( (aceleracionFinal < this.velMax) && (aceleracionFinal >= 0) ) {
+			this.velActual = aceleracionFinal;
+		}
+	}
+/////////////////////////////////////////////////
 
-	public void setY() {
-		this.y += this.velActual;
-	}
 }
