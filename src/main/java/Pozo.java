@@ -1,22 +1,13 @@
 
 import java.util.*;
 
-/**
- * 
- */
 public class Pozo extends Obstaculo {
 
-    /**
-     * Default constructor
-     */
     public Pozo() {
     }
 
-    /**
-     * 
-     */
-    public void desestabilizarAuto() {
-        // TODO implement here
+    public void desestabilizarAuto(Auto auto, double deltaTime) {
+        auto.desestabilizar(deltaTime);
     }
 
 }

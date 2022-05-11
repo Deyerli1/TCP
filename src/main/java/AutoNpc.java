@@ -1,15 +1,16 @@
 
 import java.util.*;
 
-/**
- * 
- */
-public abstract class AutoNpc extends Auto {
-
-    /**
-     * Default constructor
-     */
-    public AutoNpc() {
+public class AutoNpc extends Auto {
+	
+	protected String nombreNpc;
+	
+    public AutoNpc(String nombreNpc) {
+    	this.nombreNpc = nombreNpc;
     }
-
+    
+    public String getNombreNpc() {
+    	return nombreNpc;
+    }
+    
 }

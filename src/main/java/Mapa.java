@@ -1,20 +1,11 @@
 
 import java.util.*;
 
-/**
- * 
- */
 public class Mapa {
 
-    /**
-     * Default constructor
-     */
+	protected final String fondo = "springfield.jpg";
+	
     public Mapa() {
     }
-
-    /**
-     * 
-     */
-    private String fondo;
 
 }

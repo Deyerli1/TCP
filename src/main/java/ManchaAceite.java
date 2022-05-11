@@ -1,22 +1,13 @@
 
 import java.util.*;
 
-/**
- * 
- */
 public class ManchaAceite extends Obstaculo {
 
-    /**
-     * Default constructor
-     */
     public ManchaAceite() {
     }
 
-    /**
-     * 
-     */
-    public void desestabilizarAuto() {
-        // TODO implement here
+    public void desestabilizarAuto(Auto auto, double deltaTime) {
+        auto.desestabilizar(deltaTime);
     }
 
 }
