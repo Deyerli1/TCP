@@ -1,13 +1,6 @@
-
-import java.util.*;
-
 public class Pozo extends Obstaculo {
-
+	
     public Pozo() {
+    	super(75,75);
     }
-
-    public void desestabilizarAuto(Auto auto, double deltaTime) {
-        auto.desestabilizar(deltaTime);
-    }
-
 }

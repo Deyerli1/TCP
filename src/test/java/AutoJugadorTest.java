@@ -12,7 +12,7 @@ public class AutoJugadorTest {
     @Test
     public void creacionJugador() {
     	
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
         assertEquals(auto.getX(), 50, 0.0);
         assertEquals(auto.getY(), 50, 0.0);
         assertEquals(auto.getNombreJugador(),"Pepito");
@@ -21,7 +21,7 @@ public class AutoJugadorTest {
     @Test
     public void doblar() {
     	
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setDoblarDerecha(true);
         auto.updateHorizontal(deltaTime);
         auto.updateHorizontal(deltaTime);
@@ -39,7 +39,7 @@ public class AutoJugadorTest {
     @Test
     public void doblarIzqYDer() {
     	
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setDoblarDerecha(true);
     	auto.setDoblarIzquierda(true);
         auto.updateHorizontal(deltaTime);
@@ -50,7 +50,7 @@ public class AutoJugadorTest {
     @Test
     public void doblarExplotado() {
     	
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setDoblarDerecha(true);
         auto.explotar(deltaTime);
         auto.updateHorizontal(deltaTime);
@@ -61,7 +61,7 @@ public class AutoJugadorTest {
     @Test
     public void doblarDesestabilizado() {
     	
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setDoblarDerecha(true);
         auto.desestabilizar(deltaTime);
         auto.updateHorizontal(deltaTime);
@@ -71,7 +71,7 @@ public class AutoJugadorTest {
     
     @Test
     public void acelerar() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	auto.updateAuto(deltaTime);
     	assertEquals(auto.getY(), 70, 0.0);
@@ -88,7 +88,7 @@ public class AutoJugadorTest {
     
     @Test
     public void acelerarExplotado() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	auto.updateAuto(deltaTime);
     	assertEquals(auto.getY(), 70, 0.0);
@@ -101,7 +101,7 @@ public class AutoJugadorTest {
     }
     @Test
     public void acelerarDesestabilizado() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	auto.updateAuto(deltaTime);
     	assertEquals(auto.getY(), 70, 0.0);
@@ -115,7 +115,7 @@ public class AutoJugadorTest {
     
     @Test
     public void acelerarMax() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	while (auto.getVelActual()<auto.getVelMax()) {
 			auto.updateAuto(deltaTime);
@@ -129,7 +129,7 @@ public class AutoJugadorTest {
     
     @Test
     public void acelerarYDesacelerarACero() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	auto.updateAuto(deltaTime);
     	assertEquals(auto.getVelActual(), 20, 0.0);
@@ -144,7 +144,7 @@ public class AutoJugadorTest {
     
     @Test
     public void verificarExplotar() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	auto.updateAuto(deltaTime);
     	assertEquals(auto.getVelActual(), 20, 0.0);
@@ -171,7 +171,7 @@ public class AutoJugadorTest {
     
     @Test
     public void verificarDesestabilizado() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	auto.updateAuto(deltaTime);
     	assertEquals(auto.getVelActual(), 20, 0.0);
@@ -192,7 +192,7 @@ public class AutoJugadorTest {
     
     @Test
     public void habilidadEspecial() {
-    	AutoJugador auto = new AutoJugador("Pepito");
+    	AutoJugador auto = new AutoJugador("Pepito", new int[] {50,50});
     	auto.setAcelerar(true);
     	while (auto.getVelActual()<auto.getVelMax()) {
 			auto.updateAuto(deltaTime);

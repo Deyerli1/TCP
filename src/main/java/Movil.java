@@ -1,15 +1,7 @@
-
-import java.util.*;
-
-/**
- * 
- */
 public class Movil extends AutoNpc {
 
-    /**
-     * Default constructor
-     */
     public Movil() {
+    	super("Movil", new int[]{70,70});
     }
 
 }

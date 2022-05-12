@@ -1,5 +1,4 @@
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class EscenarioTest {
@@ -7,46 +6,64 @@ public class EscenarioTest {
 	@Test
 	public void creacionEscenario() {
 		
-		Escenario escenario = new Escenario();
-        assertEquals(escenario.getCantidadJugadores(), 1, 0.0);
-        assertFalse(escenario.isMultiplayer());
+		Mapa mapa = new Mapa();
+		Escenario escenario = new Escenario(2, mapa);
+        assertEquals(escenario.getCantidadJugadores(), 2, 0.0);
 		
 	}
 	
 	@Test
-	public void agregarAutoJugador() {
-		
-		AutoJugador auto = new AutoJugador("Carlos");
-		
-		Escenario escenario = new Escenario();
-		escenario.agregarAuto(auto);
-		assertEquals(escenario.getAutos().size(), 1, 0.0);
-		
-		AutoJugador otroAuto = new AutoJugador("Carla");
-		escenario.agregarAuto(otroAuto);
-		assertEquals(escenario.getAutos().size(), 2, 0.0);
-	
-	}
-
-	@Test
-	public void agregarAutoNpc() {
-		
-		AutoNpc auto = new AutoNpc("Bot 1");
-		
-		Escenario escenario = new Escenario();
-		escenario.agregarAuto(auto);
-		assertEquals(escenario.getAutos().size(), 1, 0.0);
-		
-	}
-	
-	@Test
-	public void iniciarPartidaUnJugador() {
+	public void agregarAutos() {
 		
 		Mapa mapa = new Mapa();
-
-		Escenario escenario = new Escenario();
-		escenario.iniciarSingle(mapa);
-		assertEquals(escenario.getMapa(), mapa);
+		
+		Escenario escenario = new Escenario(2, mapa);
+		escenario.agregarAutoJugador("Carlos");
+		assertEquals(escenario.getCantidadAutoJugador(), 1, 0.0);
+		
+		escenario.agregarAutoJugador("Carla");
+		assertEquals(escenario.getCantidadAutoJugador(), 2, 0.0);
+		
+		escenario.agregarAutoNpc();
+		assertEquals(escenario.getCantidadAutoNpc(), 1, 0.0);
 		
 	}
+	
+	@Test
+	public void agregarAutoJugadorMax() {
+		
+		Mapa mapa = new Mapa();
+		Escenario escenario = new Escenario(2, mapa);
+		
+		escenario.agregarAutoJugador("Carlos");
+		assertEquals(escenario.getCantidadAutoJugador(), 1, 0.0);
+		escenario.agregarAutoJugador("Pepe");
+		assertEquals(escenario.getCantidadAutoJugador(), 2, 0.0);
+		escenario.agregarAutoJugador("Pepa");
+		assertEquals(escenario.getCantidadAutoJugador(), 2, 0.0);
+		
+	}
+	
+	@Test
+	public void agregarAutoNpcMax() {
+		
+		Mapa mapa = new Mapa();
+		Escenario escenario = new Escenario(2, mapa);
+		
+		escenario.agregarAutoNpc();
+		assertEquals(escenario.getCantidadAutoNpc(), 1, 0.0);
+		escenario.agregarAutoNpc();
+		assertEquals(escenario.getCantidadAutoNpc(), 2, 0.0);
+		escenario.agregarAutoNpc();
+		assertEquals(escenario.getCantidadAutoNpc(), 3, 0.0);
+		escenario.agregarAutoNpc();
+		assertEquals(escenario.getCantidadAutoNpc(), 4, 0.0);
+		escenario.agregarAutoNpc();
+		assertEquals(escenario.getCantidadAutoNpc(), 5, 0.0);
+		escenario.agregarAutoNpc();
+		assertEquals(escenario.getCantidadAutoNpc(), 5, 0.0);
+		
+	}
+	
+	
 }

@@ -1,53 +1,57 @@
-
-import java.util.*;
+import java.util.LinkedList;
 
 public class Escenario {
 
-	protected Boolean multiplayer;
+	private final int MAX_NPC = 5;
+
+	private final int MAX_JUGADORES = 5;
+	private final int[][] posiciones = {{50,50}, {50,60}, {50,70}, {50,80}, {50,90}};
 	protected Mapa mapa;
 	protected int cantidadJugadores;
 	
-	//Tendria tanto auto jugador como auto npc. Y no se cuantos voy a tener, al menos 1 jugador seguro
-	protected LinkedList<Auto> autos;
-	//O mejor tener autoJugador y autoNpc en listas separadas?
+	protected LinkedList<AutoJugador> jugadorList = new LinkedList<AutoJugador>();
+	protected LinkedList<AutoNpc> npcList = new LinkedList<AutoNpc>();
+	protected LinkedList<Obstaculo> obstaculoList = new LinkedList<Obstaculo>();
 	
-	//Por ahora voy a tener 1 jugador seguro y modo offline (?¿)
-    public Escenario() {
-    	multiplayer = false;
-    	mapa = null;
-    	cantidadJugadores = 1;
-    	autos = new LinkedList<Auto>();
-    }
-
-
-    public void iniciarSingle(Mapa mapaElegido) {
+    public Escenario(int cantidadJugadores, Mapa mapaElegido) {
+    	this.cantidadJugadores = cantidadJugadores;
     	this.mapa = mapaElegido;
     }
     
-    public void iniciarMulti(int cantidadJugadores, Mapa mapaElegido) {
-    	this.cantidadJugadores = cantidadJugadores;
-        this.mapa = mapaElegido;
+    public void iniciarPartida() {
     }
     
-    public void agregarAuto(Auto auto) {
-    	autos.add(auto);
+    public void agregarAutoJugador(String nombre) {
+    	if(jugadorList.size() < this.cantidadJugadores) {
+    		AutoJugador auto = new AutoJugador(nombre, posiciones[jugadorList.size()]);
+    		jugadorList.add(auto);
+    	}
     }
     
-    public Boolean isMultiplayer() {
-		return multiplayer;
-	}
-
-
+    
+    // Que pasa con la generacion cuando el auto se queda quieto
+    public void agregarAutoNpc() {
+    	if(npcList.size() < MAX_NPC) {
+    		npcList.add(AutoNpc.crearAutoNpc());
+    	}
+    }
+    
+    public void agregarObstaculo() {
+    	obstaculoList.add(Obstaculo.crearObstaculo());
+    }
+    
 	public Mapa getMapa() {
 		return mapa;
 	}
 
-
-	public LinkedList<Auto> getAutos() {
-		return autos;
+	public int getCantidadAutoJugador() {
+		return jugadorList.size();
 	}
-
-
+	
+	public int getCantidadAutoNpc() {
+		return npcList.size();
+	}
+	
 	public int getCantidadJugadores() {
     	return cantidadJugadores;
     }

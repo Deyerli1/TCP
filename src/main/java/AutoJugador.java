@@ -6,7 +6,8 @@ public class AutoJugador extends Auto {
 
 
 	protected String nombreJugador;
-	public AutoJugador(String nombreJugador) {
+	public AutoJugador(String nombreJugador, int[] posicion) {
+		super(posicion);
     	this.nombreJugador = nombreJugador;
     }
     public void habilidadEspecial() {

@@ -1,15 +1,7 @@
-
-import java.util.*;
-
-/**
- * 
- */
 public class Fijo extends AutoNpc {
 
-    /**
-     * Default constructor
-     */
     public Fijo() {
+    	super("Fijo", new int[]{70,70});
     }
 
 }

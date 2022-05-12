@@ -1,13 +1,7 @@
 
-import java.util.*;
-
 public class Cordon extends Obstaculo {
-
+	
     public Cordon() {
+    	super(0,0);
     }
-
-    public void explotarAuto(Auto auto, double deltaTime) {
-        auto.explotar(deltaTime);
-    }
-
 }

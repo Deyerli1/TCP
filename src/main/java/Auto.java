@@ -12,10 +12,10 @@ public abstract class Auto {
 	protected boolean desestabilizado, explotado;
 	protected boolean doblarIzquierda, doblarDerecha, acelerar;
 
-	public Auto() {
+	public Auto(int[] posicion) {
 		this.velActual = 0;
-		this.x = 50;
-		this.y = 50;
+		this.x = posicion[0];
+		this.y = posicion[1];
 		this.desestabilizado = false;
 		this.explotado = false;
 		this.doblarIzquierda = false;
