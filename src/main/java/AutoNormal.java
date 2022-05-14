@@ -72,8 +72,12 @@ public class AutoNormal extends AutoEstado {
 	}
 	
 	public void habilidadEspecial() {
-		//limitar cantidad de usos
 		this.velMax = 220;
+	}
+	
+	@Override
+	public String getEstado() {
+		return "normal";
 	}
 
 }

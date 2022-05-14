@@ -1,15 +1,16 @@
 import java.util.Random;
 
 public abstract class Obstaculo {
-	protected final int x,y;
+	protected final double x,y;
 	protected String sprite;
 	
-    public Obstaculo(int x, int y) {
+
+	public Obstaculo(double x, double y) {
     	this.x = x;
     	this.y = y;
     }
     
-    public static Obstaculo crearObstaculo() {
+    public static Obstaculo crearObstaculo(double x, double y) {
 		int min = 1;
         int max = 2;
 
@@ -18,9 +19,17 @@ public abstract class Obstaculo {
         int value = random.nextInt(max + min) + min;
         
         if(value == 1) {
-        	return new Pozo();
+        	return new Pozo(x,y);
         }else {
-        	return new ManchaAceite();
+        	return new ManchaAceite(x,y);
         }
 	}
+    public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
 }

@@ -1,6 +1,6 @@
 public class Pozo extends Obstaculo {
 	
-    public Pozo() {
-    	super(75,75);
+    public Pozo(double x, double y) {
+    	super(x,y);
     }
 }

@@ -91,5 +91,7 @@ public abstract class AutoEstado {
 		public boolean isIzquierda() {
 			return doblarIzquierda;
 		}
+		
+		public abstract String getEstado();
 
 }

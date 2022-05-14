@@ -64,5 +64,9 @@ public class AutoExplotado extends AutoEstado{
 	@Override
 	public void habilidadEspecial() {
 	}
+	
+	public String getEstado() {
+		return "explotado";
+	}
 
 }

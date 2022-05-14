@@ -14,7 +14,7 @@ public abstract class Auto {
 
 	public void desestabilizar(double deltaTime) {
 		estado = estado.desestabilizar(deltaTime);
-	}
+	}	
 
 	public void explotar(double deltaTime) {
 		estado = estado.explotar(deltaTime);
@@ -70,7 +70,22 @@ public abstract class Auto {
 		return estado.isIzquierda();
 	}
 	
+	public void chocar(Pozo pozo,double deltaTime) {
+		estado = estado.explotar(deltaTime);
+	}
+
+	public void chocar(Cordon cordon,double deltaTime) {
+		estado = estado.explotar(deltaTime);
+	}
 	
+	public void chocar(ManchaAceite mancha, double deltaTime) {
+		estado = estado.desestabilizar(deltaTime);
+	}
 
-
+	public void chocar(AutoJugador auto,double deltaTime) {
+		
+	}
+	public void chocar(AutoNpc bot,double deltaTime) {
+		
+	}
 }

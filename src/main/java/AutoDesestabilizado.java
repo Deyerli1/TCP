@@ -62,4 +62,9 @@ public class AutoDesestabilizado extends AutoEstado {
 	@Override
 	public void habilidadEspecial() {
 	}
+	
+	@Override
+	public String getEstado() {
+		return "desestabilizado";
+	}
 }

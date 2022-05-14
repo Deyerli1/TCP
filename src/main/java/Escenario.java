@@ -36,8 +36,8 @@ public class Escenario {
     	}
     }
     
-    public void agregarObstaculo() {
-    	obstaculoList.add(Obstaculo.crearObstaculo());
+    public void agregarObstaculo(double x, double y) {
+    	obstaculoList.add(Obstaculo.crearObstaculo(x,y));
     }
     
 	public Mapa getMapa() {
