@@ -272,7 +272,7 @@
 											"_parent": {
 												"$ref": "AAAAAAGAWF11kL+IgQc="
 											},
-											"font": "Arial;13;1",
+											"font": "Arial;13;3",
 											"left": 125,
 											"top": 175,
 											"width": 152.4833984375,
@@ -5141,7 +5141,8 @@
 							},
 							"name": "explotar"
 						}
-					]
+					],
+					"isAbstract": true
 				},
 				{
 					"_type": "UMLClass",
