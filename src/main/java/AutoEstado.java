@@ -18,6 +18,18 @@ public abstract class AutoEstado {
 		this.y = posicion[1];
 	}
 	
+	AutoEstado(double[] posicion, double velMax){//para los npcs
+		this.acelerar=true;
+		this.doblarDerecha=false;
+		this.doblarIzquierda=false;
+		this.velActual = 0;
+		this.decremento = 20;
+		this.velMax = velMax;
+		this.velDoblar = 1;
+		this.x = posicion[0];//posiciones deberian ser randoms
+		this.y = posicion[1];
+	}
+	
 	public abstract AutoEstado desestabilizar(double deltaTime);
 	
 	public abstract AutoEstado explotar(double deltaTime);
@@ -33,6 +45,10 @@ public abstract class AutoEstado {
 	public abstract void updateHorizontal(double deltaTime);
 	
 	public abstract void updateVertical(double deltaTime);
+	
+//	public abstract void updateEstado(double deltaTime);
+	
+	public abstract void habilidadEspecial();
 	
 	public void setY(double deltaTime) {
 		// ver que pasa cuando cruzas la meta
@@ -66,6 +82,14 @@ public abstract class AutoEstado {
 		
 		public boolean isAcelerar() {
 			return acelerar;
+		}
+		
+		public boolean isDerecha() {
+			return doblarDerecha;
+		}
+		
+		public boolean isIzquierda() {
+			return doblarIzquierda;
 		}
 
 }

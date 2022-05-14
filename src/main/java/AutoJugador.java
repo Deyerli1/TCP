@@ -1,20 +1,25 @@
 
-import java.util.*;
+//import java.util.*;
 
 
 public class AutoJugador extends Auto {
 
-
+	private int topeHabilidadEspecial = 5;
 	protected String nombreJugador;
-	public AutoJugador(String nombreJugador, int[] posicion) {
+	
+	public AutoJugador(String nombreJugador, double[] posicion) {
 		super(posicion);
     	this.nombreJugador = nombreJugador;
     }
+	
     public void habilidadEspecial() {
-    	this.velMax+=20;
+    	if(topeHabilidadEspecial > 0) {
+    		estado.habilidadEspecial();
+    		topeHabilidadEspecial--;
+    	}
     }
+    
     public String getNombreJugador() {
     	return nombreJugador;
     }
-
 }

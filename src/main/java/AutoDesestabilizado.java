@@ -1,8 +1,14 @@
 
 public class AutoDesestabilizado extends AutoEstado {
 
-	AutoDesestabilizado(double[] posicion) {
+	protected final int DURACION_MALA = 5; /// placeholder
+	protected double ultimoDeltaTimeMalo;
+	
+	AutoDesestabilizado(double[] posicion, double velActual, double deltaTime) {
 		super(posicion);
+		this.acelerar = true;
+		this.velActual = velActual;
+		ultimoDeltaTimeMalo = deltaTime;
 	}
 
 	@Override
@@ -13,7 +19,7 @@ public class AutoDesestabilizado extends AutoEstado {
 	@Override
 	public AutoEstado explotar(double deltaTime) {
 		double[] posicion = {this.x,this.y};
-		return new AutoExplotado(posicion);
+		return new AutoExplotado(posicion, deltaTime);
 	}
 
 	@Override
@@ -24,7 +30,7 @@ public class AutoDesestabilizado extends AutoEstado {
 
 	@Override
 	public void setAcelerar(boolean acelerar) {
-		this.acelerar = false;
+		this.acelerar = acelerar;
 	}
 
 	@Override
@@ -50,8 +56,10 @@ public class AutoDesestabilizado extends AutoEstado {
 
 	@Override
 	public void setVelActual(double deltaTime) {
-		// TODO Auto-generated method stub
-		
+		//mantiene la velocidad como esta
 	}
-
+	
+	@Override
+	public void habilidadEspecial() {
+	}
 }

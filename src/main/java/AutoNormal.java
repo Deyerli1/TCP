@@ -4,17 +4,21 @@ public class AutoNormal extends AutoEstado {
 	AutoNormal(double[] posicion) {
 		super(posicion);
 	}
+	
+	AutoNormal(double[] posicion, double velMax) {//para los npc
+		super(posicion,velMax);
+	}
 
 	@Override
 	public AutoEstado desestabilizar(double deltaTime) {
 		double[] posicion = { this.x, this.y };
-		return new AutoDesestabilizado(posicion);
+		return new AutoDesestabilizado(posicion, this.velActual, deltaTime);
 	}
 
 	@Override
 	public AutoEstado explotar(double deltaTime) {
 		double[] posicion = { this.x, this.y };
-		return new AutoExplotado(posicion);
+		return new AutoExplotado(posicion, deltaTime);
 	}
 
 	@Override
@@ -47,8 +51,12 @@ public class AutoNormal extends AutoEstado {
 	public void updateVertical(double deltaTime) {
 		this.setVelActual(deltaTime);
 		this.setY(deltaTime);
-
 	}
+	
+//	@Override
+//	public void updateEstado(double deltaTime) {
+//		
+//	}
 
 	@Override
 	public void setVelActual(double deltaTime) {
@@ -61,7 +69,11 @@ public class AutoNormal extends AutoEstado {
 		} else {
 			this.velActual = this.velMax;
 		}
-
+	}
+	
+	public void habilidadEspecial() {
+		//limitar cantidad de usos
+		this.velMax = 220;
 	}
 
 }

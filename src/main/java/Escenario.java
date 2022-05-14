@@ -5,7 +5,7 @@ public class Escenario {
 	private final int MAX_NPC = 5;
 
 	private final int MAX_JUGADORES = 5;
-	private final int[][] posiciones = {{50,50}, {50,60}, {50,70}, {50,80}, {50,90}};
+	private final double[][] posiciones = {{50,50}, {50,60}, {50,70}, {50,80}, {50,90}};
 	protected Mapa mapa;
 	protected int cantidadJugadores;
 	

@@ -1,8 +1,12 @@
 
 public class AutoExplotado extends AutoEstado{
 
-	AutoExplotado(double[] posicion) {
+	protected final int DURACION_MALA = 5; /// placeholder
+	protected double ultimoDeltaTimeMalo;
+	
+	AutoExplotado(double[] posicion, double deltaTime) {
 		super(posicion);
+		ultimoDeltaTimeMalo = deltaTime;
 	}
 
 	@Override
@@ -45,10 +49,20 @@ public class AutoExplotado extends AutoEstado{
 	public void updateVertical(double deltaTime) {
 		//no hace nada
 	}
+	
+//	public void updateEstado(double deltaTime) {
+//		if(ultimoDeltaTimeMalo + 5 < deltaTime) {
+//			this.normalizar();
+//		}
+//	}
 
 	@Override
 	public void setVelActual(double deltaTime) {
 		this.velActual=0;
+	}
+	
+	@Override
+	public void habilidadEspecial() {
 	}
 
 }

@@ -1,7 +1,7 @@
 public class Fijo extends AutoNpc {
 
-    public Fijo() {
-    	super("Fijo", new int[]{70,70});
+    public Fijo(String nombre, double[] posicion) {
+    	super(nombre, posicion);
     }
 
 }
