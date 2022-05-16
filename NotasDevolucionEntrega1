@@ -1,11 +1,11 @@
 Notas tomadas de la devolución brindada por los profesores en la primer entrega del proyecto
 
--DDC
+--DDC
 Quitar setter y getter de DDC
 Agregar cardinalidades
 Cambiar clase mapa a fondo
 
--Código y test
+--Código y test
 Los atributos de AutoEstado tienen que estar en la clase Auto >> Se pueden acceder desde AutoEstado si creamos un objeto en Auto que le pida a AutoEstado que haga modificaciones sobre ese objeto
 
 Before y after en los test @Before
