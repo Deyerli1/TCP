@@ -1,0 +1,21 @@
+Notas tomadas de la devolución brindada por los profesores en la primer entrega del proyecto
+
+-DDC
+Quitar setter y getter de DDC
+Agregar cardinalidades
+Cambiar clase mapa a fondo
+
+-Código y test
+Los atributos de AutoEstado tienen que estar en la clase Auto >> Se pueden acceder desde AutoEstado si creamos un objeto en Auto que le pida a AutoEstado que haga modificaciones sobre ese objeto
+
+Before y after en los test @Before
+@BeforeClass >> En las clases, no test.
+Crear codigo especifico de la clase test para reutilizar codigo, pero que este código no este dentro de la codificación de las clases. Es decir, se puede hacer código para usar en el test, pero dentro del JUnit, no código extra en el juego.
+
+System.nanotime >> Para ver el ahora y calcular el tiempo que paso desde determinada accion
+
+Borrar codigo comentado //No esta incluido en las buenas prácticas >> A los profes no les gusta
+Optimizar test jugador
+Hacer test mas complicados
+
+Nota 8.5 :)
