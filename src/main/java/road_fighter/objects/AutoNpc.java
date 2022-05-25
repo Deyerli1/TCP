@@ -1,3 +1,4 @@
+package road_fighter.objects;
 import java.util.Random;
 
 public abstract class AutoNpc extends Auto {

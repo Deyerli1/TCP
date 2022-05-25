@@ -1,3 +1,4 @@
+package road_fighter.objects;
 
 //import java.util.*;
 
@@ -14,12 +15,30 @@ public class AutoJugador extends Auto {
 	
     public void habilidadEspecial() {
     	if(topeHabilidadEspecial > 0) {
-    		estado.habilidadEspecial();
+    		this.velMax = 220;
     		topeHabilidadEspecial--;
     	}
     }
-    
+        
     public String getNombreJugador() {
     	return nombreJugador;
     }
+
+	@Override
+	public void updateHorizontal(double deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateVertical(double deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setVelActual(double deltaTime) {
+		// TODO Auto-generated method stub
+		
+	}
 }

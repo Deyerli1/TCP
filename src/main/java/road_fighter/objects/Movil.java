@@ -1,3 +1,4 @@
+package road_fighter.objects;
 public class Movil extends AutoNpc {
 
     public Movil(String nombre, double[] posicion) {
