@@ -45,7 +45,7 @@ public class MenuSceneHandler extends SceneHandler {
 			}
 		};
 
-		keyEventHandler = new EventHandler<KeyEvent>() {
+		keyEventHandlerPress = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
@@ -58,6 +58,26 @@ public class MenuSceneHandler extends SceneHandler {
 				case Q:
 				case ESCAPE:
 					System.exit(0);
+					break;
+				default:
+					break;
+				}
+			}
+		};
+		
+		keyEventHandlerRelease = new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				switch (e.getCode()) {
+				case UP:
+				case W:
+				case SPACE:
+				case ENTER:
+					//r.startGame();
+					break;
+				case Q:
+				case ESCAPE:
+					//System.exit(0);
 					break;
 				default:
 					break;

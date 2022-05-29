@@ -16,10 +16,10 @@ import road_fighter.states.AutoNormal;
 
 public abstract class Auto extends GameObject implements Updatable, Renderable, Collidator {
 
-	protected boolean doblarIzquierda, doblarDerecha, acelerar;
+	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
 	protected double x, y;
 	protected double decremento, velMax, velActual, velDoblar;
-	protected final int ACELERACION = 3; /// placeholder
+	protected final int ACELERACION = 1; /// placeholder
 	private int velocidadDoblado = 1;
 	protected AutoEstado estado;
 	
@@ -115,9 +115,21 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	public void acelerar() {
 		this.estado.acelerar(this.y);
 	}
-	
+		
 	//GETTERS AND SETTERS
 	
+	public boolean isDoblarIzquierda() {
+		return doblarIzquierda;
+	}
+
+	public boolean isDoblarDerecha() {
+		return doblarDerecha;
+	}
+
+	public boolean isAcelerar() {
+		return acelerar;
+	}
+
 	public void setY(double y) {
 		this.y = y;
 		render.setY(this.y);
@@ -126,7 +138,9 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public void setX(double x) {
 		// ver que pasa al chocar con los cordones
+		//System.out.println(this.x);
 		this.x = x;
+		//System.out.println(this.x);
 		render.setX(this.x);
 		collider.setX(this.x- colliderWidth/2);
 	}
@@ -134,6 +148,23 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	public void setVelActual(double nuevaVel) {
 		this.velActual = nuevaVel;
 		
+	}
+	
+	public void setAcelerar(boolean valor) {
+		this.acelerar = valor;
+	}
+	
+	public void setDoblarIzquierda(boolean valor) {
+		if(getVelActual() > 0) {
+			this.doblarIzquierda = valor;
+		}
+	}
+	
+	public void setDoblarDerecha(boolean valor) {
+		System.out.println("doblando");
+		if(getVelActual() > 0) {
+			this.doblarDerecha = valor;
+		}
 	}
 	
 	public double getX() {
@@ -162,9 +193,13 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 
 	@Override
 	public void update(double deltaTime) {
+doblarDerecha();
+doblarIzquierda();
+acelerar();//setea Y
 
-		render.setX(this.x);
-		collider.setX(this.x- colliderWidth/2);
+
+		//render.setX(this.x);
+		//collider.setX(this.x- colliderWidth/2);
 	}
 
 	@Override

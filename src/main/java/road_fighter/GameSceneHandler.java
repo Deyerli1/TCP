@@ -44,22 +44,22 @@ public class GameSceneHandler extends SceneHandler {
 
 	protected void defineEventHandlers() {
 		System.out.println("defineEventHandlers");
-		keyEventHandler = new EventHandler<KeyEvent>() {
+		keyEventHandlerPress = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
 				System.out.println("tecla recibida");
 				switch (e.getCode()) {
 				case W:
-					player.acelerar();
+					player.setAcelerar(true);
 					break;
 				case S:
-					//frenar();
+					player.setAcelerar(false);
 					break;
 				case A:
-					player.doblarIzquierda();
+					player.setDoblarIzquierda(true);
 					break;
 				case D:
-					player.doblarDerecha();
+					player.setDoblarDerecha(true);
 					break;
 				case P:
 					makeAction();
@@ -67,17 +67,46 @@ public class GameSceneHandler extends SceneHandler {
 				case R:
 					prenderRadio();
 				default:
-					//desacelerar();
+					//player.desacelerar();
 				}
 			}
 		};
+		
+		keyEventHandlerRelease = new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent e) {
+				System.out.println("tecla soltada");
+				switch (e.getCode()) {
+				case W:
+					player.setAcelerar(false);
+					break;
+				case S:
+					//player.setAcelerar(false);
+					break;
+				case A:
+					player.setDoblarIzquierda(false);
+					break;
+				case D:
+					player.setDoblarDerecha(false);
+					break;
+				case P:
+					//makeAction();
+					break;
+				case R:
+					//prenderRadio();
+				default:
+					//player.desacelerar();
+				}
+			}
+		};
+
 	}
 	
 	public void load(boolean fullStart) {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 		
-		player = new AutoJugador("pepito", new double[] {200,200});
+		player = new AutoJugador("pepito", new double[] {200,600});
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
 		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);

@@ -35,6 +35,36 @@ public class AutoDesestabilizado extends AutoEstado {
 	public String getEstado() {
 		return "desestabilizado";
 	}
+
+	@Override
+	public void setVelActual(int sentido) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doblarDerecha(double x) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doblarIzquierda(double x) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void acelerar(double y) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void desacelerar(double y) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 

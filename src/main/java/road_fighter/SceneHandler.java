@@ -26,7 +26,8 @@ public abstract class SceneHandler {
 
 	protected Scene scene;
 	
-	protected EventHandler<KeyEvent> keyEventHandler;
+	protected EventHandler<KeyEvent> keyEventHandlerPress;
+	protected EventHandler<KeyEvent> keyEventHandlerRelease;
 	protected EventHandler<MouseEvent> mouseEventHandler;
 
 	public SceneHandler(RoadFighterGame r) {
@@ -78,11 +79,13 @@ public abstract class SceneHandler {
 	}
 
 	protected void addInputEvents() {
-		scene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
+		scene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandlerPress);
+		scene.addEventHandler(KeyEvent.KEY_RELEASED, keyEventHandlerRelease);
 	}
 
 	protected void removeInputEvents() {
-		scene.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
+		scene.removeEventHandler(KeyEvent.KEY_PRESSED, keyEventHandlerPress);
+		scene.removeEventHandler(KeyEvent.KEY_RELEASED, keyEventHandlerRelease);
 		scene.removeEventHandler(MouseEvent.MOUSE_PRESSED, mouseEventHandler);
 	}
 	

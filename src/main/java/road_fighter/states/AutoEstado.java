@@ -16,7 +16,7 @@ public abstract class AutoEstado {
 	
 	public abstract AutoEstado normalizar(double deltaTime);
 	
-	public abstract void setVelActual();
+	public abstract void setVelActual(int sentido);
 			
 	public abstract String getEstado();
 	
@@ -25,5 +25,6 @@ public abstract class AutoEstado {
 	public abstract void doblarIzquierda(double x);
 	
 	public abstract void acelerar(double y);
+
 
 }

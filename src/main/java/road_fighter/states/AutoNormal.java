@@ -24,12 +24,13 @@ public class AutoNormal extends AutoEstado {
 	}
 	
 	@Override
-	public void setVelActual() {
-		double nuevaVel = auto.getVelActual() + auto.getAceleracion();
+	public void setVelActual(int sentido) {
+		double nuevaVel = auto.getVelActual() + auto.getAceleracion()*sentido;
 		if ( nuevaVel > auto.getVelMax() ) {
 			nuevaVel = auto.getVelMax();
 		} 
-		auto.setVelActual(nuevaVel);
+		
+		auto.setVelActual(nuevaVel > 0 ? nuevaVel : 0);
 	}
 		
 	@Override
@@ -39,17 +40,25 @@ public class AutoNormal extends AutoEstado {
 
 	@Override
 	public void doblarDerecha(double x) {
-		auto.setX(x+this.auto.getVelocidadDoblado());
+		if(this.auto.isDoblarDerecha()) {
+			auto.setX(x+this.auto.getVelocidadDoblado());
+		}
+
 	}
 
 	@Override
 	public void doblarIzquierda(double x) {
-		auto.setX(x-this.auto.getVelocidadDoblado());
+		if(this.auto.isDoblarIzquierda()) {
+			auto.setX(x-this.auto.getVelocidadDoblado());
+		}
 	}
 	
 	@Override
 	public void acelerar(double y) {
-		auto.setY(y-this.auto.getAceleracion());
+		setVelActual(this.auto.isAcelerar() ? 1 : -1);
+		if(this.auto.getVelActual() > 0)
+			auto.setY(y-this.auto.getVelActual()/500);
 	}
 
+	
 }
