@@ -13,9 +13,7 @@ public class RoadFighterGame extends Application {
 	private GameSceneHandler gameSceneHandler;
 	@Override
 	public void start(Stage stage) {
-		System.out.println("en start");
 		this.stage = stage;
-
 		menuSceneHandler = new MenuSceneHandler(this);
 		Scene scene = menuSceneHandler.getScene();
 		stage.setScene(scene);
@@ -31,11 +29,11 @@ public class RoadFighterGame extends Application {
 		// scale.setX(scene.getWidth() / WIDTH);
 		// scale.setY(scene.getHeight() / HEIGHT);
 		// images.getTransforms().add(scale);
-
+		
 		stage.getIcons().add(new Image("file:src/main/resources/ico/logo.png"));
 		stage.setTitle("Flappy Bird FXGame | Programación Avanzada");
+		
 		stage.show();
-		System.out.println("fin start");
 	}
 
 	public static void main(String[] args) {

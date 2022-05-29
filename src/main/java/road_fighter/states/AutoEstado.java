@@ -19,5 +19,11 @@ public abstract class AutoEstado {
 	public abstract void setVelActual();
 			
 	public abstract String getEstado();
+	
+	public abstract void doblarDerecha(double x);
+	
+	public abstract void doblarIzquierda(double x);
+	
+	public abstract void acelerar(double y);
 
 }

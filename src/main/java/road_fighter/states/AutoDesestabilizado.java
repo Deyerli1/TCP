@@ -35,5 +35,7 @@ public class AutoDesestabilizado extends AutoEstado {
 	public String getEstado() {
 		return "desestabilizado";
 	}
+	
+	
 
 }

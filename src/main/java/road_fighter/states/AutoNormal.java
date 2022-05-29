@@ -37,4 +37,19 @@ public class AutoNormal extends AutoEstado {
 		return "normal";
 	}
 
+	@Override
+	public void doblarDerecha(double x) {
+		auto.setX(x+this.auto.getVelocidadDoblado());
+	}
+
+	@Override
+	public void doblarIzquierda(double x) {
+		auto.setX(x-this.auto.getVelocidadDoblado());
+	}
+	
+	@Override
+	public void acelerar(double y) {
+		auto.setY(y-this.auto.getAceleracion());
+	}
+
 }

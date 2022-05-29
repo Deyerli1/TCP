@@ -1,15 +1,39 @@
 package road_fighter.objects;
 
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
+import road_fighter.interfaces.Collidator;
+import road_fighter.interfaces.Collideable;
+import road_fighter.interfaces.Renderable;
+import road_fighter.interfaces.Updatable;
+import road_fighter.utils.GameObject;
 import road_fighter.states.AutoEstado;
 import road_fighter.states.AutoNormal;
 
-public abstract class Auto {
+public abstract class Auto extends GameObject implements Updatable, Renderable, Collidator {
 
 	protected boolean doblarIzquierda, doblarDerecha, acelerar;
 	protected double x, y;
 	protected double decremento, velMax, velActual, velDoblar;
-	protected final int ACELERACION = 20; /// placeholder
+	protected final int ACELERACION = 3; /// placeholder
+	private int velocidadDoblado = 1;
 	protected AutoEstado estado;
+	
+	protected final int width = 32;
+	protected final int height = 50;
+	
+	protected ImageView render;
+	protected Image autoImg;
+
+	
+	protected Rectangle collider;
+	protected final double colliderTolerance = 0.9;
+	protected final int colliderWidth = (int) (width * colliderTolerance);
+	protected final int colliderHeight = (int) (height * colliderTolerance);
 
 	public Auto(double[] posicion) {
 		this.acelerar=false;
@@ -80,22 +104,36 @@ public abstract class Auto {
 	
 	public abstract void habilidadEspecial();
 	
+	public void doblarDerecha() {
+		this.estado.doblarDerecha(this.x);
+	}
 	
+	public void doblarIzquierda() {
+		this.estado.doblarIzquierda(this.x);
+	}
+	
+	public void acelerar() {
+		this.estado.acelerar(this.y);
+	}
 	
 	//GETTERS AND SETTERS
 	
-	public void setY(double deltaTime) {
-		// ver que pasa cuando cruzas la meta
-		this.y += deltaTime * this.velActual;
+	public void setY(double y) {
+		this.y = y;
+		render.setY(this.y);
+		collider.setY(this.y- colliderHeight/2);
 	}
 	
 	public void setX(double x) {
 		// ver que pasa al chocar con los cordones
 		this.x = x;
+		render.setX(this.x);
+		collider.setX(this.x- colliderWidth/2);
 	}
 	
 	public void setVelActual(double nuevaVel) {
 		this.velActual = nuevaVel;
+		
 	}
 	
 	public double getX() {
@@ -118,7 +156,38 @@ public abstract class Auto {
 		return ACELERACION;
 	}
 	
-	
+    public int getVelocidadDoblado() {
+    	return this.velocidadDoblado;
+    }
+
+	@Override
+	public void update(double deltaTime) {
+
+		render.setX(this.x);
+		collider.setX(this.x- colliderWidth/2);
+	}
+
+	@Override
+	public Node getRender() {
+		return render;
+	}
+
+	@Override
+	public void collide(Collideable collideable) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Shape getCollider() {
+		return collider;
+	}
+
+	@Override
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	

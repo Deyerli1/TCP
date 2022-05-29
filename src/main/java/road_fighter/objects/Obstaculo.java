@@ -1,7 +1,12 @@
 package road_fighter.objects;
 import java.util.Random;
 
-public abstract class Obstaculo {
+import road_fighter.interfaces.Collideable;
+import road_fighter.interfaces.Renderable;
+import road_fighter.interfaces.Updatable;
+import road_fighter.utils.GameObject;
+
+public abstract class Obstaculo extends GameObject implements Updatable, Renderable, Collideable {
 	protected final double x,y;
 	protected String sprite;
 	

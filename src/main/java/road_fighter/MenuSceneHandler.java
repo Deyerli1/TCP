@@ -26,15 +26,16 @@ public class MenuSceneHandler extends SceneHandler {
 		super(r);	
 	}
 
+	//configuracion de tamaño de pantalla
 	protected void prepareScene() {
-		System.out.println("en prepareScene");
+		System.out.println("configurando pantalla");
 		rootGroup = new Group();
 		scene = new Scene(rootGroup, Config.baseWidth, Config.baseHeight, Color.BLACK);
-		System.out.println("fin prepareScene");
+		System.out.println("fin configurando pantalla");
 	}
 
 	protected void defineEventHandlers() {
-		System.out.println("en defineEventHandlers");
+		System.out.println("seteando teclas del menu");
 		mouseEventHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -69,27 +70,25 @@ public class MenuSceneHandler extends SceneHandler {
 	
 
 	public void load() {
-		System.out.println("en load");
+		System.out.println("cargando la escena");
 		boolean fullStart = true;
 		Group baseGroup = new Group();
 		rootGroup.getChildren().add(baseGroup);
 		
-		player = new AutoJugador(Config.baseWidth - 75, Config.baseHeight / 3, null);
-		
+		//player = new AutoJugador(Config.baseWidth - 75, Config.baseHeight / 3, null);
 		background = new Background();
-
 		title = new Title();
 		textoComenzar = new TextoComenzar();
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background, player,title, textoComenzar);
-
+		gameOB.add(background, title, textoComenzar);
 		if (fullStart) {
+			System.out.println("");
 			addTimeEventsAnimationTimer();
 			addInputEvents();
 		}
-		System.out.println("fin load");
+		System.out.println("escena cargada");
 	}
 
 	public void unload() {

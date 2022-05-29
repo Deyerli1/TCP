@@ -15,25 +15,20 @@ public class Background extends GameObject implements Updatable, Renderable {
 	private VBox render;
 	private double posX = 0;
 
-	private final int cityWidth = 136;
-	private final int cityHeight = 152;
-	private final int grassHeight = 100;
+	private final int mapWidth = 136;
+	private final int mapHeight = 152;
 
 	public Background() {
-		Image backgroundImage = new Image("file:src/main/resources/img/background.png", cityWidth, cityHeight, false, false);
+		Image backgroundImage = new Image("file:src/main/resources/img/background.png", mapWidth, mapHeight, false, false);
 
-		ImagePattern image_pattern = new ImagePattern(backgroundImage, cityWidth, cityHeight, cityWidth, cityHeight,
+		ImagePattern image_pattern = new ImagePattern(backgroundImage, mapWidth, mapHeight, mapWidth, mapHeight,
 				false);
 
-		Rectangle sky = new Rectangle(Config.baseWidth + cityWidth, Config.baseHeight - cityHeight - grassHeight);
-		Rectangle city = new Rectangle(Config.baseWidth + cityWidth, cityHeight);
-		Rectangle grass = new Rectangle(Config.baseWidth + cityWidth, grassHeight);
+		Rectangle mapa = new Rectangle(Config.baseWidth + mapWidth, Config.baseHeight - mapHeight);
+		mapa.setFill(image_pattern);
 
-		sky.setFill(Color.rgb(84, 192, 201));
-		city.setFill(image_pattern);
-		grass.setFill(Color.rgb(100, 224, 117));
 
-		render = new VBox(sky, city, grass);
+		render = new VBox(mapa);
 		// TODO zIndex list
 		render.setViewOrder(10);
 	}
@@ -46,7 +41,7 @@ public class Background extends GameObject implements Updatable, Renderable {
 	@Override
 	public void update(double deltaTime) {
 		posX += -Config.baseSpeed * deltaTime * 0.01;
-		render.setTranslateX(posX % cityWidth);
+		render.setTranslateX(posX % mapWidth);
 	}
 
 	@Override

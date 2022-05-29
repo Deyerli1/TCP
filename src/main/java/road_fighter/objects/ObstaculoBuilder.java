@@ -7,7 +7,6 @@ import road_fighter.utils.GameObjectBuilder;
 
 public class ObstaculoBuilder extends GameObject implements Updatable {
 	private final long NANOS_IN_SECOND = 1_000_000_000;
-
 	private boolean running = false;
 	private long pipeTime;
 
@@ -22,7 +21,7 @@ public class ObstaculoBuilder extends GameObject implements Updatable {
 
 			if (currentNano - pipeTime > 0) {
 				pipeTime = currentNano + (long) (Config.pipesPerSecond * NANOS_IN_SECOND);
-				createPipeColumn();
+				createObstaculo();
 			}
 		}
 	}
@@ -36,17 +35,9 @@ public class ObstaculoBuilder extends GameObject implements Updatable {
 		running = false;
 	}
 
-	public void createPipeColumn() {
-		double random = Math.random();
-
-		int totalHeight = Config.baseHeight - Config.groundHeight;
-		int emptySpace = (int) (totalHeight * Config.emptySpace);
-		int topPipeHeight = (int) (50 + random * (Config.baseHeight - 400));
-		int x = (int) (Config.baseWidth * 1.2);
-
-		Pipe topPipe = new Pipe(x, totalHeight - topPipeHeight - emptySpace, true);
-		Pipe bottomPipe = new Pipe(x, topPipeHeight, false);
-		GameObjectBuilder.getInstance().add(topPipe, bottomPipe, scoreCollider);
+	public void createObstaculo() {
+		Pozo pozo = new Pozo(200,300);
+		GameObjectBuilder.getInstance().add(pozo);
 	}
 	
 	@Override

@@ -1,6 +1,11 @@
 package road_fighter.objects;
 
-//import java.util.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+
 
 
 public class AutoJugador extends Auto {
@@ -10,7 +15,18 @@ public class AutoJugador extends Auto {
 	
 	public AutoJugador(String nombreJugador, double[] posicion) {
 		super(posicion);
+		autoImg = new Image("file:src/main/resources/img/familySedan.png", width, height, false, false);
     	this.nombreJugador = nombreJugador;
+    	render = new ImageView(autoImg);
+    	render.setX(posicion[0]);
+    	render.setY(posicion[1]);
+		render.relocate(posicion[0] - width/2, posicion[1] - height/2);
+
+		collider = new Rectangle(posicion[0] - colliderWidth/2 , posicion[1] - colliderHeight/2, colliderWidth, colliderHeight);
+		collider.setFill(null);
+		collider.setX(posicion[0]- colliderWidth/2);
+		collider.setY(posicion[1]- colliderHeight/2);
+		collider.setStroke(Color.BLUE);
     }
 	
     public void habilidadEspecial() {
@@ -24,21 +40,13 @@ public class AutoJugador extends Auto {
     	return nombreJugador;
     }
 
-	@Override
+
+    @Override
 	public void updateHorizontal(double deltaTime) {
-		// TODO Auto-generated method stub
-		
+    	
 	}
 
 	@Override
 	public void updateVertical(double deltaTime) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setVelActual(double deltaTime) {
-		// TODO Auto-generated method stub
-		
 	}
 }

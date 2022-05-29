@@ -8,8 +8,6 @@ import javafx.geometry.Bounds;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
@@ -45,24 +43,31 @@ public class GameSceneHandler extends SceneHandler {
 	}
 
 	protected void defineEventHandlers() {
+		System.out.println("defineEventHandlers");
 		keyEventHandler = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
+				System.out.println("tecla recibida");
 				switch (e.getCode()) {
-				case UP:
-					acelerar();
+				case W:
+					player.acelerar();
 					break;
-				case DOWN:
-					desacelerar();
+				case S:
+					//frenar();
 					break;
-				case LEFT:
-					doblarIzquierda();
+				case A:
+					player.doblarIzquierda();
 					break;
-				case RIGHT:
-					doblarDerecha();
+				case D:
+					player.doblarDerecha();
 					break;
+				case P:
+					makeAction();
+					break;
+				case R:
+					prenderRadio();
 				default:
-					desacelerar();
+					//desacelerar();
 				}
 			}
 		};
@@ -72,17 +77,15 @@ public class GameSceneHandler extends SceneHandler {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 		
-		player = new AutoJugador();
+		player = new AutoJugador("pepito", new double[] {200,200});
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
-		radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
+		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
 
 		// Add to builder
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, radio, player, obstaculoBuilder);
-
-
+		gameOB.add(background, player, obstaculoBuilder);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -105,34 +108,16 @@ public class GameSceneHandler extends SceneHandler {
 		if (!started) {
 			started = true;
 			obstaculoBuilder.startBuilding(2 * NANOS_IN_SECOND);
-			radio.start();
 		}
-		player.push();
+	}
+	
+	private void prenderRadio() {
+		//radio.start();
 	}
 	
 	public void update(double delta) {
 		super.update(delta);
-
 		checkColliders();
-
-		if (!ended) {
-			if (player.isDead()) {
-				ended = true;
-				pipeBuilder.stopBuilding();
-				Config.baseSpeed = 0;
-
-				// Improve
-				TranslateTransition tt = new TranslateTransition(Duration.millis(50), scene.getRoot());
-				tt.setFromX(-20f);
-				tt.setByX(20f);
-				tt.setCycleCount(6);
-				tt.setAutoReverse(true);
-				tt.playFromStart();
-				tt.setOnFinished(event -> {
-					scene.getRoot().setTranslateX(0);
-				});
-			}
-		}
 	}
 
 	private void checkColliders() {

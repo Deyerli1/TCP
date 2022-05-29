@@ -1,13 +1,14 @@
 package road_fighter;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import road_fighter.interfaces.Updatable;
-import road_fighter.utils.GameObjectBuilder;
+
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import road_fighter.interfaces.Updatable;
+import road_fighter.utils.GameObjectBuilder;
 
 public abstract class SceneHandler {
 	protected final long NANOS_IN_SECOND = 1_000_000_000;
@@ -45,21 +46,23 @@ public abstract class SceneHandler {
 	
 	public void update(double delta) {
 		frames++;
-
 		List<Updatable> updatables = GameObjectBuilder.getInstance().getUpdatables();
+
 		for (Updatable updatable : updatables) {
 			updatable.update(delta);
 		}
 	}
 
 	protected void addTimeEventsAnimationTimer() {
+		System.out.println("SceneHandler.addTimeEventsAnimationTimer");
+
 		gameTimer = new AnimationTimer() {
 			@Override
 			public void handle(long currentNano) {
 				// Update tick
 				update((currentNano - previousNanoFrame) / NANOS_IN_SECOND_D);
 				previousNanoFrame = currentNano;
-	
+				
 				// Update second
 				if (currentNano - previousNanoSecond > NANOS_IN_SECOND) {
 					oneSecondUpdate((currentNano - previousNanoSecond) / NANOS_IN_SECOND_D);
@@ -76,7 +79,6 @@ public abstract class SceneHandler {
 
 	protected void addInputEvents() {
 		scene.addEventHandler(KeyEvent.KEY_PRESSED, keyEventHandler);
-		scene.addEventHandler(MouseEvent.MOUSE_PRESSED, mouseEventHandler);
 	}
 
 	protected void removeInputEvents() {
