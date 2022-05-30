@@ -40,7 +40,7 @@ public class CaminoBuilder extends GameObject implements Updatable{
 	public void createCamino() {
 		Camino camino = new Camino(200,300-movimiento, posicionJugador);
 		GameObjectBuilder.getInstance().add(camino);
-		movimiento+=300;
+		movimiento+=300; /// Esto deberia ser la altura de un "modulo" de camino
 	}
 	
 	public void setPosicionJugador(double posicionJugador) {
