@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -25,6 +26,7 @@ public abstract class SceneHandler {
 	protected RoadFighterGame r;
 
 	protected Scene scene;
+	
 	
 	protected EventHandler<KeyEvent> keyEventHandlerPress;
 	protected EventHandler<KeyEvent> keyEventHandlerRelease;

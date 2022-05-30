@@ -1,5 +1,6 @@
 package road_fighter.objects;
 
+import javafx.scene.ParallelCamera;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,6 +29,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	protected ImageView render;
 	protected Image autoImg;
+	
 
 	
 	protected Rectangle collider;
@@ -45,6 +47,8 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.velDoblar = 1;
 		this.x = posicion[0];
 		this.y = posicion[1];
+		//camera.translateXProperty().set(this.x);
+		//camera.translateXProperty().set(this.y);
 		estado = new AutoNormal(this);
 	}
 		
@@ -154,16 +158,29 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.acelerar = valor;
 	}
 	
+	public int getWidth() {
+		return width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
 	public void setDoblarIzquierda(boolean valor) {
 		if(getVelActual() > 0) {
 			this.doblarIzquierda = valor;
 		}
+		else {
+			this.doblarIzquierda = false;
+		}
 	}
 	
 	public void setDoblarDerecha(boolean valor) {
-		System.out.println("doblando");
 		if(getVelActual() > 0) {
 			this.doblarDerecha = valor;
+		}
+		else {
+			this.doblarDerecha = false;
 		}
 	}
 	

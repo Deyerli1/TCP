@@ -6,6 +6,7 @@ import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
@@ -27,6 +28,7 @@ public class GameSceneHandler extends SceneHandler {
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
 	private Radio radio;
+	public ParallelCamera camera = new ParallelCamera();
 
 	// TODO pause
 	// boolean paused = false;
@@ -35,11 +37,14 @@ public class GameSceneHandler extends SceneHandler {
 
 	public GameSceneHandler(RoadFighterGame r) {
 		super(r);
+		
 	}
 
 	protected void prepareScene() {
 		Group rootGroup = new Group();
 		scene = new Scene(rootGroup, Config.baseWidth, Config.baseHeight, Color.BLACK);
+		
+		
 	}
 
 	protected void defineEventHandlers() {
@@ -61,9 +66,6 @@ public class GameSceneHandler extends SceneHandler {
 				case D:
 					player.setDoblarDerecha(true);
 					break;
-				case P:
-					makeAction();
-					break;
 				case R:
 					prenderRadio();
 				default:
@@ -71,13 +73,14 @@ public class GameSceneHandler extends SceneHandler {
 				}
 			}
 		};
-		
+
 		keyEventHandlerRelease = new EventHandler<KeyEvent>() {
 			@Override
 			public void handle(KeyEvent e) {
 				System.out.println("tecla soltada");
 				switch (e.getCode()) {
 				case W:
+					makeAction();
 					player.setAcelerar(false);
 					break;
 				case S:
@@ -107,6 +110,9 @@ public class GameSceneHandler extends SceneHandler {
 		scene.setRoot(rootGroup);
 		
 		player = new AutoJugador("pepito", new double[] {200,600});
+		scene.setCamera(camera);
+		camera.translateYProperty().set(-100);//vista vertical
+		
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
 		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
@@ -146,7 +152,9 @@ public class GameSceneHandler extends SceneHandler {
 	
 	public void update(double delta) {
 		super.update(delta);
+		camera.translateYProperty().set(player.getY() - Config.baseHeight/2);
 		checkColliders();
+		obstaculoBuilder.setPosicionJugador(player.getY());
 	}
 
 	private void checkColliders() {

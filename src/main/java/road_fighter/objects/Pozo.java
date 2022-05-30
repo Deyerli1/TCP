@@ -6,6 +6,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import road_fighter.Config;
 
 public class Pozo extends Obstaculo {
 	
@@ -20,14 +21,12 @@ public class Pozo extends Obstaculo {
 	protected final int colliderWidth = (int) (width * colliderTolerance);
 	protected final int colliderHeight = (int) (height * colliderTolerance);
 	
-    public Pozo(double x, double y) {
+    public Pozo(double x, double y, double posicionJugador) {
     	super(x,y);
     	pozoImg = new Image("file:src/main/resources/img/flappy-bird.png", width, height, false, false);
 		render = new ImageView(pozoImg);
-		render.relocate(Math.floor(Math.random()*(500-300+1)+300), 200);
-		
-
-		
+		render.relocate(Math.floor(Math.random()*(300-0+1)), posicionJugador-Config.baseHeight/2);
+				
 		collider = new Rectangle(colliderWidth / 2, colliderHeight / 2, colliderWidth, colliderHeight);
 		collider.setFill(null);
 		collider.setStroke(Color.FUCHSIA);

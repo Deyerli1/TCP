@@ -9,6 +9,7 @@ public class ObstaculoBuilder extends GameObject implements Updatable {
 	private final long NANOS_IN_SECOND = 1_000_000_000;
 	private boolean running = false;
 	private long pipeTime;
+	protected double posicionJugador;
 
 	public ObstaculoBuilder() {
 
@@ -36,8 +37,12 @@ public class ObstaculoBuilder extends GameObject implements Updatable {
 	}
 
 	public void createObstaculo() {
-		Pozo pozo = new Pozo(200,300);
+		Pozo pozo = new Pozo(200,300, posicionJugador);
 		GameObjectBuilder.getInstance().add(pozo);
+	}
+	
+	public void setPosicionJugador(double posicionJugador) {
+		this.posicionJugador = posicionJugador;
 	}
 	
 	@Override
