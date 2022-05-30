@@ -17,6 +17,7 @@ import road_fighter.interfaces.Collideable;
 import road_fighter.objects.Auto;
 import road_fighter.objects.AutoJugador;
 import road_fighter.objects.Background;
+import road_fighter.objects.CaminoBuilder;
 import road_fighter.objects.ObstaculoBuilder;
 import road_fighter.objects.Radio;
 import road_fighter.utils.GameObjectBuilder;
@@ -27,6 +28,7 @@ public class GameSceneHandler extends SceneHandler {
 	private Auto player;
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
+	private CaminoBuilder caminoBuilder;
 	private Radio radio;
 	public ParallelCamera camera = new ParallelCamera();
 
@@ -112,15 +114,16 @@ public class GameSceneHandler extends SceneHandler {
 		player = new AutoJugador("pepito", new double[] {200,600});
 		scene.setCamera(camera);
 		camera.translateYProperty().set(-100);//vista vertical
-		
+		camera.translateXProperty().set(player.getX() - Config.baseWidth/2);
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
+		caminoBuilder = new CaminoBuilder();
 		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
 
 		// Add to builder
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder);
+		gameOB.add(background, player, obstaculoBuilder,caminoBuilder);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -143,6 +146,7 @@ public class GameSceneHandler extends SceneHandler {
 		if (!started) {
 			started = true;
 			obstaculoBuilder.startBuilding(2 * NANOS_IN_SECOND);
+			caminoBuilder.startBuilding(NANOS_IN_SECOND * 2);
 		}
 	}
 	
@@ -153,6 +157,7 @@ public class GameSceneHandler extends SceneHandler {
 	public void update(double delta) {
 		super.update(delta);
 		camera.translateYProperty().set(player.getY() - Config.baseHeight/2);
+		camera.translateXProperty().set(player.getX() - Config.baseWidth/2);
 		checkColliders();
 		obstaculoBuilder.setPosicionJugador(player.getY());
 	}

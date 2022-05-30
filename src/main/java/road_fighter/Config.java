@@ -14,6 +14,10 @@ public class Config {
 	public final static double pipesPerSecond = 1.3;
 	public final static int playerCenter = baseWidth / 3;
 	
+	public final static double caminosPerSecond = 1.3;
+	public final static int caminoHeight = 800;
+	public final static int caminoWidth = 800;
+	
 	public static int maxScore = 0;
 
 	private Config() {

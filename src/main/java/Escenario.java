@@ -1,5 +1,9 @@
 import java.util.LinkedList;
 
+import road_fighter.objects.AutoJugador;
+import road_fighter.objects.AutoNpc;
+import road_fighter.objects.Obstaculo;
+
 public class Escenario {
 
 	private final int MAX_NPC = 5;

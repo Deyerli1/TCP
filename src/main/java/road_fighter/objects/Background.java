@@ -21,7 +21,7 @@ public class Background extends GameObject implements Updatable, Renderable {
 	private final int mapHeight = 800;
 
 	public Background() {
-		Image backgroundImage = new Image("file:src/main/resources/img/background.png", mapWidth, mapHeight, false, false);
+		Image backgroundImage = new Image("file:src/main/resources/img/grass.png", mapWidth, mapHeight, false, false);
 
 		//ImagePattern image_pattern = new ImagePattern(backgroundImage);
 
