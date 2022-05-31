@@ -2,7 +2,7 @@ package road_fighter.states;
 
 import road_fighter.objects.Auto;
 
-public abstract class AutoEstado {
+public abstract class AutoEstado{
 	
 	protected Auto auto;
 	
@@ -10,11 +10,13 @@ public abstract class AutoEstado {
 		this.auto = auto;
 	}
 		
-	public abstract AutoEstado desestabilizar(double deltaTime);
+	public abstract AutoEstado desestabilizar();
 	
-	public abstract AutoEstado explotar(double deltaTime);
+	public abstract AutoEstado explotar();
 	
-	public abstract AutoEstado normalizar(double deltaTime);
+	public abstract AutoEstado normalizar();
+	
+	public abstract AutoEstado inmunizar();
 	
 	public abstract void setVelActual(int sentido);
 			

@@ -2,9 +2,9 @@ package road_fighter.objects;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import road_fighter.states.AutoNormal;
 
 
 
@@ -27,6 +27,7 @@ public class AutoJugador extends Auto {
 		collider.setX(posicion[0]- colliderWidth/2);
 		collider.setY(posicion[1]- colliderHeight/2);
 		collider.setStroke(Color.BLUE);
+		estado = new AutoNormal(this);
     }
 	
     public void habilidadEspecial() {

@@ -1,10 +1,8 @@
 package road_fighter.objects;
 
-import javafx.scene.ParallelCamera;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import road_fighter.interfaces.Collidator;
@@ -14,6 +12,8 @@ import road_fighter.interfaces.Updatable;
 import road_fighter.utils.GameObject;
 import road_fighter.states.AutoEstado;
 import road_fighter.states.AutoNormal;
+import road_fighter.states.AutoExplotado;
+import road_fighter.states.AutoDesestabilizado;
 
 public abstract class Auto extends GameObject implements Updatable, Renderable, Collidator {
 
@@ -23,6 +23,9 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	protected final int ACELERACION = 1; /// placeholder
 	private int velocidadDoblado = 1;
 	protected AutoEstado estado;
+	private double tiempoPenalizacion = 0;
+	private final double tiempoInmunidadMaximo = 200;
+	private boolean deltaTimeMaloSeteado = false;
 	
 	protected final int width = 32;
 	protected final int height = 50;
@@ -30,8 +33,9 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	protected ImageView render;
 	protected Image autoImg;
 	
-
-	
+	protected final long NANOS_IN_SECOND = 1_000_000_000;
+	protected final double NANOS_IN_SECOND_D = 1_000_000_000.0;
+		
 	protected Rectangle collider;
 	protected final double colliderTolerance = 0.9;
 	protected final int colliderWidth = (int) (width * colliderTolerance);
@@ -49,7 +53,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.y = posicion[1];
 		//camera.translateXProperty().set(this.x);
 		//camera.translateXProperty().set(this.y);
-		estado = new AutoNormal(this);
+		
 	}
 		
 	public Auto(double[] posicion, double velMax) {//para los npcs
@@ -65,20 +69,41 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		estado = new AutoNormal(this);
 	}
 
-	public void desestabilizar(double deltaTime) {
-		estado = estado.desestabilizar(deltaTime);
+	public void desestabilizar() {
+		estado = estado.desestabilizar();
 	}	
 
-	public void explotar(double deltaTime) {
-		estado = estado.explotar(deltaTime);
+	public void explotar() {
+		estado = estado.explotar();
 	}
 	
-	public void normalizar(double deltaTime) {
-		estado = estado.normalizar(deltaTime);
+	public void inmunizar() {
+		estado = estado.inmunizar();
+	}
+	
+	public void inmunizar(double deltaTimeActual) {
+		if((estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class)) {
+			tiempoPenalizacion++;
+			System.out.println(tiempoPenalizacion);
+		}
+		else if (tiempoPenalizacion > 0){
+			tiempoPenalizacion--;
+			System.out.println(tiempoPenalizacion);
+		}
+		
+		if( (estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class) && tiempoPenalizacion > tiempoInmunidadMaximo ) {
+			System.out.println("deltaTimeActual "+deltaTimeActual);
+			tiempoPenalizacion = 50;
+			estado = estado.normalizar();
+		}
+		
+		if(tiempoPenalizacion == 0)
+			deltaTimeMaloSeteado = false;
 	}
 	
 	public void updateAuto(double deltaTime) {
 //		estado = estado.updateEstado(deltaTime);
+		
 		updateHorizontal(deltaTime);
 		updateVertical(deltaTime);
 	}
@@ -86,26 +111,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	public abstract void updateHorizontal(double deltaTime);
 	
 	public abstract void updateVertical(double deltaTime);
-		
-	public void chocar(Pozo pozo,double deltaTime) {
-		estado = estado.explotar(deltaTime);
-	}
-
-	public void chocar(Cordon cordon,double deltaTime) {
-		estado = estado.explotar(deltaTime);
-	}
-	
-	public void chocar(ManchaAceite mancha, double deltaTime) {
-		estado = estado.desestabilizar(deltaTime);
-	}
-
-	public void chocar(AutoJugador auto,double deltaTime) {
-		
-	}
-	public void chocar(AutoNpc bot,double deltaTime) {
-		
-	}
-	
+			
 	public abstract void habilidadEspecial();
 	
 	public void doblarDerecha() {
@@ -133,6 +139,11 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	public boolean isAcelerar() {
 		return acelerar;
 	}
+	
+	public void setImg(Image img) {
+		render.setImage(img);
+		System.out.println("seteando imagen");
+	}
 
 	public void setY(double y) {
 		this.y = y;
@@ -142,9 +153,8 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public void setX(double x) {
 		// ver que pasa al chocar con los cordones
-		//System.out.println(this.x);
+
 		this.x = x;
-		//System.out.println(this.x);
 		render.setX(this.x);
 		collider.setX(this.x- colliderWidth/2);
 	}
@@ -207,16 +217,20 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
     public int getVelocidadDoblado() {
     	return this.velocidadDoblado;
     }
-
+    
+    public void setDeltaTimeMalo (double deltaTime) {
+    	if(estado.getClass() != AutoNormal.class && !deltaTimeMaloSeteado) {
+			deltaTimeMaloSeteado = true;
+		}
+    }
+    
 	@Override
 	public void update(double deltaTime) {
-doblarDerecha();
-doblarIzquierda();
-acelerar();//setea Y
-
-
-		//render.setX(this.x);
-		//collider.setX(this.x- colliderWidth/2);
+		setDeltaTimeMalo(deltaTime);
+		inmunizar(deltaTime);
+		doblarDerecha();
+		doblarIzquierda();
+		acelerar();//setea Y
 	}
 
 	@Override
@@ -226,8 +240,12 @@ acelerar();//setea Y
 
 	@Override
 	public void collide(Collideable collideable) {
-		// TODO Auto-generated method stub
-		
+		//hitAudio.play();
+			if (!deltaTimeMaloSeteado && collideable.getClass() == Pozo.class) {
+				this.explotar();
+			} else if (!deltaTimeMaloSeteado && collideable.getClass() == ManchaAceite.class){
+				this.desestabilizar();
+			}
 	}
 
 	@Override

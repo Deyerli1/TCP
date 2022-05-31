@@ -12,23 +12,23 @@ public class AutoDesestabilizado extends AutoEstado {
 	}
 
 	@Override
-	public AutoEstado desestabilizar(double deltaTime) {
-		return this; //??
+	public AutoEstado desestabilizar() {
+		return this;
 	}
 
 	@Override
-	public AutoEstado explotar(double deltaTime) {
+	public AutoEstado explotar() {
 		return new AutoExplotado(this.auto);
 	}
 
 	@Override
-	public AutoEstado normalizar(double deltaTime) {
+	public AutoEstado normalizar() {
 		return new AutoNormal(this.auto);
 	}
-
+	
 	@Override
-	public void setVelActual() {
-		//mantiene la velocidad como esta
+	public AutoEstado inmunizar() {
+		return new AutoInmune(this.auto);
 	}
 		
 	@Override
@@ -56,13 +56,7 @@ public class AutoDesestabilizado extends AutoEstado {
 
 	@Override
 	public void acelerar(double y) {
-		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public void desacelerar(double y) {
-		// TODO Auto-generated method stub
 		
 	}
 	

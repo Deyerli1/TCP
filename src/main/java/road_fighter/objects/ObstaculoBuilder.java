@@ -10,6 +10,8 @@ public class ObstaculoBuilder extends GameObject implements Updatable {
 	private boolean running = false;
 	private long pipeTime;
 	protected double posicionJugador;
+	private int obstaculosMaximos = 5;
+	
 
 	public ObstaculoBuilder() {
 
@@ -35,10 +37,19 @@ public class ObstaculoBuilder extends GameObject implements Updatable {
 	public void stopBuilding() {
 		running = false;
 	}
-
+	
 	public void createObstaculo() {
-		Pozo pozo = new Pozo(200,300, posicionJugador);
-		GameObjectBuilder.getInstance().add(pozo);
+		Obstaculo.posicionActualJugador = posicionJugador;
+		if(Obstaculo.obstaculosActuales != obstaculosMaximos ) {
+			Obstaculo obs;
+			if( (int)Math.floor(Math.random()*(10-1+1)+1) > 7) {
+				obs = new Pozo(posicionJugador);
+			}
+			else {
+				obs = new ManchaAceite(posicionJugador);
+			}
+			GameObjectBuilder.getInstance().add(obs);
+		}
 	}
 	
 	public void setPosicionJugador(double posicionJugador) {

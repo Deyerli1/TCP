@@ -1,5 +1,7 @@
 import java.util.LinkedList;
 
+import road_fighter.objects.Obstaculo;
+
 public class Escenario {
 
 	private final int MAX_NPC = 5;
@@ -37,7 +39,7 @@ public class Escenario {
     }
     
     public void agregarObstaculo(double x, double y) {
-    	obstaculoList.add(Obstaculo.crearObstaculo(x,y));
+    	obstaculoList.add(Obstaculo.crearObstaculo(y));
     }
     
 	public Mapa getMapa() {

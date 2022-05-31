@@ -1,17 +1,17 @@
 package road_fighter.states;
 
-import javafx.scene.image.Image;
 import road_fighter.objects.Auto;
 
-public class AutoNormal extends AutoEstado {
+public class AutoInmune extends AutoEstado{
 
-	public AutoNormal(Auto auto) {
-		super(auto);
-		auto.setImg (new Image("file:src/main/resources/img/familySedan.png", auto.getWidth(), auto.getHeight(), false, false));
-	}
+	protected final int DURACION_MALA = 5; /// placeholder
 	
+	AutoInmune(Auto auto) {
+		super(auto);
+	}
+
 	@Override
-	public AutoEstado desestabilizar() {		
+	public AutoEstado desestabilizar() {
 		return new AutoDesestabilizado(this.auto);
 	}
 
@@ -22,14 +22,14 @@ public class AutoNormal extends AutoEstado {
 
 	@Override
 	public AutoEstado normalizar() {
-		return this;
+		return new AutoNormal(this.auto);
 	}
 	
 	@Override
 	public AutoEstado inmunizar() {
-		return new AutoInmune(this.auto);
+		return this;
 	}
-	
+		
 	@Override
 	public void setVelActual(int sentido) {
 		double nuevaVel = auto.getVelActual() + auto.getAceleracion()*sentido;
@@ -42,7 +42,7 @@ public class AutoNormal extends AutoEstado {
 		
 	@Override
 	public String getEstado() {
-		return "normal";
+		return "inmune";
 	}
 
 	@Override
@@ -67,5 +67,5 @@ public class AutoNormal extends AutoEstado {
 			auto.setY(y-this.auto.getVelActual()/20);
 	}
 
-	
 }
+

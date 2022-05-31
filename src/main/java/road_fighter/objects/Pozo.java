@@ -1,5 +1,6 @@
 package road_fighter.objects;
 
+import road_fighter.utils.GameObjectBuilder;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,22 +22,33 @@ public class Pozo extends Obstaculo {
 	protected final int colliderWidth = (int) (width * colliderTolerance);
 	protected final int colliderHeight = (int) (height * colliderTolerance);
 	
-    public Pozo(double x, double y, double posicionJugador) {
-    	super(x,y);
-    	pozoImg = new Image("file:src/main/resources/img/flappy-bird.png", width, height, false, false);
+    public Pozo(double posicionJugador) {
+    	super((int)posicionJugador-Config.baseHeight/2);
+    	//this.x = (int)Math.floor(Math.random()*(300-0+1));
+    	this.x = 200;
+    	pozoImg = new Image("file:src/main/resources/img/pozo.png", width, height, false, false);
 		render = new ImageView(pozoImg);
-		render.relocate(Math.floor(Math.random()*(300-0+1)), posicionJugador-Config.baseHeight/2);
-				
-		collider = new Rectangle(colliderWidth / 2, colliderHeight / 2, colliderWidth, colliderHeight);
+		render.relocate(this.x - colliderWidth / 2, this.y - colliderHeight / 2);
+		collider = new Rectangle(this.x - colliderWidth / 2, this.y - colliderHeight / 2, colliderWidth, colliderHeight);
 		collider.setFill(null);
 		collider.setStroke(Color.FUCHSIA);
-		System.out.println("spawn");
     }
 
 	@Override
 	public void update(double deltaTime) {
-		// TODO Auto-generated method stub
-		
+		if (isOffScreen()) {
+			System.out.println("obstactulos actuales: "+Obstaculo.obstaculosActuales);
+			Obstaculo.obstaculosActuales--;
+			destroy();
+		}
+	}
+	
+	public void setY(double y) {
+		this.y = y;
+	}
+	
+	public boolean isOffScreen() {		
+		return y - offScreenTolerance > posicionActualJugador;
 	}
 
 	@Override
@@ -51,7 +63,7 @@ public class Pozo extends Obstaculo {
 
 	@Override
 	public void destroy() {
-		// TODO Auto-generated method stub
+		GameObjectBuilder.getInstance().remove(this);
 		
 	}
 }
