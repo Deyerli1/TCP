@@ -20,7 +20,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
 	protected double x, y;
 	protected double decremento, velMax, velActual, velDoblar;
-	protected final int ACELERACION = 1; /// placeholder
+	protected final int ACELERACION = 15; /// placeholder
 	private int velocidadDoblado = 1;
 	protected AutoEstado estado;
 	
@@ -43,7 +43,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.doblarIzquierda=false;
 		this.velActual = 0;
 		this.decremento = 20;
-		this.velMax = 200;
+		this.velMax = 500;
 		this.velDoblar = 1;
 		this.x = posicion[0];
 		this.y = posicion[1];

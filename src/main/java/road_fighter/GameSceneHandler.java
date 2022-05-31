@@ -17,6 +17,7 @@ import road_fighter.interfaces.Collideable;
 import road_fighter.objects.Auto;
 import road_fighter.objects.AutoJugador;
 import road_fighter.objects.Background;
+import road_fighter.objects.Camino;
 import road_fighter.objects.CaminoBuilder;
 import road_fighter.objects.ObstaculoBuilder;
 import road_fighter.objects.Radio;
@@ -118,12 +119,13 @@ public class GameSceneHandler extends SceneHandler {
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
 		caminoBuilder = new CaminoBuilder();
+		Camino primerCamino = new Camino(20,-100);
 		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
 
 		// Add to builder
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder,caminoBuilder);
+		gameOB.add(background, player, obstaculoBuilder,caminoBuilder,primerCamino);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -160,6 +162,7 @@ public class GameSceneHandler extends SceneHandler {
 		camera.translateXProperty().set(player.getX() - Config.baseWidth/2);
 		checkColliders();
 		obstaculoBuilder.setPosicionJugador(player.getY());
+		caminoBuilder.setPosicionJugador(player.getY());
 	}
 
 	private void checkColliders() {

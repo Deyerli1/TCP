@@ -16,7 +16,10 @@ public class Config {
 	
 	public final static double caminosPerSecond = 1.3;
 	public final static int caminoHeight = 800;
-	public final static int caminoWidth = 800;
+	public final static int caminoWidth = 360;
+	
+	public final static int cordonHeight = 800;
+	public final static int cordonWidth = 25;
 	
 	public static int maxScore = 0;
 

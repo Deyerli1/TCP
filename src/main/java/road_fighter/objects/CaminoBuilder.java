@@ -7,9 +7,10 @@ import road_fighter.utils.GameObjectBuilder;
 
 public class CaminoBuilder extends GameObject implements Updatable{
 	private final long NANOS_IN_SECOND = 1_000_000_000;
+	private final long maxFrontRenderDistance = 2000;
 	private boolean running = false;
 	private long caminoTime;
-	protected double movimiento=0;
+	protected double movimiento=1;
 	protected double posicionJugador;
 	
 	public CaminoBuilder() {
@@ -38,9 +39,15 @@ public class CaminoBuilder extends GameObject implements Updatable{
 	}
 
 	public void createCamino() {
-		Camino camino = new Camino(200,300-movimiento, posicionJugador);
+		if(Math.abs(-movimiento*Config.baseHeight - posicionJugador) < maxFrontRenderDistance) {
+		Camino camino = new Camino(movimiento);
+		movimiento++;
+		System.out.println("Movimient" + movimiento);
 		GameObjectBuilder.getInstance().add(camino);
-		movimiento+=300; /// Esto deberia ser la altura de un "modulo" de camino
+	}else {
+		System.out.println("No render, too far " + movimiento*Config.baseHeight + " " + posicionJugador);
+		System.out.println(Math.abs(-movimiento*Config.baseHeight - posicionJugador));
+	}
 	}
 	
 	public void setPosicionJugador(double posicionJugador) {
