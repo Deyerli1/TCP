@@ -1,8 +1,8 @@
-package road_fighter.objects;
+/*package road_fighter.objects;
 
 public class Cordon extends Obstaculo {
 	
     public Cordon() {
-    	super(0,0);
+    	//super(0,0);
     }
-}
+}*/

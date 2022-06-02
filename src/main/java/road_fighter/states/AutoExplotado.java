@@ -9,7 +9,6 @@ public class AutoExplotado extends AutoEstado{
 	
 	AutoExplotado(Auto auto) {
 		super(auto);
-		System.out.println("explotando");
 		auto.setImg (new Image("file:src/main/resources/img/explotado.png", auto.getWidth(), auto.getHeight(), false, false));
 	}
 
@@ -39,25 +38,21 @@ public class AutoExplotado extends AutoEstado{
 
 	@Override
 	public void setVelActual(int sentido) {
-		// TODO Auto-generated method stub
-		
+		//en el constructor se setea en 0
 	}
 
 	@Override
 	public void doblarDerecha(double x) {
-		// TODO Auto-generated method stub
-		
+		//no se permite doblar cuando esta explotado
 	}
 
 	@Override
 	public void doblarIzquierda(double x) {
-		// TODO Auto-generated method stub
-		
+		//no se permite doblar cuando esta explotado
 	}
 
 	@Override
 	public void acelerar(double y) {
-		
-		
+		//no se permite acelerar cuando esta explotado
 	}
 }

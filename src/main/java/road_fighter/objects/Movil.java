@@ -1,4 +1,4 @@
-package road_fighter.objects;
+/*package road_fighter.objects;
 public class Movil extends AutoNpc {
 
     public Movil(String nombre, double[] posicion) {
@@ -40,4 +40,4 @@ public class Movil extends AutoNpc {
 		
 	}
 
-}
+}*/

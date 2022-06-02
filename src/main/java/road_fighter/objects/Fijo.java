@@ -1,8 +1,10 @@
 package road_fighter.objects;
+
 public class Fijo extends AutoNpc {
 
-    public Fijo(String nombre, double[] posicion) {
-    	super(nombre, posicion);
+    public Fijo(double posicionJugador) {
+    	super((int)posicionJugador, "file:src/main/resources/img/NpcFijo.png");
+    	System.out.println("-------------------------------------------------");
     }
 
 	@Override

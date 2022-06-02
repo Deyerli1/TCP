@@ -1,4 +1,4 @@
-import java.util.LinkedList;
+/*import java.util.LinkedList;
 
 import road_fighter.objects.Obstaculo;
 
@@ -57,4 +57,4 @@ public class Escenario {
 	public int getCantidadJugadores() {
     	return cantidadJugadores;
     }
-}
+}*/

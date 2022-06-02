@@ -1,4 +1,4 @@
-package road_fighter.objects;
+/*package road_fighter.objects;
 
 import java.io.File;
 
@@ -126,4 +126,4 @@ public class Radio extends GameObject implements Updatable, Renderable {
 		mediaPlayer.stop();
 	}
 
-}
+}*/

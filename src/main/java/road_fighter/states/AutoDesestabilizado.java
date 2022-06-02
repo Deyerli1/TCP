@@ -1,14 +1,16 @@
 package road_fighter.states;
 
+import javafx.scene.image.Image;
 import road_fighter.objects.Auto;
 
 public class AutoDesestabilizado extends AutoEstado {
 
-	protected final int DURACION_MALA = 5; /// placeholder
-	protected double ultimoDeltaTimeMalo;
+	private int direccionDesvio;
 	
 	AutoDesestabilizado(Auto auto) {
 		super(auto);
+		direccionDesvio = (int)Math.floor(Math.random()*(1-(-1)+1)+(-1));
+		auto.setImg (new Image("file:src/main/resources/img/desestabilizado.png", auto.getWidth(), auto.getHeight(), false, false));
 	}
 
 	@Override
@@ -44,20 +46,26 @@ public class AutoDesestabilizado extends AutoEstado {
 
 	@Override
 	public void doblarDerecha(double x) {
-		// TODO Auto-generated method stub
-		
+		if(this.auto.isDoblarDerecha()) {
+			auto.setX(x-this.auto.getVelocidadDoblado());
+		}
 	}
-
+	
 	@Override
 	public void doblarIzquierda(double x) {
-		// TODO Auto-generated method stub
-		
+		if(this.auto.isDoblarIzquierda()) {
+			auto.setX(x+this.auto.getVelocidadDoblado());
+		}
+
 	}
 
 	@Override
 	public void acelerar(double y) {
-		
-		
+		setVelActual(this.auto.isAcelerar() ? 1 : -1);
+		if(this.auto.getVelActual() > 0) {
+			auto.setY(y-this.auto.getVelActual()/16);
+			auto.setX(auto.getX()+direccionDesvio*2);
+		}
 	}
 	
 	

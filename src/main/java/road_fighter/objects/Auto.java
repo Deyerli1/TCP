@@ -19,12 +19,12 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 
 	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
 	protected double x, y;
-	protected double decremento, velMax, velActual, velDoblar;
+	protected double velMax, velActual, velDoblar;
 	protected final int ACELERACION = 1; /// placeholder
-	private int velocidadDoblado = 1;
+	private int velocidadDoblado = 10;
 	protected AutoEstado estado;
 	private double tiempoPenalizacion = 0;
-	private final double tiempoInmunidadMaximo = 200;
+	private final double tiempoPenalizacionMaximo = 120;
 	private boolean deltaTimeMaloSeteado = false;
 	
 	protected final int width = 32;
@@ -46,7 +46,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
 		this.velActual = 0;
-		this.decremento = 20;
 		this.velMax = 200;
 		this.velDoblar = 1;
 		this.x = posicion[0];
@@ -56,16 +55,14 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		
 	}
 		
-	public Auto(double[] posicion, double velMax) {//para los npcs
+	public Auto(int posicion) {//para los npcs
 		this.acelerar=true;
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
-		this.velActual = 0;
-		this.decremento = 20;
-		this.velMax = velMax;
+		this.velActual = 150;
+		this.velMax = 150;
 		this.velDoblar = 1;
-		this.x = posicion[0];//posiciones deberian ser randoms
-		this.y = posicion[1];
+		this.y = posicion;
 		estado = new AutoNormal(this);
 	}
 
@@ -84,26 +81,22 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	public void inmunizar(double deltaTimeActual) {
 		if((estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class)) {
 			tiempoPenalizacion++;
-			System.out.println(tiempoPenalizacion);
 		}
 		else if (tiempoPenalizacion > 0){
 			tiempoPenalizacion--;
-			System.out.println(tiempoPenalizacion);
 		}
 		
-		if( (estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class) && tiempoPenalizacion > tiempoInmunidadMaximo ) {
-			System.out.println("deltaTimeActual "+deltaTimeActual);
-			tiempoPenalizacion = 50;
+		if( (estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class) && tiempoPenalizacion > tiempoPenalizacionMaximo ) {
+			tiempoPenalizacion = 50;//para que la inmunidad dure un cierto tiempo
 			estado = estado.normalizar();
 		}
 		
 		if(tiempoPenalizacion == 0)
 			deltaTimeMaloSeteado = false;
-	}
+	}	
 	
 	public void updateAuto(double deltaTime) {
 //		estado = estado.updateEstado(deltaTime);
-		
 		updateHorizontal(deltaTime);
 		updateVertical(deltaTime);
 	}
@@ -142,7 +135,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public void setImg(Image img) {
 		render.setImage(img);
-		System.out.println("seteando imagen");
 	}
 
 	public void setY(double y) {
@@ -153,7 +145,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public void setX(double x) {
 		// ver que pasa al chocar con los cordones
-
 		this.x = x;
 		render.setX(this.x);
 		collider.setX(this.x- colliderWidth/2);
@@ -256,7 +247,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	@Override
 	public void destroy() {
 		// TODO Auto-generated method stub
-		
 	}
 	
 	

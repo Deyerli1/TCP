@@ -15,8 +15,9 @@ import road_fighter.interfaces.Collideable;
 import road_fighter.objects.Auto;
 import road_fighter.objects.AutoJugador;
 import road_fighter.objects.Background;
+//import road_fighter.objects.NPCBuilder;
 import road_fighter.objects.ObstaculoBuilder;
-import road_fighter.objects.Radio;
+//import road_fighter.objects.Radio;
 import road_fighter.utils.GameObjectBuilder;
 
 
@@ -25,7 +26,8 @@ public class GameSceneHandler extends SceneHandler {
 	private Auto player;
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
-	private Radio radio;
+	//private NPCBuilder npcBuilder;
+	//private Radio radio;
 	public ParallelCamera camera = new ParallelCamera();
 
 	// TODO pause
@@ -103,12 +105,13 @@ public class GameSceneHandler extends SceneHandler {
 		
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
+		//npcBuilder = new NPCBuilder();
 		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
 
 		// Add to builder
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder);
+		gameOB.add(background, player, obstaculoBuilder/*, npcBuilder*/);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -131,6 +134,7 @@ public class GameSceneHandler extends SceneHandler {
 		if (!started) {
 			started = true;
 			obstaculoBuilder.startBuilding(2 * NANOS_IN_SECOND);
+			//npcBuilder.startBuilding(2 * NANOS_IN_SECOND);
 		}
 	}
 	
@@ -142,7 +146,7 @@ public class GameSceneHandler extends SceneHandler {
 		super.update(delta);
 		camera.translateYProperty().set(player.getY() - Config.baseHeight/2 - 200);
 		checkColliders();
-		obstaculoBuilder.setPosicionJugador(player.getY());
+		Config.posicionJugador = player.getY();
 	}
 	
 
