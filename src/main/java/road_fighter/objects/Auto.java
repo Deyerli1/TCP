@@ -1,8 +1,10 @@
 package road_fighter.objects;
 
+import road_fighter.utils.AudioResources;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import road_fighter.interfaces.Collidator;
@@ -30,8 +32,10 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	private int choquesActuales = 0;
 	protected String imgPath;
 	
-	protected final int width = 32;
-	protected final int height = 50;
+	private AudioClip desestabilizacionAudio;
+	private AudioClip explosionAudio;
+	private AudioClip motorAudio;
+	private AudioClip whatUpWithThat;
 	
 	protected ImageView render;
 	protected Image autoImg;
@@ -41,10 +45,10 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		
 	protected Rectangle collider;
 	protected final double colliderTolerance = 0.9;
-	protected final int colliderWidth = (int) (width * colliderTolerance);
-	protected final int colliderHeight = (int) (height * colliderTolerance);
+	protected final int colliderWidth;
+	protected final int colliderHeight;
 
-	public Auto(double[] posicion) {
+	public Auto(double[] posicion, int width, int height) {
 		this.acelerar=false;
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
@@ -52,9 +56,13 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.velMax = 200;
 		this.x = posicion[0];
 		this.y = posicion[1];
+		colliderWidth = (int) (width * colliderTolerance);
+		colliderHeight = (int) (height * colliderTolerance);
+		initAudios();
+		motorAudio.setVolume(1);
 	}
 		
-	public Auto(int posicion) {//para los npcs
+	public Auto(int posicion, int width, int height) {//para los npcs
 		this.acelerar=true;
 		this.velActual = 0;
 		this.doblarDerecha=false;
@@ -63,6 +71,9 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.velocidadDoblado = 1;
 		this.y = posicion;
 		estado = new AutoNormal(this, 1);
+		colliderWidth = (int) (width * colliderTolerance);
+		colliderHeight = (int) (height * colliderTolerance);
+		initAudios();
 	}
 
 	public void desestabilizar() {
@@ -95,14 +106,19 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 			deltaTimeMaloSeteado = false;
 	}	
 	
-	public void updateAuto(double deltaTime) {
-		updateHorizontal(deltaTime);
-		updateVertical(deltaTime);
+	private void initAudios() {
+		whatUpWithThat = AudioResources.getWhatUpWithThat();
+		explosionAudio = AudioResources.getExplosionAudio();
+		motorAudio = AudioResources.getMotorAudio();
+		
+		setAudioVol(1);
 	}
 	
-	public abstract void updateHorizontal(double deltaTime);
-	
-	public abstract void updateVertical(double deltaTime);
+	private void setAudioVol(int vol) {
+		whatUpWithThat.setVolume(vol);
+		explosionAudio.setVolume(vol);
+		motorAudio.setVolume(vol);
+	}
 			
 	public abstract void habilidadEspecial();
 	
@@ -156,19 +172,18 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public void setAcelerar(boolean valor) {
 		this.acelerar = valor;
+		if(isAcelerar() && !motorAudio.isPlaying()) {
+			motorAudio.play();
+		}
 	}
-	
-	public int getWidth() {
-		return width;
-	}
-	
+
 	public String getImgPath() {
 		return imgPath;
 	}
-
-	public int getHeight() {
-		return height;
-	}
+	
+	public abstract int getWidth();
+	
+	public abstract int getHeight();
 
 	public void setDoblarIzquierda(boolean valor) {
 		if(getVelActual() > 0) {
@@ -235,11 +250,15 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	@Override
 	public void collide(Collideable collideable) {
 		//hitAudio.play();
+		
 			if ( (!deltaTimeMaloSeteado || estado.getClass() == AutoDesestabilizado.class ) && (collideable.getClass() == Pozo.class || choquesActuales == choquesMaximos || collideable.getClass() == Cordon.class) ) {
 				choquesActuales = 0;
+				explosionAudio.play();
 				this.explotar();
 			} else if (!deltaTimeMaloSeteado && (collideable.getClass() == ManchaAceite.class || collideable.getClass() == AutoJugador.class || collideable.getClass() == Movil.class || collideable.getClass() == Fijo.class) ){
 				choquesActuales++;
+				if( (AutoJugador.class).toString() == "class road_fighter.objects.AutoJugador")
+					whatUpWithThat.play();
 				this.desestabilizar();
 			}
 	}

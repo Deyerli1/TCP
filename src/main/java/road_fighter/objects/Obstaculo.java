@@ -20,7 +20,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 	protected final int height = 36;
 	
 	protected ImageView render;
-	Image pozoImg;
+	Image obsImg;
 	
 	protected Rectangle collider;
 	protected final double colliderTolerance = 0.75;
@@ -30,12 +30,24 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 	public Obstaculo(double y, String pathImg) {
     	this.y = y-Config.baseHeight/2;
     	this.x = (int)Math.floor(Math.random()*( (Config.baseWidth-200) - (Config.baseWidth+200)+(Config.baseWidth+200)));
-    	pozoImg = new Image(pathImg, width, height, false, false);
-		render = new ImageView(pozoImg);
+    	obsImg = new Image(pathImg, width, height, false, false);
+		render = new ImageView(obsImg);
 		render.relocate(this.x - colliderWidth / 2, this.y - colliderHeight / 2);
 		collider = new Rectangle(this.x - colliderWidth / 2, this.y - colliderHeight / 2, colliderWidth, colliderHeight);
 		collider.setFill(null);
 		collider.setStroke(Color.FUCHSIA);
+    }
+		
+	public Obstaculo(int y, int x, String pathImg, int height, int anguloRotacionCollider) {//meta
+		obsImg = new Image(pathImg, 800, 20, false, false);
+        render = new ImageView(obsImg);
+        render.relocate(x,y);
+
+        collider = new Rectangle(x,y,20, height);
+        collider.setFill(null);
+        collider.setStroke(Color.FUCHSIA);
+        collider.setStrokeWidth(2);
+        collider.setRotate(anguloRotacionCollider);
     }
 	
 	@Override

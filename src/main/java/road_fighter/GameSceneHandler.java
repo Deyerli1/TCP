@@ -16,6 +16,7 @@ import road_fighter.objects.Auto;
 import road_fighter.objects.AutoJugador;
 import road_fighter.objects.Background;
 import road_fighter.objects.Cordon;
+import road_fighter.objects.Meta;
 import road_fighter.objects.NPCBuilder;
 import road_fighter.objects.ObstaculoBuilder;
 //import road_fighter.objects.Radio;
@@ -27,8 +28,9 @@ public class GameSceneHandler extends SceneHandler {
 	private Auto player;
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
-	Cordon cordonIzquierdo;
-	Cordon cordonDerecho;
+	private Cordon cordonIzquierdo;
+	private Cordon cordonDerecho;
+	private Meta meta;
 	private NPCBuilder npcBuilder;
 	//private Radio radio;
 	public ParallelCamera camera = new ParallelCamera();
@@ -111,12 +113,12 @@ public class GameSceneHandler extends SceneHandler {
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
+		meta = new Meta(20000);
 		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
 
-		// Add to builder
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho);
+		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();

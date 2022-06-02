@@ -2,10 +2,12 @@ package road_fighter.objects;
 
 public class Movil extends AutoNpc {
 	
-	private static final String fotoMovil = "file:src/main/resources/img/NpcMovil.png";
-
+	private static final String fotoMovil = "file:src/main/resources/img/MovilCamion.png";
+	private static final int width = 40;
+	private static final int height = 100;
+	
     public Movil(double posicionJugador) {
-    	super((int)posicionJugador, fotoMovil);
+    	super((int)posicionJugador, fotoMovil, width, height);
     	this.doblarDerecha=true;
     }
     
@@ -29,21 +31,19 @@ public class Movil extends AutoNpc {
 }
 
 	@Override
-	public void updateHorizontal(double deltaTime) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateVertical(double deltaTime) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void habilidadEspecial() {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	@Override
+	public int getWidth() {
+		return width;
+	}
+
+	@Override
+	public int getHeight() {
+		return height;
 	}
 
 }

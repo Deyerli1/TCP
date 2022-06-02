@@ -12,16 +12,20 @@ public final class AudioResources {
 		return create("sfx/die.wav");
 	}
 
-	public static AudioClip getHitAudio() {
-		return create("sfx/hit.wav");
+	public static AudioClip getExplosionAudio() {
+		return create("sfx/explosionAudio.wav");
 	}
 
-	public static AudioClip getWingAudio() {
-		return create("sfx/wing.wav");
+	public static AudioClip getMotorAudio() {
+		return create("sfx/motor.wav");
 	}
 
 	public static AudioClip getPointAudio() {
 		return create("sfx/point.wav");
+	}
+	
+	public static AudioClip getWhatUpWithThat() {
+		return create("sfx/whatUpWithThat.wav");
 	}
 	
 }

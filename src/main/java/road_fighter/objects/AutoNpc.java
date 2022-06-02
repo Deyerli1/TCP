@@ -9,8 +9,8 @@ import road_fighter.utils.GameObjectBuilder;
 
 public abstract class AutoNpc extends Auto {
 	
-    public AutoNpc(int posicion, String imgPath) {
-    	super(posicion-Config.baseHeight/2);
+    public AutoNpc(int posicion, String imgPath, int width, int height) {
+    	super(posicion-Config.baseHeight/2, width, height);
     	this.imgPath = imgPath;
     	this.x = (int)Math.floor(Math.random()*( (Config.baseWidth-200) - (Config.baseWidth+200)+(Config.baseWidth+200)));
     	autoImg = new Image(imgPath, width, height, false, false);
@@ -30,7 +30,7 @@ public abstract class AutoNpc extends Auto {
 			GameObjectBuilder.getInstance().remove(this);
 		}
 	}
-    
+        
     public boolean isOffScreen() {		
 		return y - Config.offScreenTolerance > Config.posicionActualJugador;
 	}
