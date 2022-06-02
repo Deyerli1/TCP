@@ -15,7 +15,8 @@ import road_fighter.interfaces.Collideable;
 import road_fighter.objects.Auto;
 import road_fighter.objects.AutoJugador;
 import road_fighter.objects.Background;
-//import road_fighter.objects.NPCBuilder;
+import road_fighter.objects.Cordon;
+import road_fighter.objects.NPCBuilder;
 import road_fighter.objects.ObstaculoBuilder;
 //import road_fighter.objects.Radio;
 import road_fighter.utils.GameObjectBuilder;
@@ -26,7 +27,9 @@ public class GameSceneHandler extends SceneHandler {
 	private Auto player;
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
-	//private NPCBuilder npcBuilder;
+	Cordon cordonIzquierdo;
+	Cordon cordonDerecho;
+	private NPCBuilder npcBuilder;
 	//private Radio radio;
 	public ParallelCamera camera = new ParallelCamera();
 
@@ -98,20 +101,22 @@ public class GameSceneHandler extends SceneHandler {
 	public void load(boolean fullStart) {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
-		
+				
 		player = new AutoJugador("pepito", new double[] {200,600});
+		cordonIzquierdo = new Cordon(95);
+		cordonDerecho = new Cordon(694);
 		scene.setCamera(camera);
 		camera.translateYProperty().set(-100);//vista vertical
 		
 		background = new Background();
 		obstaculoBuilder = new ObstaculoBuilder();
-		//npcBuilder = new NPCBuilder();
+		npcBuilder = new NPCBuilder();
 		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
 
 		// Add to builder
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder/*, npcBuilder*/);
+		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -134,7 +139,7 @@ public class GameSceneHandler extends SceneHandler {
 		if (!started) {
 			started = true;
 			obstaculoBuilder.startBuilding(2 * NANOS_IN_SECOND);
-			//npcBuilder.startBuilding(2 * NANOS_IN_SECOND);
+			npcBuilder.startBuilding(2 * NANOS_IN_SECOND);
 		}
 	}
 	

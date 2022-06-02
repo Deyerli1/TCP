@@ -4,10 +4,14 @@ import javafx.scene.image.Image;
 import road_fighter.objects.Auto;
 
 public class AutoNormal extends AutoEstado {
-
+	
 	public AutoNormal(Auto auto) {
 		super(auto);
-		auto.setImg (new Image("file:src/main/resources/img/familySedan.png", auto.getWidth(), auto.getHeight(), false, false));
+		auto.setImg (new Image(auto.getImgPath(), auto.getWidth(), auto.getHeight(), false, false));
+	}
+	
+	public AutoNormal(Auto auto, int a) {//para los npc
+		super(auto);
 	}
 	
 	@Override
@@ -64,7 +68,7 @@ public class AutoNormal extends AutoEstado {
 	public void acelerar(double y) {
 		setVelActual(this.auto.isAcelerar() ? 1 : -1);
 		if(this.auto.getVelActual() > 0)
-			auto.setY(y-this.auto.getVelActual()/20);
+			auto.setY(y-this.auto.getVelActual());
 	}
 
 	

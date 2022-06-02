@@ -15,8 +15,6 @@ import road_fighter.utils.GameObjectBuilder;
 
 public abstract class Obstaculo extends GameObject implements Updatable, Renderable, Collideable {
 	protected double x,y;
-	protected String sprite;
-	protected final int offScreenTolerance = 700;
 	
 	protected final int width = 51;
 	protected final int height = 36;
@@ -43,9 +41,6 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 	@Override
 	public void update(double deltaTime) {
 		if (isOffScreen()) {
-			//System.out.println("obstactulos actuales: "+Obstaculo.obstaculosActuales);
-			//ObstaculoBuilder.obstaculosActuales--;
-			System.out.println("remove");
 			GameObjectBuilder.getInstance().remove(this);
 		}
 	}
@@ -57,7 +52,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 	}
 	
 	public boolean isOffScreen() {		
-		return y - offScreenTolerance > Config.posicionActualJugador;
+		return y - Config.offScreenTolerance > Config.posicionActualJugador;
 	}
 
 	@Override

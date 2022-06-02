@@ -1,4 +1,4 @@
-/*package road_fighter.objects;
+package road_fighter.objects;
 
 import road_fighter.Config;
 import road_fighter.interfaces.Buildable;
@@ -37,12 +37,11 @@ public class NPCBuilder extends GameObject implements Buildable {
 	}
 
 	public void create() {
-		AutoNpc obs;
-		obs = new Fijo(Config.posicionJugador - distanciaAJugador);
-
-		/*if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 7) {
+		Auto obs;
+		if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 3) {
+			obs = new Fijo(Config.posicionJugador - distanciaAJugador);
 		} else {
-			obs = new ManchaAceite(Config.posicionJugador - distanciaAJugador);
+			obs = new Movil(Config.posicionJugador - distanciaAJugador);
 		}
 		GameObjectBuilder.getInstance().add(obs);
 	}
@@ -51,4 +50,4 @@ public class NPCBuilder extends GameObject implements Buildable {
 	public void destroy() {
 	}
 
-}*/
+}

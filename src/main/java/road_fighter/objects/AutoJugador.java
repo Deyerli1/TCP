@@ -12,11 +12,13 @@ public class AutoJugador extends Auto {
 
 	private int topeHabilidadEspecial = 5;
 	protected String nombreJugador;
+	private static final String fotoJugador = "file:src/main/resources/img/familySedan.png";
 	
 	public AutoJugador(String nombreJugador, double[] posicion) {
 		super(posicion);
-		autoImg = new Image("file:src/main/resources/img/familySedan.png", width, height, false, false);
-    	this.nombreJugador = nombreJugador;
+		autoImg = new Image(fotoJugador, width, height, false, false);
+    	this.imgPath = fotoJugador;
+		this.nombreJugador = nombreJugador;
     	render = new ImageView(autoImg);
     	render.setX(posicion[0]);
     	render.setY(posicion[1]);

@@ -15,17 +15,20 @@ import road_fighter.states.AutoNormal;
 import road_fighter.states.AutoExplotado;
 import road_fighter.states.AutoDesestabilizado;
 
-public abstract class Auto extends GameObject implements Updatable, Renderable, Collidator {
+public abstract class Auto extends GameObject implements Updatable, Renderable, Collidator, Collideable {
 
 	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
 	protected double x, y;
 	protected double velMax, velActual, velDoblar;
 	protected final int ACELERACION = 1; /// placeholder
-	private int velocidadDoblado = 10;
+	protected int velocidadDoblado = 10;
 	protected AutoEstado estado;
 	private double tiempoPenalizacion = 0;
 	private final double tiempoPenalizacionMaximo = 120;
 	private boolean deltaTimeMaloSeteado = false;
+	private final int choquesMaximos = 5;
+	private int choquesActuales = 0;
+	protected String imgPath;
 	
 	protected final int width = 32;
 	protected final int height = 50;
@@ -47,23 +50,19 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.doblarIzquierda=false;
 		this.velActual = 0;
 		this.velMax = 200;
-		this.velDoblar = 1;
 		this.x = posicion[0];
 		this.y = posicion[1];
-		//camera.translateXProperty().set(this.x);
-		//camera.translateXProperty().set(this.y);
-		
 	}
 		
 	public Auto(int posicion) {//para los npcs
 		this.acelerar=true;
+		this.velActual = 0;
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
-		this.velActual = 150;
 		this.velMax = 150;
-		this.velDoblar = 1;
+		this.velocidadDoblado = 1;
 		this.y = posicion;
-		estado = new AutoNormal(this);
+		estado = new AutoNormal(this, 1);
 	}
 
 	public void desestabilizar() {
@@ -96,7 +95,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	}	
 	
 	public void updateAuto(double deltaTime) {
-//		estado = estado.updateEstado(deltaTime);
 		updateHorizontal(deltaTime);
 		updateVertical(deltaTime);
 	}
@@ -161,6 +159,10 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public int getWidth() {
 		return width;
+	}
+	
+	public String getImgPath() {
+		return imgPath;
 	}
 
 	public int getHeight() {
@@ -232,16 +234,18 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	@Override
 	public void collide(Collideable collideable) {
 		//hitAudio.play();
-			if (!deltaTimeMaloSeteado && collideable.getClass() == Pozo.class) {
+			if (!deltaTimeMaloSeteado && (collideable.getClass() == Pozo.class || choquesActuales == choquesMaximos || collideable.getClass() == Cordon.class) ) {
+				choquesActuales = 0;
 				this.explotar();
-			} else if (!deltaTimeMaloSeteado && collideable.getClass() == ManchaAceite.class){
+			} else if (!deltaTimeMaloSeteado && (collideable.getClass() == ManchaAceite.class || collideable.getClass() == AutoJugador.class || collideable.getClass() == Movil.class || collideable.getClass() == Fijo.class) ){
+				choquesActuales++;
 				this.desestabilizar();
 			}
 	}
 
 	@Override
 	public Shape getCollider() {
-		return collider;
+		return collider;	
 	}
 
 	@Override
