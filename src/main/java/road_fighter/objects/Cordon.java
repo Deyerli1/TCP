@@ -26,7 +26,6 @@ public class Cordon extends Obstaculo {
     @Override
     public void update(double deltaTime) {
         // TODO Auto-generated method stub
-        
     }
 
     @Override

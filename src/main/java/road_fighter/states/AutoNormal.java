@@ -68,7 +68,7 @@ public class AutoNormal extends AutoEstado {
 	public void acelerar(double y) {
 		setVelActual(this.auto.isAcelerar() ? 1 : -1);
 		if(this.auto.getVelActual() > 0)
-			auto.setY(y-this.auto.getVelActual());
+			auto.setY(y-this.auto.getVelActual()/10);
 	}
 
 	

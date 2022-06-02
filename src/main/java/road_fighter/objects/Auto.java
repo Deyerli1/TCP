@@ -70,6 +70,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	}	
 
 	public void explotar() {
+		this.velActual = 0;
 		estado = estado.explotar();
 	}
 	
@@ -234,7 +235,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	@Override
 	public void collide(Collideable collideable) {
 		//hitAudio.play();
-			if (!deltaTimeMaloSeteado && (collideable.getClass() == Pozo.class || choquesActuales == choquesMaximos || collideable.getClass() == Cordon.class) ) {
+			if ( (!deltaTimeMaloSeteado || estado.getClass() == AutoDesestabilizado.class ) && (collideable.getClass() == Pozo.class || choquesActuales == choquesMaximos || collideable.getClass() == Cordon.class) ) {
 				choquesActuales = 0;
 				this.explotar();
 			} else if (!deltaTimeMaloSeteado && (collideable.getClass() == ManchaAceite.class || collideable.getClass() == AutoJugador.class || collideable.getClass() == Movil.class || collideable.getClass() == Fijo.class) ){
