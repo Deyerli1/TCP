@@ -29,7 +29,6 @@ public class IndividualSpriteAnimation extends Transition {
 	}
 
 	protected void interpolate(double k) {
-		// k -> [0, 1]
 		final int index = frameNumbers[Math.min((int) Math.floor(k * frameNumbers.length), frameNumbers.length - 1)];
 		if (index != lastIndex) {
 			imageView.setImage(images[index]);

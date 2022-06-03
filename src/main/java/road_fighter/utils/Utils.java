@@ -7,7 +7,6 @@ import javafx.scene.image.WritableImage;
 import javafx.scene.paint.Color;
 
 public class Utils {
-	// Check if both arrays (old and new) are same size
 	public static Image reColor(Image inputImage, Color[] oldColors, Color[] newColors) {
 		int width = (int) inputImage.getWidth();
 		int height = (int) inputImage.getHeight();
@@ -27,7 +26,6 @@ public class Utils {
 				writer.setColor(x, y, current);
 			}
 		}
-
 		return outputImage;
 	}
 }

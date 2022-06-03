@@ -5,9 +5,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import road_fighter.Config;
+import road_fighter.interfaces.Despawneable;
 import road_fighter.utils.GameObjectBuilder;
 
-public abstract class AutoNpc extends Auto {
+public abstract class AutoNpc extends Auto implements Despawneable {
 	
     public AutoNpc(int posicion, String imgPath, int width, int height) {
     	super(posicion-Config.baseHeight/2, width, height);
@@ -30,28 +31,10 @@ public abstract class AutoNpc extends Auto {
 			GameObjectBuilder.getInstance().remove(this);
 		}
 	}
-        
+       
+    @Override
     public boolean isOffScreen() {		
 		return y - Config.offScreenTolerance > Config.posicionActualJugador;
 	}
 	
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

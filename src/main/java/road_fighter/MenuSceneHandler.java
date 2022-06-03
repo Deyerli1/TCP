@@ -1,7 +1,5 @@
 package road_fighter;
 import road_fighter.objects.Background;
-import road_fighter.objects.Auto;
-import road_fighter.objects.AutoJugador;
 import road_fighter.objects.menu.TextoComenzar;
 import road_fighter.objects.menu.Title;
 import road_fighter.utils.GameObjectBuilder;
@@ -15,7 +13,6 @@ import javafx.scene.paint.Color;
 
 public class MenuSceneHandler extends SceneHandler {
 
-	private Auto player;
 	private Background background;
 	private Title title;
 	private TextoComenzar textoComenzar;
@@ -28,14 +25,11 @@ public class MenuSceneHandler extends SceneHandler {
 
 	//configuracion de tamaño de pantalla
 	protected void prepareScene() {
-		System.out.println("configurando pantalla");
 		rootGroup = new Group();
 		scene = new Scene(rootGroup, Config.baseWidth, Config.baseHeight, Color.BLACK);
-		System.out.println("fin configurando pantalla");
 	}
 
 	protected void defineEventHandlers() {
-		System.out.println("seteando teclas del menu");
 		mouseEventHandler = new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -84,18 +78,15 @@ public class MenuSceneHandler extends SceneHandler {
 				}
 			}
 		};
-		System.out.println("fin defineEventHandlers");
 	}
 	
 	
 
 	public void load() {
-		System.out.println("cargando la escena");
 		boolean fullStart = true;
 		Group baseGroup = new Group();
 		rootGroup.getChildren().add(baseGroup);
 		
-		//player = new AutoJugador(Config.baseWidth - 75, Config.baseHeight / 3, null);
 		background = new Background();
 		title = new Title();
 		textoComenzar = new TextoComenzar();
@@ -104,11 +95,9 @@ public class MenuSceneHandler extends SceneHandler {
 		gameOB.setRootNode(baseGroup);
 		gameOB.add(background, title, textoComenzar);
 		if (fullStart) {
-			System.out.println("");
 			addTimeEventsAnimationTimer();
 			addInputEvents();
 		}
-		System.out.println("escena cargada");
 	}
 
 	public void unload() {

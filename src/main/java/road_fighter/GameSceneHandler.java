@@ -32,17 +32,14 @@ public class GameSceneHandler extends SceneHandler {
 	private Cordon cordonDerecho;
 	private Meta meta;
 	private NPCBuilder npcBuilder;
-	//private Radio radio;
 	public ParallelCamera camera = new ParallelCamera();
+	//private Radio radio;
 
-	// TODO pause
-	// boolean paused = false;
 	boolean started = false;
 	boolean ended = false;
 
 	public GameSceneHandler(RoadFighterGame r) {
 		super(r);
-		
 	}
 
 	protected void prepareScene() {
@@ -60,7 +57,8 @@ public class GameSceneHandler extends SceneHandler {
 					player.setAcelerar(true);
 					break;
 				case S:
-					player.setAcelerar(false);
+					//TODO
+					//player.setFrenar(false);
 					break;
 				case A:
 					player.setDoblarIzquierda(true);
@@ -69,9 +67,12 @@ public class GameSceneHandler extends SceneHandler {
 					player.setDoblarDerecha(true);
 					break;
 				case R:
-					prenderRadio();
+					//TODO
+					//prenderRadio();
+				case ESCAPE:
+					System.exit(0);
+					break;
 				default:
-					//player.desacelerar();
 				}
 			}
 		};
@@ -82,9 +83,7 @@ public class GameSceneHandler extends SceneHandler {
 				switch (e.getCode()) {
 				case W:
 					player.setAcelerar(false);
-					break;
-				case S:
-					//player.setAcelerar(false);
+					
 					break;
 				case A:
 					player.setDoblarIzquierda(false);
@@ -93,7 +92,6 @@ public class GameSceneHandler extends SceneHandler {
 					player.setDoblarDerecha(false);
 					break;
 				default:
-					//player.desacelerar();
 				}
 			}
 		};
@@ -104,7 +102,7 @@ public class GameSceneHandler extends SceneHandler {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 				
-		player = new AutoJugador("pepito", new double[] {200,600});
+		player = new AutoJugador("pepito", 400, 600);
 		cordonIzquierdo = new Cordon(95);
 		cordonDerecho = new Cordon(694);
 		scene.setCamera(camera);

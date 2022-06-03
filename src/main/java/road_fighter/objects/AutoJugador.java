@@ -5,7 +5,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import road_fighter.interfaces.Collideable;
-import road_fighter.states.AutoDesestabilizado;
 import road_fighter.states.AutoNormal;
 
 
@@ -18,20 +17,20 @@ public class AutoJugador extends Auto {
 	private static final int width = 35;
 	private static final int height = 70;
 	
-	public AutoJugador(String nombreJugador, double[] posicion) {
-		super(posicion, width, height);
+	public AutoJugador(String nombreJugador, int x, int y) {
+		super(x, y, width, height);
 		autoImg = new Image(fotoJugador, width, height, false, false);
     	this.imgPath = fotoJugador;
 		this.nombreJugador = nombreJugador;
     	render = new ImageView(autoImg);
-    	render.setX(posicion[0]);
-    	render.setY(posicion[1]);
-		render.relocate(posicion[0] - width/2, posicion[1] - height/2);
+    	render.setX(x);
+    	render.setY(y);
+		render.relocate(x - width/2, y - height/2);
 
-		collider = new Rectangle(posicion[0] - colliderWidth/2 , posicion[1] - colliderHeight/2, colliderWidth, colliderHeight);
+		collider = new Rectangle(x - colliderWidth/2 , y - colliderHeight/2, colliderWidth, colliderHeight);
 		collider.setFill(null);
-		collider.setX(posicion[0]- colliderWidth/2);
-		collider.setY(posicion[1]- colliderHeight/2);
+		collider.setX(x- colliderWidth/2);
+		collider.setY(y- colliderHeight/2);
 		collider.setStroke(Color.BLUE);
 		estado = new AutoNormal(this);
     }
@@ -59,7 +58,6 @@ public class AutoJugador extends Auto {
 	
 	@Override
 	public void collide(Collideable collideable) {
-		//hitAudio.play();
 			super.collide(collideable);
 			if ( collideable.getClass() == Meta.class) {
 				this.explotar();

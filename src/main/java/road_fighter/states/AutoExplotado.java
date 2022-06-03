@@ -4,8 +4,6 @@ import javafx.scene.image.Image;
 import road_fighter.objects.Auto;
 
 public class AutoExplotado extends AutoEstado{
-
-	protected final int DURACION_MALA = 5; /// placeholder
 	
 	AutoExplotado(Auto auto) {
 		super(auto);
@@ -30,10 +28,6 @@ public class AutoExplotado extends AutoEstado{
 	@Override
 	public AutoEstado inmunizar() {
 		return new AutoInmune(this.auto);
-	}
-		
-	public String getEstado() {
-		return "explotado";
 	}
 
 	@Override

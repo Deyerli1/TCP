@@ -25,13 +25,12 @@ public class Title extends GameObject implements Renderable {
 		private VBox render;
 
 		public Title() {
-			text = new Text("potato");
+			text = new Text("Road Fighter Titulo");
 
 			render = new VBox(text);
 			render.setAlignment(Pos.TOP_LEFT);
 			render.setTranslateY(Y);
 			render.setTranslateX(150);
-			// Esto debería heredarse?
 			render.setPrefWidth(Config.baseWidth);
 
 			Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 50);

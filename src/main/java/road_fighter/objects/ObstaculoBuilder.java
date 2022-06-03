@@ -7,9 +7,9 @@ import road_fighter.utils.GameObjectBuilder;
 
 public class ObstaculoBuilder extends GameObject implements Buildable {
 	private boolean running = false;
-	protected final int distanciaAJugador = 300;
+	protected final int distanciaAJugadorSpawn = 300;
 	private final int OBSTACULO_COOLDOWN = 200;
-	private int tiempoParaProximaObstaculo;
+	private int tiempoParaProximoObstaculo;
 	
 	public ObstaculoBuilder() {
 
@@ -18,13 +18,13 @@ public class ObstaculoBuilder extends GameObject implements Buildable {
 	@Override
 	public void update(double deltaTime) {
 		if (running) {
-			if (tiempoParaProximaObstaculo <= 0
+			if (tiempoParaProximoObstaculo <= 0
 					&& ((Config.posicionActualJugador - 50) > Config.posicionJugador)) {
 				Config.posicionActualJugador = Config.posicionJugador;
-				tiempoParaProximaObstaculo = OBSTACULO_COOLDOWN;
+				tiempoParaProximoObstaculo = OBSTACULO_COOLDOWN;
 				create();
 			}
-			tiempoParaProximaObstaculo--;
+			tiempoParaProximoObstaculo--;
 		}
 	}
 
@@ -39,10 +39,10 @@ public class ObstaculoBuilder extends GameObject implements Buildable {
 	public void create() {
 		Obstaculo obs;
 
-		if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 7) {
-			obs = new Pozo(Config.posicionJugador - distanciaAJugador);
+		if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 5) {
+			obs = new Pozo(Config.posicionJugador - distanciaAJugadorSpawn);
 		} else {
-			obs = new ManchaAceite(Config.posicionJugador - distanciaAJugador);
+			obs = new ManchaAceite(Config.posicionJugador - distanciaAJugadorSpawn);
 		}
 		GameObjectBuilder.getInstance().add(obs);
 	}

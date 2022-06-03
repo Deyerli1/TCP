@@ -4,7 +4,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import javafx.animation.AnimationTimer;
 import javafx.event.EventHandler;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -19,14 +18,12 @@ public abstract class SceneHandler {
 	protected int last_fps_frame = 0;
 	protected AtomicInteger fps = new AtomicInteger(0);
 	
-	
 	protected AnimationTimer gameTimer;
 	protected long previousNanoFrame;
 	protected long previousNanoSecond;
 	protected RoadFighterGame r;
 
 	protected Scene scene;
-	
 	
 	protected EventHandler<KeyEvent> keyEventHandlerPress;
 	protected EventHandler<KeyEvent> keyEventHandlerRelease;
@@ -57,8 +54,6 @@ public abstract class SceneHandler {
 	}
 
 	protected void addTimeEventsAnimationTimer() {
-		System.out.println("SceneHandler.addTimeEventsAnimationTimer");
-
 		gameTimer = new AnimationTimer() {
 			@Override
 			public void handle(long currentNano) {

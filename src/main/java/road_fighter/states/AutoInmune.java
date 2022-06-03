@@ -3,8 +3,6 @@ package road_fighter.states;
 import road_fighter.objects.Auto;
 
 public class AutoInmune extends AutoEstado{
-
-	protected final int DURACION_MALA = 5; /// placeholder
 	
 	AutoInmune(Auto auto) {
 		super(auto);
@@ -40,10 +38,6 @@ public class AutoInmune extends AutoEstado{
 		auto.setVelActual(nuevaVel > 0 ? nuevaVel : 0);
 	}
 		
-	@Override
-	public String getEstado() {
-		return "inmune";
-	}
 
 	@Override
 	public void doblarDerecha(double x) {

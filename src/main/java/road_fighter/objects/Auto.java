@@ -19,57 +19,56 @@ import road_fighter.states.AutoDesestabilizado;
 
 public abstract class Auto extends GameObject implements Updatable, Renderable, Collidator, Collideable {
 
-	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
 	protected double x, y;
 	protected double velMax, velActual, velDoblar;
-	protected final int ACELERACION = 1; /// placeholder
-	protected int velocidadDoblado = 10;
-	protected AutoEstado estado;
-	private double tiempoPenalizacion = 0;
+	private double tiempoPenalizacion = 0;//el tiempo que paso desde que inicio la penalizacion
 	private final double tiempoPenalizacionMaximo = 120;
-	private boolean deltaTimeMaloSeteado = false;
-	private final int choquesMaximos = 5;
+	
+	protected final int ACELERACION = 1;
+	protected int velocidadDoblado = 10;
+	private final int CHOQUES_MAXIMOS = 5;//choques antes de explotar
 	private int choquesActuales = 0;
+	
+	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
+	private boolean penalizado = false;
+	
+	protected AutoEstado estado;
 	protected String imgPath;
 	
 	private AudioClip desestabilizacionAudio;
 	private AudioClip explosionAudio;
 	private AudioClip motorAudio;
-	private AudioClip whatUpWithThat;
+	private AudioClip whatUpWithThat;//sonido adicional al desestabilizar, solo para jugadores
 	
 	protected ImageView render;
 	protected Image autoImg;
-	
-	protected final long NANOS_IN_SECOND = 1_000_000_000;
-	protected final double NANOS_IN_SECOND_D = 1_000_000_000.0;
 		
 	protected Rectangle collider;
 	protected final double colliderTolerance = 0.9;
 	protected final int colliderWidth;
 	protected final int colliderHeight;
 
-	public Auto(double[] posicion, int width, int height) {
+	public Auto(int x, int y, int width, int height) {
 		this.acelerar=false;
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
 		this.velActual = 0;
 		this.velMax = 200;
-		this.x = posicion[0];
-		this.y = posicion[1];
+		this.x = x;
+		this.y = y;
 		colliderWidth = (int) (width * colliderTolerance);
 		colliderHeight = (int) (height * colliderTolerance);
 		initAudios();
-		motorAudio.setVolume(1);
 	}
 		
-	public Auto(int posicion, int width, int height) {//para los npcs
+	public Auto(int y, int width, int height) {//para los npcs
 		this.acelerar=true;
 		this.velActual = 0;
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
 		this.velMax = 150;
 		this.velocidadDoblado = 1;
-		this.y = posicion;
+		this.y = y;
 		estado = new AutoNormal(this, 1);
 		colliderWidth = (int) (width * colliderTolerance);
 		colliderHeight = (int) (height * colliderTolerance);
@@ -84,11 +83,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.velActual = 0;
 		estado = estado.explotar();
 	}
-	
-	public void inmunizar() {
-		estado = estado.inmunizar();
-	}
-	
+		
 	public void inmunizar(double deltaTimeActual) {
 		if((estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class)) {
 			tiempoPenalizacion++;
@@ -103,7 +98,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		}
 		
 		if(tiempoPenalizacion == 0)
-			deltaTimeMaloSeteado = false;
+			penalizado = false;
 	}	
 	
 	private void initAudios() {
@@ -113,15 +108,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		
 		setAudioVol(1);
 	}
-	
-	private void setAudioVol(int vol) {
-		whatUpWithThat.setVolume(vol);
-		explosionAudio.setVolume(vol);
-		motorAudio.setVolume(vol);
-	}
-			
-	public abstract void habilidadEspecial();
-	
+		
 	public void doblarDerecha() {
 		this.estado.doblarDerecha(this.x);
 	}
@@ -134,18 +121,12 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.estado.acelerar(this.y);
 	}
 		
-	//GETTERS AND SETTERS
+	//SETTERS
 	
-	public boolean isDoblarIzquierda() {
-		return doblarIzquierda;
-	}
-
-	public boolean isDoblarDerecha() {
-		return doblarDerecha;
-	}
-
-	public boolean isAcelerar() {
-		return acelerar;
+	private void setAudioVol(int vol) {
+		whatUpWithThat.setVolume(vol);
+		explosionAudio.setVolume(vol);
+		motorAudio.setVolume(vol);
 	}
 	
 	public void setImg(Image img) {
@@ -159,7 +140,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	}
 	
 	public void setX(double x) {
-		// ver que pasa al chocar con los cordones
 		this.x = x;
 		render.setX(this.x);
 		collider.setX(this.x- colliderWidth/2);
@@ -167,7 +147,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public void setVelActual(double nuevaVel) {
 		this.velActual = nuevaVel;
-		
 	}
 	
 	public void setAcelerar(boolean valor) {
@@ -176,14 +155,12 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 			motorAudio.play();
 		}
 	}
-
-	public String getImgPath() {
-		return imgPath;
-	}
 	
-	public abstract int getWidth();
-	
-	public abstract int getHeight();
+	public void setPenalizado (double deltaTime) {
+    	if(estado.getClass() != AutoNormal.class && !penalizado) {
+    		penalizado = true;
+		}
+    }
 
 	public void setDoblarIzquierda(boolean valor) {
 		if(getVelActual() > 0) {
@@ -202,6 +179,28 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 			this.doblarDerecha = false;
 		}
 	}
+	
+	//GETTERS
+
+	public boolean isDoblarIzquierda() {
+		return doblarIzquierda;
+	}
+
+	public boolean isDoblarDerecha() {
+		return doblarDerecha;
+	}
+
+	public boolean isAcelerar() {
+		return acelerar;
+	}
+	
+	public String getImgPath() {
+		return imgPath;
+	}
+	
+	public abstract int getWidth();
+	
+	public abstract int getHeight();
 	
 	public double getX() {
 		return x;
@@ -227,21 +226,17 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
     	return this.velocidadDoblado;
     }
     
-    public void setDeltaTimeMalo (double deltaTime) {
-    	if(estado.getClass() != AutoNormal.class && !deltaTimeMaloSeteado) {
-			deltaTimeMaloSeteado = true;
-		}
-    }
+    //OVERRIDES
     
 	@Override
 	public void update(double deltaTime) {
-		setDeltaTimeMalo(deltaTime);
+		setPenalizado(deltaTime);
 		inmunizar(deltaTime);
 		doblarDerecha();
 		doblarIzquierda();
 		acelerar();//setea Y
 	}
-
+	
 	@Override
 	public Node getRender() {
 		return render;
@@ -251,11 +246,11 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	public void collide(Collideable collideable) {
 		//hitAudio.play();
 		
-			if ( (!deltaTimeMaloSeteado || estado.getClass() == AutoDesestabilizado.class ) && (collideable.getClass() == Pozo.class || choquesActuales == choquesMaximos || collideable.getClass() == Cordon.class) ) {
+			if ( (!penalizado || estado.getClass() == AutoDesestabilizado.class ) && (collideable.getClass() == Pozo.class || choquesActuales == CHOQUES_MAXIMOS || collideable.getClass() == Cordon.class) ) {
 				choquesActuales = 0;
 				explosionAudio.play();
 				this.explotar();
-			} else if (!deltaTimeMaloSeteado && (collideable.getClass() == ManchaAceite.class || collideable.getClass() == AutoJugador.class || collideable.getClass() == Movil.class || collideable.getClass() == Fijo.class) ){
+			} else if (!penalizado && (collideable.getClass() == ManchaAceite.class || collideable.getClass() == AutoJugador.class || collideable.getClass() == Movil.class || collideable.getClass() == Fijo.class) ){
 				choquesActuales++;
 				if( (AutoJugador.class).toString() == "class road_fighter.objects.AutoJugador")
 					whatUpWithThat.play();

@@ -8,19 +8,20 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import road_fighter.Config;
 import road_fighter.interfaces.Collideable;
+import road_fighter.interfaces.Despawneable;
 import road_fighter.interfaces.Renderable;
 import road_fighter.interfaces.Updatable;
 import road_fighter.utils.GameObject;
 import road_fighter.utils.GameObjectBuilder;
 
-public abstract class Obstaculo extends GameObject implements Updatable, Renderable, Collideable {
+public abstract class Obstaculo extends GameObject implements Updatable, Renderable, Collideable, Despawneable {
 	protected double x,y;
 	
 	protected final int width = 51;
 	protected final int height = 36;
 	
 	protected ImageView render;
-	Image obsImg;
+	private Image obsImg;
 	
 	protected Rectangle collider;
 	protected final double colliderTolerance = 0.75;
@@ -56,13 +57,8 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 			GameObjectBuilder.getInstance().remove(this);
 		}
 	}
-	
 
-	
-	public void setY(double y) {
-		this.y = y;
-	}
-	
+	@Override
 	public boolean isOffScreen() {		
 		return y - Config.offScreenTolerance > Config.posicionActualJugador;
 	}
@@ -76,15 +72,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 	public Shape getCollider() {
 		return collider;
 	}
-    
-    public double getX() {
-		return x;
-	}
-
-	public double getY() {
-		return y;
-	}
-	
+    	
 	@Override
 	public void destroy() {
 		

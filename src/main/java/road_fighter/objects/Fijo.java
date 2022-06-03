@@ -7,16 +7,9 @@ public class Fijo extends AutoNpc {
 	
 	private static final String fotoFijo = "file:src/main/resources/img/FijoColectivo.png";
 
-	
     public Fijo(double posicionJugador) {
     	super((int)posicionJugador, fotoFijo, width, height);
     }
-
-	@Override
-	public void habilidadEspecial() {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public int getWidth() {

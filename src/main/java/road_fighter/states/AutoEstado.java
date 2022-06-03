@@ -19,9 +19,7 @@ public abstract class AutoEstado{
 	public abstract AutoEstado inmunizar();
 	
 	public abstract void setVelActual(int sentido);
-			
-	public abstract String getEstado();
-	
+				
 	public abstract void doblarDerecha(double x);
 	
 	public abstract void doblarIzquierda(double x);

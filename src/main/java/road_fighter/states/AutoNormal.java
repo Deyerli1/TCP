@@ -40,21 +40,14 @@ public class AutoNormal extends AutoEstado {
 		if ( nuevaVel > auto.getVelMax() ) {
 			nuevaVel = auto.getVelMax();
 		} 
-		
 		auto.setVelActual(nuevaVel > 0 ? nuevaVel : 0);
 	}
 		
-	@Override
-	public String getEstado() {
-		return "normal";
-	}
-
 	@Override
 	public void doblarDerecha(double x) {
 		if(this.auto.isDoblarDerecha()) {
 			auto.setX(x+this.auto.getVelocidadDoblado());
 		}
-
 	}
 
 	@Override
@@ -68,7 +61,7 @@ public class AutoNormal extends AutoEstado {
 	public void acelerar(double y) {
 		setVelActual(this.auto.isAcelerar() ? 1 : -1);
 		if(this.auto.getVelActual() > 0)
-			auto.setY(y-this.auto.getVelActual()/3);
+			auto.setY(y-this.auto.getVelActual()/12);
 	}
 
 	

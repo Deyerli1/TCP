@@ -7,8 +7,8 @@ import road_fighter.utils.GameObjectBuilder;
 
 public class NPCBuilder extends GameObject implements Buildable {
 	private boolean running = false;
-	protected final int distanciaAJugador = 300;
-	private final int NPC_COOLDOWN = 200;
+	protected final int distanciaAJugadorSpawn = 300;
+	private final int NPC_COOLDOWN = 100;
 	private int tiempoParaProximoNpc;
 
 	public NPCBuilder() {
@@ -38,10 +38,10 @@ public class NPCBuilder extends GameObject implements Buildable {
 
 	public void create() {
 		Auto obs;
-		if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 3) {
-			obs = new Fijo(Config.posicionJugador - distanciaAJugador);
+		if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 5) {
+			obs = new Fijo(Config.posicionJugador - distanciaAJugadorSpawn);
 		} else {
-			obs = new Movil(Config.posicionJugador - distanciaAJugador);
+			obs = new Movil(Config.posicionJugador - distanciaAJugadorSpawn);
 		}
 		GameObjectBuilder.getInstance().add(obs);
 	}

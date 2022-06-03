@@ -9,7 +9,7 @@ public class AutoDesestabilizado extends AutoEstado {
 	
 	AutoDesestabilizado(Auto auto) {
 		super(auto);
-		direccionDesvio = (int)Math.floor(Math.random()*(1-(-1)+1)+(-1));
+		direccionDesvio = (int)Math.floor(Math.random()*(2-(-1)+1)+(-1));
 		auto.setImg (new Image("file:src/main/resources/img/desestabilizado.png", auto.getWidth(), auto.getHeight(), false, false));
 	}
 
@@ -32,16 +32,10 @@ public class AutoDesestabilizado extends AutoEstado {
 	public AutoEstado inmunizar() {
 		return new AutoInmune(this.auto);
 	}
-		
-	@Override
-	public String getEstado() {
-		return "desestabilizado";
-	}
 
 	@Override
 	public void setVelActual(int sentido) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -67,7 +61,4 @@ public class AutoDesestabilizado extends AutoEstado {
 			auto.setX(auto.getX()+direccionDesvio*2);
 		}
 	}
-	
-	
-
 }

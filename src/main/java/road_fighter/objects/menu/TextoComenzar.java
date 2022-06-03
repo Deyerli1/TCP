@@ -19,12 +19,11 @@ public class TextoComenzar extends GameObject implements Renderable {
 	private VBox render;
 
 	public TextoComenzar() {
-		text = new Text("TextoComenzar");
+		text = new Text("Road Fighter");
 
 		render = new VBox(text);
 		render.setAlignment(Pos.TOP_CENTER);
 		render.setTranslateY(Y);
-		// Esto debería heredarse?
 		render.setPrefWidth(Config.baseWidth);
 		
 		Font font = Font.font("Verdana", FontWeight.NORMAL, 40);
