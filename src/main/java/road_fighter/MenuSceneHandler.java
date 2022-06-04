@@ -20,6 +20,9 @@ public class MenuSceneHandler extends SceneHandler {
 	private final int MENU_MAP_HEIGHT = Config.baseHeight;
 	
 	private final String PATH_FONDO_MENU = "file:src/main/resources/img/backgroundMenu.png";
+	private final String PATH_VOLUMEN_MENU = "src/main/resources/snd/music.png";
+	private final String PATH_UN_JUGADOR_MENU = "file:src/main/resources/img/singleplayer.png";
+	private final String PATH_OPCIONES_MENU = "file:src/main/resources/img/optiones.png";
 	private final String PATH_MUSICA_MENU = "src/main/resources/snd/ambient.mp3";
 	private Background background;
 	private Title title;
@@ -140,10 +143,10 @@ public class MenuSceneHandler extends SceneHandler {
 		background = new Background(PATH_FONDO_MENU, 0, MENU_MAP_WIDTH, MENU_MAP_HEIGHT);
 		title = new Title();
 		reproductor = new Reproductor(PATH_MUSICA_MENU);
-		unJugador = new MenuItem("file:src/main/resources/img/singleplayer.png", 250, 500);
-		options = new MenuItem("file:src/main/resources/img/options.png", 250, 600);
+		unJugador = new MenuItem(PATH_UN_JUGADOR_MENU, 250, 500);
+		options = new MenuItem(PATH_OPCIONES_MENU, 250, 600);
 		
-		MenuItem volumen = new MenuItem("file:src/main/resources/img/music.png", 1000, 500);
+		MenuItem volumen = new MenuItem(PATH_VOLUMEN_MENU, 1000, 500);
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
