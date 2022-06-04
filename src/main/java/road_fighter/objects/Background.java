@@ -8,7 +8,7 @@ import road_fighter.utils.GameObject;
 
 public class Background extends GameObject implements Renderable {
 	private ImageView render;
-
+	
 	public Background(String imgPath, int y, int width, int height) {
 		Image backgroundImage = new Image(imgPath, width, height, false, false);
 		render = new ImageView(backgroundImage);
@@ -16,6 +16,13 @@ public class Background extends GameObject implements Renderable {
 		render.setViewOrder(10);
 	}
 
+	public void setY(int y) {
+		render.setY(y);
+	}
+	public void setX(int x) {
+		render.setX(x);
+	}
+	
 	@Override
 	public Node getRender() {
 		return render;
