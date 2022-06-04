@@ -82,6 +82,9 @@ public class GameSceneHandler extends SceneHandler {
 					break;
 				case SPACE:
 					player.habilidadEspecial();
+				case R:
+					//TODO
+					//r.startGam();
 				default:
 				}
 			}

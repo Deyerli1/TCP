@@ -34,6 +34,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
     	obsImg = new Image(pathImg, width, height, false, false);
 		render = new ImageView(obsImg);
 		render.relocate(this.x - colliderWidth / 2, this.y - colliderHeight / 2);
+		render.setViewOrder(8);
 		collider = new Rectangle(this.x - colliderWidth / 2, this.y - colliderHeight / 2, colliderWidth, colliderHeight);
 		collider.setFill(null);
 		collider.setStroke(Color.FUCHSIA);
