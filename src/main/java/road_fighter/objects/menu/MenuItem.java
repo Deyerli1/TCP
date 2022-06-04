@@ -1,7 +1,6 @@
 package road_fighter.objects.menu;
 
 import javafx.scene.Node;
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;

@@ -4,6 +4,7 @@ import java.io.File;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import road_fighter.Config;
 import road_fighter.utils.GameObject;
 
 public class Reproductor extends GameObject {
@@ -14,7 +15,7 @@ public class Reproductor extends GameObject {
 	public Reproductor(String mediaPath) {
 		loop = new Media(new File(mediaPath).toURI().toString());
 		mediaPlayer = new MediaPlayer(loop);
-		mediaPlayer.setVolume(0.3);
+		mediaPlayer.setVolume(Config.volumenMusica);
 		mediaPlayer.setCycleCount(MediaPlayer.INDEFINITE);
 		mediaPlayer.play();
 	}
@@ -27,6 +28,11 @@ public class Reproductor extends GameObject {
 		return started;
 	}
 
+	public void setVolume(double volume) {
+		Config.volumenMusica = volume;
+		mediaPlayer.setVolume(Config.volumenMusica);
+	}
+	
 	@Override
 	public void destroy() {
 		mediaPlayer.stop();

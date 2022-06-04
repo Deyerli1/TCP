@@ -20,16 +20,16 @@ public class MenuSceneHandler extends SceneHandler {
 	private final int MENU_MAP_HEIGHT = Config.baseHeight;
 	
 	private final String PATH_FONDO_MENU = "file:src/main/resources/img/backgroundMenu.png";
-	private final String PATH_VOLUMEN_MENU = "src/main/resources/snd/music.png";
+	private final String PATH_VOLUMEN_MENU = "file:src/main/resources/img/music.png";
 	private final String PATH_UN_JUGADOR_MENU = "file:src/main/resources/img/singleplayer.png";
-	private final String PATH_OPCIONES_MENU = "file:src/main/resources/img/optiones.png";
+//	private final String PATH_OPCIONES_MENU = "file:src/main/resources/img/options.png";
 	private final String PATH_MUSICA_MENU = "src/main/resources/snd/ambient.mp3";
 	private Background background;
 	private Title title;
-	private TextoComenzar textoComenzar;
 	private MenuItem unJugador;
-	private MenuItem options;
+//	private MenuItem optionsMenu;
 	private Group rootGroup;
+	private MenuItem musicaMenu;
 	public ParallelCamera camera = new ParallelCamera();
 	
 	public MenuSceneHandler(RoadFighterGame r) {
@@ -62,13 +62,21 @@ public class MenuSceneHandler extends SceneHandler {
 				case S:
 					cambiarMenu();
 					break;
+				case LEFT:
+				case A:
+					bajarVol();
+					break;
+				case RIGHT:
+				case D:
+					subirVol();
+					break;
 				case SPACE:
 				case ENTER:
 					accionMenu();
 					break;
 				case Q:
 				case ESCAPE:
-					accionEscape();
+					System.exit(0);
 					break;
 				default:
 					break;
@@ -101,15 +109,7 @@ public class MenuSceneHandler extends SceneHandler {
 		if(unJugador.isSelected()) {
 			r.startGame();
 		}else {
-			irAOpciones();
-		}
-	}
-	
-	public void accionEscape() {
-		if(options.isSelected()) {
-			irAMenu();
-		}else {
-			System.exit(0);			
+			
 		}
 	}
 	
@@ -117,21 +117,30 @@ public class MenuSceneHandler extends SceneHandler {
 		
 		if(unJugador.isSelected()) {
 			this.unJugador.setSelected(false);
-			this.options.setSelected(true);
-		}else {
+			this.musicaMenu.setSelected(true);
+		}else{
 			this.unJugador.setSelected(true);
-			this.options.setSelected(false);
+			this.musicaMenu.setSelected(false);
 		}
 	}
 	
-	public void irAOpciones() {
-		camera.translateXProperty().set(800);//vista vertical
-		background.setX(800);
+	private void bajarVol() {
+		if(!unJugador.isSelected()) {
+			cambiarVolumen(-0.1);
+		}
 	}
 	
-	public void irAMenu() {
-		camera.translateXProperty().set(0);//vista vertical
-		background.setX(0);
+	private void subirVol() {
+		if(!unJugador.isSelected()) {
+			cambiarVolumen(0.1);
+		}
+	}
+	
+	private void cambiarVolumen(double slide) {
+		double volNuevo = Config.volumenMusica+ slide;
+		if(volNuevo>=0 && volNuevo<=1) {
+			reproductor.setVolume(volNuevo);
+		}
 	}
 	
 	public void load() {
@@ -144,13 +153,13 @@ public class MenuSceneHandler extends SceneHandler {
 		title = new Title();
 		reproductor = new Reproductor(PATH_MUSICA_MENU);
 		unJugador = new MenuItem(PATH_UN_JUGADOR_MENU, 250, 500);
-		options = new MenuItem(PATH_OPCIONES_MENU, 250, 600);
 		
-		MenuItem volumen = new MenuItem(PATH_VOLUMEN_MENU, 1000, 500);
+		musicaMenu = new MenuItem(PATH_VOLUMEN_MENU, 250, 600);
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background, title, reproductor, unJugador, options, volumen);
+		gameOB.add(background, title, reproductor, unJugador, musicaMenu);
+		
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
