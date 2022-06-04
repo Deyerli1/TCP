@@ -19,12 +19,14 @@ import road_fighter.objects.Cordon;
 import road_fighter.objects.Meta;
 import road_fighter.objects.NPCBuilder;
 import road_fighter.objects.ObstaculoBuilder;
+import road_fighter.objects.Reproductor;
 //import road_fighter.objects.Radio;
 import road_fighter.utils.GameObjectBuilder;
 
 
 public class GameSceneHandler extends SceneHandler {
 	
+	private final String PATH_MUSICA_GAME = "src/main/resources/snd/looping-radio-mix.mp3";
 	private Auto player;
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
@@ -32,6 +34,7 @@ public class GameSceneHandler extends SceneHandler {
 	private Cordon cordonDerecho;
 	private Meta meta;
 	private NPCBuilder npcBuilder;
+	
 	public ParallelCamera camera = new ParallelCamera();
 	//private Radio radio;
 
@@ -112,11 +115,11 @@ public class GameSceneHandler extends SceneHandler {
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
 		meta = new Meta(20000);
-		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
+		reproductor = new Reproductor(PATH_MUSICA_GAME);
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta);
+		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, reproductor);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -141,10 +144,6 @@ public class GameSceneHandler extends SceneHandler {
 			obstaculoBuilder.startBuilding(2 * NANOS_IN_SECOND);
 			npcBuilder.startBuilding(2 * NANOS_IN_SECOND);
 		}
-	}
-	
-	private void prenderRadio() {
-		//radio.start();
 	}
 	
 	public void update(double delta) {

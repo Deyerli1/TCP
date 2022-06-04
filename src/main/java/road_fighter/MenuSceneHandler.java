@@ -1,5 +1,6 @@
 package road_fighter;
 import road_fighter.objects.Background;
+import road_fighter.objects.Reproductor;
 import road_fighter.objects.menu.TextoComenzar;
 import road_fighter.objects.menu.Title;
 import road_fighter.utils.GameObjectBuilder;
@@ -16,7 +17,9 @@ public class MenuSceneHandler extends SceneHandler {
 	private Background background;
 	private Title title;
 	private TextoComenzar textoComenzar;
-
+	
+	private final String PATH_MUSICA_MENU = "src/main/resources/snd/ambient.mp3";
+	
 	private Group rootGroup;
 
 	public MenuSceneHandler(RoadFighterGame r) {
@@ -90,10 +93,11 @@ public class MenuSceneHandler extends SceneHandler {
 		background = new Background();
 		title = new Title();
 		textoComenzar = new TextoComenzar();
-
+		reproductor = new Reproductor(PATH_MUSICA_MENU);
+		
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background, title, textoComenzar);
+		gameOB.add(background, title, textoComenzar, reproductor);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
