@@ -9,11 +9,7 @@ public class AutoNormal extends AutoEstado {
 		super(auto);
 		auto.setImg (new Image(auto.getImgPath(), auto.getWidth(), auto.getHeight(), false, false));
 	}
-	
-	public AutoNormal(Auto auto, int a) {//para los npc
-		super(auto);
-	}
-	
+		
 	@Override
 	public AutoEstado desestabilizar() {		
 		return new AutoDesestabilizado(this.auto);
@@ -26,13 +22,10 @@ public class AutoNormal extends AutoEstado {
 
 	@Override
 	public AutoEstado normalizar() {
+		auto.setAutoAngle(0);
 		return this;
 	}
 	
-	@Override
-	public AutoEstado inmunizar() {
-		return new AutoInmune(this.auto);
-	}
 	
 	@Override
 	public void setVelActual(int sentido) {
@@ -59,9 +52,14 @@ public class AutoNormal extends AutoEstado {
 	
 	@Override
 	public void acelerar(double y) {
-		setVelActual(this.auto.isAcelerar() ? 1 : -1);
-		if(this.auto.getVelActual() > 0)
-			auto.setY(y-this.auto.getVelActual()/12);
+		if(!auto.isGanador()) {
+			setVelActual(this.auto.isAcelerar() ? 1 : -1);
+			if(this.auto.getVelActual() > 0)
+				auto.setY(y-this.auto.getVelActual()/6);
+		}
+		else {
+			auto.setVelActual(0);
+		}
 	}
 
 	

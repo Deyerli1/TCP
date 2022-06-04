@@ -6,15 +6,16 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import road_fighter.Config;
 import road_fighter.interfaces.Despawneable;
+import road_fighter.states.AutoNormal;
 import road_fighter.utils.GameObjectBuilder;
 
 public abstract class AutoNpc extends Auto implements Despawneable {
 	
     public AutoNpc(int posicion, String imgPath, int width, int height) {
     	super(posicion-Config.baseHeight/2, width, height);
-    	this.imgPath = imgPath;
-    	this.x = (int)Math.floor(Math.random()*( (Config.baseWidth-200) - (Config.baseWidth+200)+(Config.baseWidth+200)));
     	autoImg = new Image(imgPath, width, height, false, false);
+    	this.imgPath = imgPath;
+    	this.x = (int)Math.floor(Math.random()*( 540 - 240 + 1) +240);
 		render = new ImageView(autoImg);
     	render.setY(this.y);
     	render.setX(this.x);
@@ -22,6 +23,7 @@ public abstract class AutoNpc extends Auto implements Despawneable {
 		collider = new Rectangle(this.x - colliderWidth / 2, this.y - colliderHeight / 2, colliderWidth, colliderHeight);
 		collider.setFill(null);
 		collider.setStroke(Color.FUCHSIA);
+		estado = new AutoNormal(this);
     }
 
     @Override

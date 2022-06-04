@@ -47,7 +47,6 @@ public class GameObjectBuilder {
 	public void add(GameObject... gameObjects) {
 		checkRootNode();
 		for (GameObject gameObject : gameObjects) {
-			System.out.println("GameObjectBuilder.add");
 			allGameObjects.add(gameObject);
 
 			if (Updatable.class.isAssignableFrom(gameObject.getClass())) {

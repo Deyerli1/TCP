@@ -2,6 +2,7 @@ package road_fighter;
 
 import java.util.List;
 
+import javafx.animation.TranslateTransition;
 import javafx.event.EventHandler;
 import javafx.geometry.Bounds;
 import javafx.scene.Group;
@@ -10,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
+import javafx.util.Duration;
 import road_fighter.interfaces.Collidator;
 import road_fighter.interfaces.Collideable;
 import road_fighter.objects.Auto;
@@ -19,11 +21,20 @@ import road_fighter.objects.Cordon;
 import road_fighter.objects.Meta;
 import road_fighter.objects.NPCBuilder;
 import road_fighter.objects.ObstaculoBuilder;
-//import road_fighter.objects.Radio;
+import road_fighter.objects.Reproductor;
+import road_fighter.objects.VelocidadInfo;
+import road_fighter.states.AutoExplotado;
+import road_fighter.states.AutoNormal;
 import road_fighter.utils.GameObjectBuilder;
 
 
 public class GameSceneHandler extends SceneHandler {
+	
+	private final int MAP_WIDTH = 800;
+	private final int MAP_HEIGHT = 20000;
+
+	private final String PATH_FONDO_GAME = "file:src/main/resources/img/background.png";
+	private final String PATH_MUSICA_GAME = "src/main/resources/snd/looping-radio-mix.mp3";
 	
 	private Auto player;
 	private Background background;
@@ -32,11 +43,13 @@ public class GameSceneHandler extends SceneHandler {
 	private Cordon cordonDerecho;
 	private Meta meta;
 	private NPCBuilder npcBuilder;
+	private VelocidadInfo velInfo;
 	public ParallelCamera camera = new ParallelCamera();
 	//private Radio radio;
 
-	boolean started = false;
-	boolean ended = false;
+	private boolean animacionActiva = false;
+	private boolean started = false;
+	private boolean ended = false;
 
 	public GameSceneHandler(RoadFighterGame r) {
 		super(r);
@@ -72,6 +85,8 @@ public class GameSceneHandler extends SceneHandler {
 				case ESCAPE:
 					System.exit(0);
 					break;
+				case SPACE:
+					player.habilidadEspecial();
 				default:
 				}
 			}
@@ -103,20 +118,21 @@ public class GameSceneHandler extends SceneHandler {
 		scene.setRoot(rootGroup);
 				
 		player = new AutoJugador("pepito", 400, 600);
-		cordonIzquierdo = new Cordon(95);
-		cordonDerecho = new Cordon(694);
+		cordonIzquierdo = new Cordon(210);
+		cordonDerecho = new Cordon(572);
+		velInfo = new VelocidadInfo();
 		scene.setCamera(camera);
 		camera.translateYProperty().set(-100);//vista vertical
 		
-		background = new Background();
+		background = new Background(PATH_FONDO_GAME, -19200, MAP_WIDTH, MAP_HEIGHT);
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
 		meta = new Meta(20000);
-		//radio = new Radio(Config.playerCenter, Config.baseHeight / 2, player);
+		reproductor = new Reproductor(PATH_MUSICA_GAME);
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta);
+		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -152,6 +168,24 @@ public class GameSceneHandler extends SceneHandler {
 		camera.translateYProperty().set(player.getY() - Config.baseHeight/2 - 200);
 		checkColliders();
 		Config.posicionJugador = player.getY();
+		if(!player.isGanador()) {
+			if(player.getEstado().getClass()  == AutoExplotado.class && !animacionActiva) {
+				animacionActiva = true;
+				TranslateTransition tt = new TranslateTransition(Duration.millis(50), scene.getRoot());
+				tt.setFromX(-20f);
+				tt.setByX(20f);
+				tt.setCycleCount(6);
+				tt.setAutoReverse(true);
+				tt.playFromStart();
+				tt.setOnFinished(event -> {
+					scene.getRoot().setTranslateX(0);
+				});
+			}
+			else if(player.getEstado().getClass()  == AutoNormal.class) {
+				animacionActiva = false;
+			}
+		}
+		
 	}
 	
 
@@ -195,6 +229,5 @@ public class GameSceneHandler extends SceneHandler {
 		cleanData();
 		super.unload();
 	}
-
 }
 

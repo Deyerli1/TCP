@@ -9,8 +9,10 @@ public class AutoDesestabilizado extends AutoEstado {
 	
 	AutoDesestabilizado(Auto auto) {
 		super(auto);
-		direccionDesvio = (int)Math.floor(Math.random()*(2-(-1)+1)+(-1));
+		direccionDesvio = (int)Math.floor(Math.random()*(1-(-1)+1)+(-1));
 		auto.setImg (new Image("file:src/main/resources/img/desestabilizado.png", auto.getWidth(), auto.getHeight(), false, false));
+		//auto.setImg (new Image(auto.getImgPath(), auto.getWidth(), auto.getHeight(), false, false));
+		auto.setAutoAngle(direccionDesvio*20);
 	}
 
 	@Override
@@ -25,14 +27,10 @@ public class AutoDesestabilizado extends AutoEstado {
 
 	@Override
 	public AutoEstado normalizar() {
+		auto.setAutoAngle(0);
 		return new AutoNormal(this.auto);
 	}
 	
-	@Override
-	public AutoEstado inmunizar() {
-		return new AutoInmune(this.auto);
-	}
-
 	@Override
 	public void setVelActual(int sentido) {
 

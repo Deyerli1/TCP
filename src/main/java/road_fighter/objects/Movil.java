@@ -13,12 +13,12 @@ public class Movil extends AutoNpc {
 
 	public void setX(double x) {
 		if (this.isDoblarDerecha()) {
-			if (this.getX() > 600) {
+			if (this.getX() > 540) {
 				setDoblarIzquierda(true);
 				setDoblarDerecha(false);
 			}
 		} else if (this.isDoblarIzquierda()) {
-			if (this.getX() < 100) {
+			if (this.getX() < 240) {
 				setDoblarDerecha(true);
 				setDoblarIzquierda(false);
 			}
@@ -37,6 +37,12 @@ public class Movil extends AutoNpc {
 	@Override
 	public int getHeight() {
 		return height;
+	}
+
+	@Override
+	public void habilidadEspecial() {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

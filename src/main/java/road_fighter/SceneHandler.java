@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import road_fighter.interfaces.Updatable;
+import road_fighter.objects.Reproductor;
 import road_fighter.utils.GameObjectBuilder;
 
 public abstract class SceneHandler {
@@ -22,7 +23,7 @@ public abstract class SceneHandler {
 	protected long previousNanoFrame;
 	protected long previousNanoSecond;
 	protected RoadFighterGame r;
-
+	protected Reproductor reproductor;
 	protected Scene scene;
 	
 	protected EventHandler<KeyEvent> keyEventHandlerPress;

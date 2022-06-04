@@ -17,6 +17,13 @@ public class Background extends GameObject implements Renderable {
 		render = new ImageView(backgroundImage);
 		render.setY(-19200);
 	}
+	
+	public Background(String imgPath, int y, int width, int height) {
+        Image backgroundImage = new Image(imgPath, width, height, false, false);
+        render = new ImageView(backgroundImage);
+        render.setY(y);
+        render.setViewOrder(10);
+    }
 
 	@Override
 	public Node getRender() {

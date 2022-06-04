@@ -22,7 +22,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	protected double x, y;
 	protected double velMax, velActual, velDoblar;
 	private double tiempoPenalizacion = 0;//el tiempo que paso desde que inicio la penalizacion
-	private final double tiempoPenalizacionMaximo = 120;
+	private final double TIEMPO_PENALIZACION_MAXIMO = 120, VEL_MAX_JUGADOR = 120, VEL_MAX_NPC = 100;
 	
 	protected final int ACELERACION = 1;
 	protected int velocidadDoblado = 10;
@@ -30,7 +30,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	private int choquesActuales = 0;
 	
 	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
-	private boolean penalizado = false;
+	protected boolean penalizado = false, habilidadEspecialActiva = false, ganador = false, explotado = false;
 	
 	protected AutoEstado estado;
 	protected String imgPath;
@@ -53,7 +53,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
 		this.velActual = 0;
-		this.velMax = 200;
+		this.velMax = VEL_MAX_JUGADOR;
 		this.x = x;
 		this.y = y;
 		colliderWidth = (int) (width * colliderTolerance);
@@ -66,10 +66,9 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		this.velActual = 0;
 		this.doblarDerecha=false;
 		this.doblarIzquierda=false;
-		this.velMax = 150;
+		this.velMax = VEL_MAX_NPC;
 		this.velocidadDoblado = 1;
 		this.y = y;
-		estado = new AutoNormal(this, 1);
 		colliderWidth = (int) (width * colliderTolerance);
 		colliderHeight = (int) (height * colliderTolerance);
 		initAudios();
@@ -84,16 +83,18 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		estado = estado.explotar();
 	}
 		
-	public void inmunizar(double deltaTimeActual) {
-		if((estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class)) {
+	public void normalizar() {
+		if((estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class || habilidadEspecialActiva)) {
 			tiempoPenalizacion++;
 		}
 		else if (tiempoPenalizacion > 0){
 			tiempoPenalizacion--;
 		}
 		
-		if( (estado.getClass() == AutoExplotado.class || estado.getClass() == AutoDesestabilizado.class) && tiempoPenalizacion > tiempoPenalizacionMaximo ) {
+		if(tiempoPenalizacion > TIEMPO_PENALIZACION_MAXIMO ) {
 			tiempoPenalizacion = 50;//para que la inmunidad dure un cierto tiempo
+			habilidadEspecialActiva = false;
+			this.velMax = VEL_MAX_JUGADOR;
 			estado = estado.normalizar();
 		}
 		
@@ -120,8 +121,14 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	public void acelerar() {
 		this.estado.acelerar(this.y);
 	}
+	
+	public abstract void habilidadEspecial();
 		
 	//SETTERS
+	
+	public void setVelMax(double velMax) {
+		this.velMax = velMax;
+	}
 	
 	private void setAudioVol(int vol) {
 		whatUpWithThat.setVolume(vol);
@@ -131,6 +138,11 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public void setImg(Image img) {
 		render.setImage(img);
+	}
+	
+	public void setAutoAngle(int angulo) {
+		render.setRotate(angulo);
+		collider.setRotate(angulo);
 	}
 
 	public void setY(double y) {
@@ -156,7 +168,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		}
 	}
 	
-	public void setPenalizado (double deltaTime) {
+	public void setPenalizado () {
     	if(estado.getClass() != AutoNormal.class && !penalizado) {
     		penalizado = true;
 		}
@@ -181,6 +193,15 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	}
 	
 	//GETTERS
+	
+	public boolean isGanador() {
+		return ganador;
+	}
+	
+ 
+	public AutoEstado getEstado() {
+		return estado;
+	}
 
 	public boolean isDoblarIzquierda() {
 		return doblarIzquierda;
@@ -196,6 +217,10 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	
 	public String getImgPath() {
 		return imgPath;
+	}
+	
+	public double getVelMaxJugador() {
+		return VEL_MAX_JUGADOR;
 	}
 	
 	public abstract int getWidth();
@@ -230,8 +255,8 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
     
 	@Override
 	public void update(double deltaTime) {
-		setPenalizado(deltaTime);
-		inmunizar(deltaTime);
+		setPenalizado();
+		normalizar();
 		doblarDerecha();
 		doblarIzquierda();
 		acelerar();//setea Y
@@ -245,7 +270,6 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	@Override
 	public void collide(Collideable collideable) {
 		//hitAudio.play();
-		
 			if ( (!penalizado || estado.getClass() == AutoDesestabilizado.class ) && (collideable.getClass() == Pozo.class || choquesActuales == CHOQUES_MAXIMOS || collideable.getClass() == Cordon.class) ) {
 				choquesActuales = 0;
 				explosionAudio.play();
@@ -257,10 +281,10 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 				this.desestabilizar();
 			}
 	}
-
+	
 	@Override
 	public Shape getCollider() {
-		return collider;	
+		return collider;
 	}
 
 	@Override

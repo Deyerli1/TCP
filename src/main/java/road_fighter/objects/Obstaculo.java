@@ -18,7 +18,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 	protected double x,y;
 	
 	protected final int width = 51;
-	protected final int height = 36;
+	protected final int height = 36; 
 	
 	protected ImageView render;
 	private Image obsImg;
@@ -30,7 +30,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 
 	public Obstaculo(double y, String pathImg) {
     	this.y = y-Config.baseHeight/2;
-    	this.x = (int)Math.floor(Math.random()*( (Config.baseWidth-200) - (Config.baseWidth+200)+(Config.baseWidth+200)));
+    	this.x = (int)Math.floor(Math.random()*( 540 - 240 + 1) +240);
     	obsImg = new Image(pathImg, width, height, false, false);
 		render = new ImageView(obsImg);
 		render.relocate(this.x - colliderWidth / 2, this.y - colliderHeight / 2);
@@ -39,9 +39,11 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 		collider.setStroke(Color.FUCHSIA);
     }
 		
-	public Obstaculo(int y, int x, String pathImg, int height, int anguloRotacionCollider) {//meta
+	public Obstaculo(int y, int x, String pathImg, int height, int anguloRotacionCollider) {//meta y cordones
 		obsImg = new Image(pathImg, 800, 20, false, false);
         render = new ImageView(obsImg);
+        render.setX(x);
+        render.setY(y);
         render.relocate(x,y);
 
         collider = new Rectangle(x,y,20, height);

@@ -21,4 +21,10 @@ public class Fijo extends AutoNpc {
 		return height;
 	}
 
+	@Override
+	public void habilidadEspecial() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

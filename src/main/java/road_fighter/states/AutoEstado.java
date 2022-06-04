@@ -16,8 +16,6 @@ public abstract class AutoEstado{
 	
 	public abstract AutoEstado normalizar();
 	
-	public abstract AutoEstado inmunizar();
-	
 	public abstract void setVelActual(int sentido);
 				
 	public abstract void doblarDerecha(double x);

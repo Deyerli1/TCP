@@ -3,13 +3,14 @@ package road_fighter.states;
 import javafx.scene.image.Image;
 import road_fighter.objects.Auto;
 
-public class AutoExplotado extends AutoEstado{
+public class AutoGanador extends AutoEstado{
 	
-	private static String imgPath = "file:src/main/resources/img/explotado.png";
+	private static String imgPath = "file:src/main/resources/img/ganador.gif";
 	
-	AutoExplotado(Auto auto) {
+	public AutoGanador(Auto auto) {
 		super(auto);
-		auto.setImg (new Image(imgPath, auto.getWidth(), auto.getHeight(), false, false));
+		auto.setImg (new Image(imgPath, 600, 400, false, false));
+		
 	}
 
 	@Override

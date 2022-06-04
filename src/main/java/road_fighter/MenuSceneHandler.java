@@ -1,5 +1,6 @@
 package road_fighter;
 import road_fighter.objects.Background;
+import road_fighter.objects.Reproductor;
 import road_fighter.objects.menu.TextoComenzar;
 import road_fighter.objects.menu.Title;
 import road_fighter.utils.GameObjectBuilder;
@@ -12,6 +13,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 
 public class MenuSceneHandler extends SceneHandler {
+	
+	private final int MENU_MAP_WIDTH = Config.baseWidth;
+	private final int MENU_MAP_HEIGHT = Config.baseHeight;
+	
+	private final String PATH_FONDO_MENU = "file:src/main/resources/img/backgroundMenu.png";
+	private final String PATH_MUSICA_MENU = "src/main/resources/snd/ambient.mp3";
 
 	private Background background;
 	private Title title;
@@ -87,13 +94,14 @@ public class MenuSceneHandler extends SceneHandler {
 		Group baseGroup = new Group();
 		rootGroup.getChildren().add(baseGroup);
 		
-		background = new Background();
+		background = new Background(PATH_FONDO_MENU, 0, MENU_MAP_WIDTH, MENU_MAP_HEIGHT);
 		title = new Title();
 		textoComenzar = new TextoComenzar();
+		reproductor = new Reproductor(PATH_MUSICA_MENU);
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background, title, textoComenzar);
+		gameOB.add(background, title, textoComenzar, reproductor);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
