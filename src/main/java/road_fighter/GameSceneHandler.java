@@ -26,6 +26,10 @@ import road_fighter.utils.GameObjectBuilder;
 
 public class GameSceneHandler extends SceneHandler {
 	
+	private final int MAP_WIDTH = 800;
+	private final int MAP_HEIGHT = 20000;
+
+	private final String PATH_FONDO_GAME = "file:src/main/resources/img/backgroundGame.png";
 	private final String PATH_MUSICA_GAME = "src/main/resources/snd/looping-radio-mix.mp3";
 	private Auto player;
 	private Background background;
@@ -111,7 +115,7 @@ public class GameSceneHandler extends SceneHandler {
 		scene.setCamera(camera);
 		camera.translateYProperty().set(-100);//vista vertical
 		
-		background = new Background();
+		background = new Background(PATH_FONDO_GAME, -19200, MAP_WIDTH, MAP_HEIGHT);
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
 		meta = new Meta(20000);

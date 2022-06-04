@@ -2,14 +2,9 @@ package road_fighter.objects.menu;
 
 import javafx.animation.Animation;
 import javafx.animation.TranslateTransition;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import road_fighter.Config;
 import road_fighter.interfaces.Renderable;
@@ -18,25 +13,20 @@ import road_fighter.utils.GameObject;
 public class Title extends GameObject implements Renderable {
 		private final int Y = Config.baseHeight / 3 - 35;
 		
+		private final int TITLE_WIDTH = 450;
+		private final int TITLE_HEIGHT = 300;
 		private final TranslateTransition idleAnimation;
 		private final Duration translateDuration = Duration.millis(1000);
-
-		private Text text;
-		private VBox render;
-
+		private Image img;
+		private ImageView render;
+		
 		public Title() {
-			text = new Text("Road Fighter Titulo");
+			img = new Image("file:src/main/resources/img/title.png", TITLE_WIDTH, TITLE_HEIGHT, false, false);
 
-			render = new VBox(text);
-			render.setAlignment(Pos.TOP_LEFT);
-			render.setTranslateY(Y);
-			render.setTranslateX(150);
-			render.setPrefWidth(Config.baseWidth);
-
-			Font font = Font.font("Verdana", FontWeight.EXTRA_BOLD, 50);
-			text.setTextAlignment(TextAlignment.CENTER);
-			text.setFont(font);
-			text.setFill(Color.DARKGREEN);
+			render = new ImageView(img);
+			render.setViewOrder(1);
+	    	render.setX(190);
+	    	render.setY(-150);
 			
 			idleAnimation = initIdleAnimation();
 		}

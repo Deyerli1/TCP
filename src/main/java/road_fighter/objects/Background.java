@@ -9,13 +9,11 @@ import road_fighter.utils.GameObject;
 public class Background extends GameObject implements Renderable {
 	private ImageView render;
 
-	private final int mapWidth = 800;
-	private final int mapHeight = 20000;
-
-	public Background() {
-		Image backgroundImage = new Image("file:src/main/resources/img/background.png", mapWidth, mapHeight, false, false);
+	public Background(String imgPath, int y, int width, int height) {
+		Image backgroundImage = new Image(imgPath, width, height, false, false);
 		render = new ImageView(backgroundImage);
-		render.setY(-19200);
+		render.setY(y);
+		render.setViewOrder(10);
 	}
 
 	@Override
