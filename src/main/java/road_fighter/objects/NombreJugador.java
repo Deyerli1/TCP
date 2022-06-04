@@ -11,29 +11,29 @@ import road_fighter.interfaces.Renderable;
 import road_fighter.interfaces.Updatable;
 import road_fighter.utils.GameObject;
 
-public class VelocidadInfo extends GameObject implements Renderable, Updatable {
-	private static int y = 5;
-	private static int x = 10;
+public class NombreJugador extends GameObject implements Renderable, Updatable {
+	private int y = 5;
+	private int x = 10;
 
 	private Text text;
 	private static VBox render;
-	private static double vel;
+	private static String nombreJugador;
 
-	public VelocidadInfo() {
+	public NombreJugador(String _nombreJugador) {
 		text = new Text();
-		vel = 0;
+		nombreJugador = _nombreJugador;
 		render = new VBox(text);
 		render.setTranslateY(y);
-		render.setTranslateX(x);
+		render.setTranslateX(x-10);
 
 		text.setFont(Font.font("MONOSPACED", FontWeight.BOLD, FontPosture.REGULAR, 15));
 		
 		text.setFill(Color.WHITE);
 	}
 	
-	public static void setValores(double _vel, double _y) {
-		vel = _vel;
-		render.setTranslateY(_y-570);
+	public static void setValores(double x, double _y) {
+		render.setTranslateX(x-10);
+		render.setTranslateY(_y+50);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class VelocidadInfo extends GameObject implements Renderable, Updatable {
 
 	@Override
 	public void update(double deltaTime) {
-		text.setText(vel+" Km/h");
+		text.setText(nombreJugador);
 	}
 
 	@Override

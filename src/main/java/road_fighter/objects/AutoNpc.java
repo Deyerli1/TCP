@@ -23,7 +23,7 @@ public abstract class AutoNpc extends Auto implements Despawneable {
 		collider = new Rectangle(this.x - colliderWidth / 2, this.y - colliderHeight / 2, colliderWidth, colliderHeight);
 		collider.setFill(null);
 		collider.setStroke(Color.FUCHSIA);
-		estado = new AutoNormal(this);
+		estado = new AutoNormal(this); 
     }
 
     @Override
@@ -31,6 +31,8 @@ public abstract class AutoNpc extends Auto implements Despawneable {
     	super.update(deltaTime);
 		if (isOffScreen()) {
 			GameObjectBuilder.getInstance().remove(this);
+		}else {
+			habilidadEspecial();
 		}
 	}
        

@@ -33,17 +33,19 @@ public class NPCBuilder extends GameObject implements Buildable {
 	}
 
 	public void stopBuilding() {
-		running = false;
+		running = false; 
 	}
 
 	public void create() {
 		Auto obs;
-		if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 5) {
-			obs = new Fijo(Config.posicionJugador - distanciaAJugadorSpawn);
-		} else {
-			obs = new Movil(Config.posicionJugador - distanciaAJugadorSpawn);
+		if(running) {
+			if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 5) {
+				obs = new Fijo(Config.posicionJugador - distanciaAJugadorSpawn);
+			} else {
+				obs = new Movil(Config.posicionJugador - distanciaAJugadorSpawn);
+			}
+			GameObjectBuilder.getInstance().add(obs);
 		}
-		GameObjectBuilder.getInstance().add(obs);
 	}
 
 	@Override

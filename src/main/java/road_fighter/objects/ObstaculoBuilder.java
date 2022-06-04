@@ -24,7 +24,7 @@ public class ObstaculoBuilder extends GameObject implements Buildable {
 				tiempoParaProximoObstaculo = OBSTACULO_COOLDOWN;
 				create();
 			}
-			tiempoParaProximoObstaculo--;
+			tiempoParaProximoObstaculo--; 
 		}
 	}
 
@@ -39,12 +39,14 @@ public class ObstaculoBuilder extends GameObject implements Buildable {
 	public void create() {
 		Obstaculo obs;
 
-		if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 5) {
-			obs = new Pozo(Config.posicionJugador - distanciaAJugadorSpawn);
-		} else {
-			obs = new ManchaAceite(Config.posicionJugador - distanciaAJugadorSpawn);
+		if(running) {
+			if ((int) Math.floor(Math.random() * (10 - 1 + 1) + 1) > 5) {
+				obs = new Pozo(Config.posicionJugador - distanciaAJugadorSpawn);
+			} else {
+				obs = new ManchaAceite(Config.posicionJugador - distanciaAJugadorSpawn);
+			}
+			GameObjectBuilder.getInstance().add(obs);
 		}
-		GameObjectBuilder.getInstance().add(obs);
 	}
 
 	@Override

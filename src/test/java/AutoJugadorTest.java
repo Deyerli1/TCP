@@ -2,18 +2,19 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import road_fighter.objects.Auto;
+import road_fighter.objects.AutoJugador;
+import road_fighter.objects.Pozo;
+import road_fighter.states.AutoDesestabilizado;
+
 public class AutoJugadorTest {
-    
-    long deltaTime = 1;
-   //private static final double NANOS_IN_SECOND_D = 1_000_000_000.0;
-    private static double[] posicion = {50,50};
+
 
     @Test
-    public void creacionJugador() {
-    	AutoJugador auto = new AutoJugador("Pepito", posicion);
-        assertEquals(auto.getX(), 50, 0.0);
-        assertEquals(auto.getY(), 50, 0.0);
-        assertEquals(auto.getNombreJugador(),"Pepito");
+    public void choquePozo() {
+    	Auto auto = new AutoJugador("Pepito", 400, 600);
+    	auto.collide(new Pozo(600));
+       	assertEquals(auto.getEstado(), AutoDesestabilizado.class);
     }
     
     @Test

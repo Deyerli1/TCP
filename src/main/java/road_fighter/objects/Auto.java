@@ -12,6 +12,7 @@ import road_fighter.interfaces.Collideable;
 import road_fighter.interfaces.Renderable;
 import road_fighter.interfaces.Updatable;
 import road_fighter.utils.GameObject;
+import road_fighter.utils.GameObjectBuilder;
 import road_fighter.states.AutoEstado;
 import road_fighter.states.AutoNormal;
 import road_fighter.states.AutoExplotado;
@@ -20,17 +21,18 @@ import road_fighter.states.AutoDesestabilizado;
 public abstract class Auto extends GameObject implements Updatable, Renderable, Collidator, Collideable {
 
 	protected double x, y;
-	protected double velMax, velActual, velDoblar;
+	protected double velMax, velActual, velDoblar; 
 	private double tiempoPenalizacion = 0;//el tiempo que paso desde que inicio la penalizacion
 	private final double TIEMPO_PENALIZACION_MAXIMO = 120, VEL_MAX_JUGADOR = 120, VEL_MAX_NPC = 100;
 	
-	protected final int ACELERACION = 1;
-	protected int velocidadDoblado = 10;
+	protected final int ACELERACION = 1;  
+	protected int velocidadDoblado = 7; 
 	private final int CHOQUES_MAXIMOS = 5;//choques antes de explotar
 	private int choquesActuales = 0;
 	
 	protected boolean doblarIzquierda, doblarDerecha, acelerar = false;
-	protected boolean penalizado = false, habilidadEspecialActiva = false, ganador = false, explotado = false;
+	protected boolean penalizado = false, habilidadEspecialActiva = false, 
+						ganador = false, explotado = false, borracho = false;
 	
 	protected AutoEstado estado;
 	protected String imgPath;
@@ -79,7 +81,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	}	
 
 	public void explotar() {
-		this.velActual = 0;
+		this.velActual = 0; 
 		estado = estado.explotar();
 	}
 		
@@ -95,7 +97,12 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 			tiempoPenalizacion = 50;//para que la inmunidad dure un cierto tiempo
 			habilidadEspecialActiva = false;
 			this.velMax = VEL_MAX_JUGADOR;
-			estado = estado.normalizar();
+			if(this.getClass() == AutoJugador.class) {
+				estado = estado.normalizar();
+			}else {
+				GameObjectBuilder.getInstance().remove(this);
+			}
+			
 		}
 		
 		if(tiempoPenalizacion == 0)
@@ -106,6 +113,7 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		whatUpWithThat = AudioResources.getWhatUpWithThat();
 		explosionAudio = AudioResources.getExplosionAudio();
 		motorAudio = AudioResources.getMotorAudio();
+		desestabilizacionAudio = AudioResources.getDesestabilizadoAudio();
 		
 		setAudioVol(1);
 	}
@@ -140,6 +148,10 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 		render.setImage(img);
 	}
 	
+	public void setBorracho(boolean value) {
+		borracho = value;
+	}
+	
 	public void setAutoAngle(int angulo) {
 		render.setRotate(angulo);
 		collider.setRotate(angulo);
@@ -152,9 +164,11 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	}
 	
 	public void setX(double x) {
-		this.x = x;
-		render.setX(this.x);
-		collider.setX(this.x- colliderWidth/2);
+		if(x < 575 && x > 210 ) {
+			this.x = x;
+			render.setX(this.x);
+			collider.setX(this.x- colliderWidth/2);
+		}
 	}
 	
 	public void setVelActual(double nuevaVel) {
@@ -193,6 +207,10 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 	}
 	
 	//GETTERS
+	
+	public boolean isBorracho() {
+		return borracho;
+	}
 	
 	public boolean isGanador() {
 		return ganador;
@@ -276,8 +294,15 @@ public abstract class Auto extends GameObject implements Updatable, Renderable, 
 				this.explotar();
 			} else if (!penalizado && (collideable.getClass() == ManchaAceite.class || collideable.getClass() == AutoJugador.class || collideable.getClass() == Movil.class || collideable.getClass() == Fijo.class) ){
 				choquesActuales++;
-				if( (AutoJugador.class).toString() == "class road_fighter.objects.AutoJugador")
+				desestabilizacionAudio.play();
+				if( this.getClass() == AutoJugador.class && !ganador ) {
 					whatUpWithThat.play();
+				}
+				this.desestabilizar();
+			}
+			else if( this.getClass() == AutoJugador.class && collideable.getClass() == LataCerveza.class) {
+				desestabilizacionAudio.play();
+				borracho = true;
 				this.desestabilizar();
 			}
 	}

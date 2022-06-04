@@ -24,7 +24,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
 	private Image obsImg;
 	
 	protected Rectangle collider;
-	protected final double colliderTolerance = 0.75;
+	protected final double colliderTolerance = 0.75; 
 	protected final int colliderWidth = (int) (width * colliderTolerance);
 	protected final int colliderHeight = (int) (height * colliderTolerance);
 
@@ -40,7 +40,7 @@ public abstract class Obstaculo extends GameObject implements Updatable, Rendera
     }
 		
 	public Obstaculo(int y, int x, String pathImg, int height, int anguloRotacionCollider) {//meta y cordones
-		obsImg = new Image(pathImg, 800, 20, false, false);
+		obsImg = new Image(pathImg, 340, 20, false, false);
         render = new ImageView(obsImg);
         render.setX(x);
         render.setY(y);

@@ -20,6 +20,7 @@ import road_fighter.objects.Background;
 import road_fighter.objects.Cordon;
 import road_fighter.objects.Meta;
 import road_fighter.objects.NPCBuilder;
+import road_fighter.objects.NombreJugador;
 import road_fighter.objects.ObstaculoBuilder;
 import road_fighter.objects.Reproductor;
 import road_fighter.objects.VelocidadInfo;
@@ -34,7 +35,6 @@ public class GameSceneHandler extends SceneHandler {
 	private final int MAP_HEIGHT = 20000;
 
 	private final String PATH_FONDO_GAME = "file:src/main/resources/img/background.png";
-	private final String PATH_MUSICA_GAME = "src/main/resources/snd/looping-radio-mix.mp3";
 	
 	private Auto player;
 	private Background background;
@@ -44,12 +44,14 @@ public class GameSceneHandler extends SceneHandler {
 	private Meta meta;
 	private NPCBuilder npcBuilder;
 	private VelocidadInfo velInfo;
+	private NombreJugador nombreAuto;
 	public ParallelCamera camera = new ParallelCamera();
-	//private Radio radio;
+	
 
 	private boolean animacionActiva = false;
 	private boolean started = false;
-	private boolean ended = false;
+	
+	private TranslateTransition tt = new TranslateTransition();
 
 	public GameSceneHandler(RoadFighterGame r) {
 		super(r);
@@ -57,7 +59,7 @@ public class GameSceneHandler extends SceneHandler {
 
 	protected void prepareScene() {
 		Group rootGroup = new Group();
-		scene = new Scene(rootGroup, Config.baseWidth, Config.baseHeight, Color.BLACK);
+		scene = new Scene(rootGroup, Config.baseWidth, Config.baseHeight, Color.rgb(103, 137, 43));
 	}
 
 	protected void defineEventHandlers() {
@@ -69,19 +71,12 @@ public class GameSceneHandler extends SceneHandler {
 					makeAction();
 					player.setAcelerar(true);
 					break;
-				case S:
-					//TODO
-					//player.setFrenar(false);
-					break;
 				case A:
 					player.setDoblarIzquierda(true);
 					break;
 				case D:
 					player.setDoblarDerecha(true);
 					break;
-				case R:
-					//TODO
-					//prenderRadio();
 				case ESCAPE:
 					System.exit(0);
 					break;
@@ -117,7 +112,8 @@ public class GameSceneHandler extends SceneHandler {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 				
-		player = new AutoJugador("pepito", 400, 600);
+		String nombreJugador = "pepito";
+		player = new AutoJugador(nombreJugador, 400, 600);
 		cordonIzquierdo = new Cordon(210);
 		cordonDerecho = new Cordon(572);
 		velInfo = new VelocidadInfo();
@@ -127,12 +123,13 @@ public class GameSceneHandler extends SceneHandler {
 		background = new Background(PATH_FONDO_GAME, -19200, MAP_WIDTH, MAP_HEIGHT);
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
-		meta = new Meta(20000);
-		reproductor = new Reproductor(PATH_MUSICA_GAME);
+		meta = new Meta(18650);
+		reproductor = new Reproductor(Config.PATH_MUSICA);
+		nombreAuto = new NombreJugador(nombreJugador);
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor);
+		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor, nombreAuto);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -146,7 +143,6 @@ public class GameSceneHandler extends SceneHandler {
 	
 	private void cleanData() {
 		GameObjectBuilder.getInstance().removeAll();
-		ended = false;
 		started = false;
 		Config.baseSpeed = 250;
 	}
@@ -159,10 +155,6 @@ public class GameSceneHandler extends SceneHandler {
 		}
 	}
 	
-	private void prenderRadio() {
-		//radio.start();
-	}
-	
 	public void update(double delta) {
 		super.update(delta);
 		camera.translateYProperty().set(player.getY() - Config.baseHeight/2 - 200);
@@ -171,7 +163,7 @@ public class GameSceneHandler extends SceneHandler {
 		if(!player.isGanador()) {
 			if(player.getEstado().getClass()  == AutoExplotado.class && !animacionActiva) {
 				animacionActiva = true;
-				TranslateTransition tt = new TranslateTransition(Duration.millis(50), scene.getRoot());
+				tt = new TranslateTransition(Duration.millis(50), scene.getRoot());
 				tt.setFromX(-20f);
 				tt.setByX(20f);
 				tt.setCycleCount(6);
@@ -180,12 +172,28 @@ public class GameSceneHandler extends SceneHandler {
 				tt.setOnFinished(event -> {
 					scene.getRoot().setTranslateX(0);
 				});
+			}else if(player.isBorracho() && !animacionActiva) {
+				animacionActiva = true;
+				tt = new TranslateTransition( Duration.seconds(2), scene.getRoot());
+				tt.setFromX(-20f);
+				tt.setByX(20f);
+				tt.setCycleCount(6);
+				tt.setAutoReverse(true);
+				tt.playFromStart();
+				tt.setOnFinished(event -> {
+					scene.getRoot().setTranslateX(0);
+					tt.stop();
+				});
 			}
-			else if(player.getEstado().getClass()  == AutoNormal.class) {
+			else if(player.getEstado().getClass() == AutoNormal.class) {
 				animacionActiva = false;
+				player.setBorracho(false);
 			}
 		}
-		
+		else {
+			obstaculoBuilder.stopBuilding();
+			npcBuilder.stopBuilding();
+		}
 	}
 	
 
@@ -212,7 +220,7 @@ public class GameSceneHandler extends SceneHandler {
 				// XXX Si el substract es distinto???
 				// Check intersects
 				if (intersect.getBoundsInLocal().getWidth() != -1) {
-					collidator.collide(collideable);
+					collidator.collide(collideable); 
 				} else {
 					// Check contains
 					Bounds collideableBounds = collideable.getCollider().getBoundsInLocal();

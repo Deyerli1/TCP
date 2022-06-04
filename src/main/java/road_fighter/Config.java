@@ -9,7 +9,11 @@ public class Config {
 	public static double posicionActualJugador = 0;
 	public static double posicionJugador;//esta es la actual
 	public static final int offScreenTolerance = 700;
+	
+	public static final String PATH_MUSICA = "src/main/resources/snd/ambient.mp3";
 
+	public static double volumenMusica = 0.5;
+	
 	private Config() {
 	}
 	

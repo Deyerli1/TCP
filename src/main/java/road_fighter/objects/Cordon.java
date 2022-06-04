@@ -7,8 +7,8 @@ import road_fighter.Config;
 public class Cordon extends Obstaculo {
         
     public Cordon(int x) {
-        super(-(int)(Config.baseHeight*24.3), x, "file:src/main/resources/img/cordon.png", 20000, 0);
-    }
+        super(-(int)(Config.baseHeight*24.3), x, "file:src/main/resources/img/empty.png", 30000, 0);
+    } 
 
     @Override
     public void update(double deltaTime) {

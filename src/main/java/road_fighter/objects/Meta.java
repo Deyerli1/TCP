@@ -6,9 +6,10 @@ import javafx.scene.shape.Shape;
 public class Meta extends Obstaculo {
 
 	public Meta(int y) {
-		 super(-y, 50, "file:src/main/resources/img/meta.png", 500, 90);
-		 collider.setX(400);
+		 super(-y, 230, "file:src/main/resources/img/meta.png", 500, 90);
+		 collider.setX(230);
 		 collider.setY(render.getY()-300);
+		 render.setViewOrder(9);
 	}
 
 	@Override

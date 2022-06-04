@@ -46,6 +46,14 @@ public class Title extends GameObject implements Renderable {
 			return translateTransition;
 		}
 
+		public void setDisable(boolean estado) {
+			render.setDisable(estado);
+		}
+		
+		public void playAnimation() {
+			idleAnimation.play();
+		}
+		
 		@Override
 		public void destroy() {
 			idleAnimation.stop();

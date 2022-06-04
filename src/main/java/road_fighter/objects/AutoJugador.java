@@ -11,11 +11,9 @@ import road_fighter.states.AutoNormal;
 
 
 public class AutoJugador extends Auto {
-	
+	 
 	private int topeHabilidadEspecial = 5;
-	protected String nombreJugador;
 	private static final String fotoJugador = "file:src/main/resources/img/familySedan.png";
-	private static final String fotoGanador = "file:src/main/resources/img/ganador.gif";
 	private static final int width = 35;
 	private static final int height = 70;
 	
@@ -23,7 +21,6 @@ public class AutoJugador extends Auto {
 		super(x, y, width, height);
 		autoImg = new Image(fotoJugador, width, height, false, false);
     	this.imgPath = fotoJugador;
-		this.nombreJugador = nombreJugador;
     	render = new ImageView(autoImg);
     	render.setX(x);
     	render.setY(y);
@@ -34,7 +31,7 @@ public class AutoJugador extends Auto {
 		collider.setX(x- colliderWidth/2);
 		collider.setY(y- colliderHeight/2);
 		collider.setStroke(Color.BLUE);
-		estado = new AutoNormal(this); 
+		estado = new AutoNormal(this);
     }
 	
 	private void ganar() {
@@ -46,11 +43,7 @@ public class AutoJugador extends Auto {
 	public boolean isGanador() {
 		return ganador;
 	}
-	
-	public String getNombreJugador() {
-    	return nombreJugador;
-    }
-	
+		
 	@Override
     public void habilidadEspecial() {
     	if(topeHabilidadEspecial > 0 && !penalizado) {
@@ -83,5 +76,6 @@ public class AutoJugador extends Auto {
 	public void update(double deltaTime) {
 		super.update(deltaTime);
 		VelocidadInfo.setValores(velActual, y);
+		NombreJugador.setValores(this.x, this.y);
 	}
 }

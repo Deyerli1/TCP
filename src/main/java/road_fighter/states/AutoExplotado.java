@@ -5,7 +5,7 @@ import road_fighter.objects.Auto;
 
 public class AutoExplotado extends AutoEstado{
 	
-	private static String imgPath = "file:src/main/resources/img/explotado.png";
+	private static String imgPath = "file:src/main/resources/img/explotado.gif";
 	
 	AutoExplotado(Auto auto) {
 		super(auto);
@@ -14,7 +14,7 @@ public class AutoExplotado extends AutoEstado{
 
 	@Override
 	public AutoEstado desestabilizar() {
-		return new AutoDesestabilizado(this.auto);
+		return new AutoDesestabilizado(this.auto); 
 	}
 
 	@Override
@@ -25,6 +25,7 @@ public class AutoExplotado extends AutoEstado{
 	@Override
 	public AutoEstado normalizar() {
 		auto.setAutoAngle(0);
+		auto.setX(400);
 		return new AutoNormal(this.auto);
 	}
 	

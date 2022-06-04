@@ -9,13 +9,14 @@ public class AutoGanador extends AutoEstado{
 	
 	public AutoGanador(Auto auto) {
 		super(auto);
+		auto.setX(210);
+		auto.setAutoAngle(0);
 		auto.setImg (new Image(imgPath, 600, 400, false, false));
-		
 	}
 
 	@Override
 	public AutoEstado desestabilizar() {
-		return new AutoDesestabilizado(this.auto);
+		return this;
 	}
 
 	@Override
@@ -25,8 +26,7 @@ public class AutoGanador extends AutoEstado{
 
 	@Override
 	public AutoEstado normalizar() {
-		auto.setAutoAngle(0);
-		return new AutoNormal(this.auto);
+		return this;
 	}
 	
 	@Override

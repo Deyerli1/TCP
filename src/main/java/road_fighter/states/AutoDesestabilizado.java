@@ -10,8 +10,7 @@ public class AutoDesestabilizado extends AutoEstado {
 	AutoDesestabilizado(Auto auto) {
 		super(auto);
 		direccionDesvio = (int)Math.floor(Math.random()*(1-(-1)+1)+(-1));
-		auto.setImg (new Image("file:src/main/resources/img/desestabilizado.png", auto.getWidth(), auto.getHeight(), false, false));
-		//auto.setImg (new Image(auto.getImgPath(), auto.getWidth(), auto.getHeight(), false, false));
+		auto.setImg (new Image(auto.getImgPath(), auto.getWidth(), auto.getHeight(), false, false));
 		auto.setAutoAngle(direccionDesvio*20);
 	}
 

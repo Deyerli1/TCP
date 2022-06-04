@@ -16,7 +16,7 @@ public class RoadFighterGame extends Application {
 		this.stage = stage;
 		menuSceneHandler = new MenuSceneHandler(this);
 		Scene scene = menuSceneHandler.getScene();
-		stage.setScene(scene);
+		stage.setScene(scene); 
 
 		menuSceneHandler.load();
 		
