@@ -1,45 +1,56 @@
 package road_fighter.objects.menu;
 
-import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
-import road_fighter.Config;
 import road_fighter.interfaces.Renderable;
 import road_fighter.utils.GameObject;
 
 public class MenuItem extends GameObject implements Renderable{
-	private final int Y = Config.baseHeight * 3 / 5;
-	
-	private final int ITEM_WIDTH = 200;
-	private final int ITEM_HEIGHT = 100;
+
+	//Tamaño original 500x87
+	private final int ITEM_WIDTH = 300;
+	private final int ITEM_HEIGHT = 53;
 	
 	private Image img;
 	private ImageView render;
-//	private Text text;
-//	private VBox render;
-
-	public MenuItem(String name) {
-		img = new Image(name, ITEM_WIDTH, ITEM_HEIGHT, false, false);
-
+	private boolean selected = false;
+	private Effect shadow = new DropShadow(10, Color.BLACK);
+//	private Effect blur = new BoxBlur(1, 1, 3);
+	
+	public MenuItem(String path, int x, int y) {
+		img = new Image(path, ITEM_WIDTH, ITEM_HEIGHT, false, false);
 		render = new ImageView(img);
-		render.setViewOrder(1);
-    	render.setX(190);
-    	render.setY(-150);
-		
+		render.setViewOrder(2);
+    	render.setX(x);
+    	render.setY(y);
 	}
-
+	
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+		if(this.selected) {
+			render.setEffect(shadow);
+		}else {
+			render.setEffect(null);
+		}
+	}
+	
+	public boolean isSelected() {
+		return selected;
+	}
 	@Override
 	public Node getRender() {
 		return render;
 	}
 
 	@Override
-	public void destroy() {	}
+	public void destroy() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

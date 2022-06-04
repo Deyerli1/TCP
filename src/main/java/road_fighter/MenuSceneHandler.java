@@ -23,7 +23,8 @@ public class MenuSceneHandler extends SceneHandler {
 	private Background background;
 	private Title title;
 	private TextoComenzar textoComenzar;
-	
+	private MenuItem unJugador;
+	private MenuItem options;
 	private Group rootGroup;
 
 	public MenuSceneHandler(RoadFighterGame r) {
@@ -52,15 +53,13 @@ public class MenuSceneHandler extends SceneHandler {
 				switch (e.getCode()) {
 				case UP:
 				case W:
-					// Menu hacia arriba
-					break;
 				case DOWN:
 				case S:
-					// Menu hacia abajo
+					cambiarMenu();
 					break;
 				case SPACE:
 				case ENTER:
-					r.startGame();
+					accion();
 					break;
 				case Q:
 				case ESCAPE:
@@ -93,8 +92,24 @@ public class MenuSceneHandler extends SceneHandler {
 		};
 	}
 	
+	public void accion() {
+		if(unJugador.isSelected()) {
+			r.startGame();
+		}else {
+			
+		}
+	}
 	
-
+	public void cambiarMenu(){
+		if(unJugador.isSelected()) {
+			this.unJugador.setSelected(false);
+			this.options.setSelected(true);
+		}else {
+			this.unJugador.setSelected(true);
+			this.options.setSelected(false);
+		}
+	}
+	
 	public void load() {
 		boolean fullStart = true;
 		Group baseGroup = new Group();
@@ -102,16 +117,17 @@ public class MenuSceneHandler extends SceneHandler {
 		
 		background = new Background(PATH_FONDO_MENU, 0, MENU_MAP_WIDTH, MENU_MAP_HEIGHT);
 		title = new Title();
-		textoComenzar = new TextoComenzar();
 		reproductor = new Reproductor(PATH_MUSICA_MENU);
-//		MenuItem unJugador = new MenuItem("");
+		unJugador = new MenuItem("file:src/main/resources/img/singleplayer.png", 250, 500);
+		options = new MenuItem("file:src/main/resources/img/options.png", 250, 600);
 		
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(baseGroup);
-		gameOB.add(background, title, textoComenzar, reproductor);
+		gameOB.add(background, title, reproductor, unJugador, options);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
+			unJugador.setSelected(true);
 		}
 	}
 
