@@ -1,13 +1,13 @@
-Juego de Programación Avanzada
+# Juego de Programación Avanzada
 
-Consigna
+## Consigna
 
-Introducción
+### Introducción
 Durante el taller desarrollaremos un juego de carreras multijugador, con mecánicas similares al Road Fighter
 
 En las clases del taller se les proveerá de herramientas para poder realizarlo en Java, con las buenas prácticas que irán adquiriendo.
 
-Metodología de trabajo
+### Metodología de trabajo
 
 La realización del juego, tendrá tres etapas con sus respectivas entregas:
 
@@ -24,7 +24,7 @@ Esto incluye evitar el código aglomerado, tener una buena interacción de clase
 
 ---
 
-Mecánica del juego
+## Mecánica del juego
 
 La mecánica del juego consiste en una carrera entre múltiples automóviles en una ruta. A diferencia del Road Fighter, además de existir los automóviles circulando por la ruta, se contará con otros oponentes controlados por otras personas.
 * Una partida debe contar como mínimo con 2 jugadores (y soportar más de 4)
@@ -42,7 +42,7 @@ La mecánica del juego consiste en una carrera entre múltiples automóviles en 
 
 
 
-Requisitos generales
+### Requisitos generales
 
 1. Como usuario quiero ingresar al juego con mi nombre de usuario y contraseña, para poder jugar contra otros jugadores en una sala
 2. Como usuario quiero seleccionar una sala de las existentes, para poder ingresar y jugar con los participantes (*1)
@@ -55,7 +55,7 @@ Notas:
 (*2) La partida podrá ser iniciada por el creador de la sala, o cuando todos los jugadores estén listos, o cualquier otra condición que consideren
 
 
-Requisitos extras
+### Requisitos extras
 
 Además de las mecánicas y requisitos antes mencionados, cada grupo debe elegir al menos 5 puntos de requisitos extras de los siguientes
 - (3) Agregar cambios para acelerar más rápido
