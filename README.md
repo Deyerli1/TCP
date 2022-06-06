@@ -24,7 +24,7 @@ Esto incluye evitar el código aglomerado, tener una buena interacción de clase
 
 ---
 
-## Mecánica del juego
+### Mecánica del juego
 
 La mecánica del juego consiste en una carrera entre múltiples automóviles en una ruta. A diferencia del Road Fighter, además de existir los automóviles circulando por la ruta, se contará con otros oponentes controlados por otras personas.
 * Una partida debe contar como mínimo con 2 jugadores (y soportar más de 4)
