@@ -4,6 +4,8 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import road_fighter.servidor.Cliente;
+import road_fighter.servidor.Servidor;
 
 public class RoadFighterGame extends Application {
 	private Stage stage;
@@ -11,6 +13,10 @@ public class RoadFighterGame extends Application {
 	private MenuSceneHandler menuSceneHandler;
 
 	private GameSceneHandler gameSceneHandler;
+	
+	public Servidor servidor;
+	public Cliente cliente;
+	
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
@@ -37,4 +43,16 @@ public class RoadFighterGame extends Application {
 		stage.setScene(scene);
 		gameSceneHandler.load(true);
 	}
+	
+	public void host(int puerto) {
+		servidor = new Servidor(puerto);
+		agregarJugador();
+	}
+	
+	public void agregarJugador() {
+		//new Lobby();
+		cliente.main(null);
+	}
+	
+	
 }

@@ -3,6 +3,7 @@ import road_fighter.objects.Background;
 import road_fighter.objects.Reproductor;
 import road_fighter.objects.menu.MenuItem;
 import road_fighter.objects.menu.Title;
+import road_fighter.servidor.Servidor;
 import road_fighter.utils.GameObjectBuilder;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -21,15 +22,14 @@ public class MenuSceneHandler extends SceneHandler {
 	private final String PATH_FONDO_MENU = "file:src/main/resources/img/backgroundMenu.png";
 	private final String PATH_VOLUMEN_MENU = "file:src/main/resources/img/music.png";
 	private final String PATH_UN_JUGADOR_MENU = "file:src/main/resources/img/singleplayer.png";
-//	private final String PATH_OPCIONES_MENU = "file:src/main/resources/img/options.png";
 	private final String PATH_MUSICA_MENU = "src/main/resources/snd/ambient.mp3";
 	private Background background;
 	private Title title;
 	private MenuItem unJugador;
-//	private MenuItem optionsMenu;
 	private Group rootGroup;
 	private MenuItem musicaMenu;
 	public ParallelCamera camera = new ParallelCamera();
+	
 	
 	public MenuSceneHandler(RoadFighterGame r) {
 		super(r);	
@@ -107,13 +107,12 @@ public class MenuSceneHandler extends SceneHandler {
 	public void accionMenu() {
 		if(unJugador.isSelected()) {
 			r.startGame();
-		}else {
-			
+		}else {//es multijugador
+			r.host(Config.puerto);
 		}
 	}
 	
 	public void cambiarMenu(){
-		
 		if(unJugador.isSelected()) {
 			this.unJugador.setSelected(false);
 			this.musicaMenu.setSelected(true);

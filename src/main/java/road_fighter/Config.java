@@ -14,6 +14,8 @@ public class Config {
 
 	public static double volumenMusica = 0.5;
 	
+	public static int puerto = 42069;
+	
 	private Config() {
 	}
 	
