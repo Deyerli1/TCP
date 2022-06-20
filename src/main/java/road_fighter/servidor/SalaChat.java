@@ -30,10 +30,12 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-
+import road_fighter.RoadFighterGame;
+import road_fighter.objects.Reproductor;
 import road_fighter.servidor.Cliente;
 import road_fighter.servidor.MensajeAServidor;
 import road_fighter.servidor.Sala;
+import road_fighter.utils.MyTextArea;
 
 public class SalaChat extends JFrame {
 
@@ -44,8 +46,10 @@ public class SalaChat extends JFrame {
 	private Cliente cliente;
 	private String nombre;
 	private JButton btnEnviar;
+	private JButton btnJugar;
 	private Sala sala;
 	private boolean salaPrivada;
+	
 
 	public SalaChat(Sala sala, Cliente cliente) {
 		this.sala = sala;
@@ -78,7 +82,6 @@ public class SalaChat extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 			}
-
 		});
 
 		JMenuItem mntmNewMenuItem = new JMenuItem("Ver tiempos de sesion");
@@ -127,17 +130,27 @@ public class SalaChat extends JFrame {
 		});
 		panel.add(textFieldEscrituraMensaje);
 		textFieldEscrituraMensaje.setColumns(10);
+		
+		
+		btnJugar = new JButton("Jugar");
+		btnJugar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				iniciarJuego();
+			}
+		});
+		panel.add(btnJugar, BorderLayout.NORTH);
+		
 
 		btnEnviar = new JButton("Enviar");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				enviarMensaje();
-
 			}
 
 		});
 		panel.add(btnEnviar, BorderLayout.EAST);
 
+		textArea = new MyTextArea();
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
 		textArea.setText("Has ingresado a la sala"
@@ -216,6 +229,10 @@ public class SalaChat extends JFrame {
 			textFieldEscrituraMensaje.setText("");
 		}
 
+	}
+	
+	private void startGame() {
+		System.out.println("iniciando juego");
 	}
 
 	public String getNombreSala() {
@@ -312,6 +329,10 @@ public class SalaChat extends JFrame {
 				textArea.setText(textArea.getText() + "\n");				
 			}
 		}
+	}
+	
+	private void iniciarJuego() {
+		sala.iniciarJuego();
 	}
 }
 

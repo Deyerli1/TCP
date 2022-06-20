@@ -59,10 +59,10 @@ public class HiloCliente extends Thread {
 					//7: recibe la lista de usuarios en la sala
 					recibirListaUsuarios(mensaje);
 					break;
-				case 8:
-					//8: creacion y apertura de sala privada
-					salaPrivadaCreada(mensaje);
-					break;
+//				case 8:
+//					//8: creacion y apertura de sala privada
+//					salaPrivadaCreada(mensaje);
+//					break;
 				case 9:
 					//9: ya existe la sala privada
 					mostrarErrorPorPantalla("Sala privada existente", "Error en creacion de sala privada");
@@ -88,9 +88,9 @@ public class HiloCliente extends Thread {
 		ventana.mostrarErrorPorPantalla(descripcion, titulo);
 	}
 
-	private void salaPrivadaCreada(MensajeACliente mensaje) {
-		ventana.salaPrivadaCreada(mensaje);
-	}
+//	private void salaPrivadaCreada(MensajeACliente mensaje) {
+//		ventana.salaPrivadaCreada(mensaje);
+//	}
 
 	private void recibirListaUsuarios(MensajeACliente mensaje) {
 		ventana.recibirListaUsuarios(mensaje);

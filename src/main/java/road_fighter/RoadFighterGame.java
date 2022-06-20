@@ -13,10 +13,7 @@ public class RoadFighterGame extends Application {
 	private MenuSceneHandler menuSceneHandler;
 
 	private GameSceneHandler gameSceneHandler;
-	
-	public Servidor servidor;
-	public Cliente cliente;
-	
+		
 	@Override
 	public void start(Stage stage) {
 		this.stage = stage;
@@ -32,7 +29,7 @@ public class RoadFighterGame extends Application {
 		stage.show();
 	}
 
-	public static void main(String[] args) {
+	public void iniciarJuego() {
 		launch();
 	}
 
@@ -43,16 +40,5 @@ public class RoadFighterGame extends Application {
 		stage.setScene(scene);
 		gameSceneHandler.load(true);
 	}
-	
-	public void host(int puerto) {
-		servidor = new Servidor(puerto);
-		agregarJugador();
-	}
-	
-	public void agregarJugador() {
-		//new Lobby();
-		cliente.main(null);
-	}
-	
 	
 }

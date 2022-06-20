@@ -321,13 +321,13 @@ public class Lobby extends JFrame {
 		salaChat.mostrarListaUsuarios(mensaje.getTexto());
 	}
 
-	public void salaPrivadaCreada(MensajeACliente mensaje) {
-		SalaChat salaPrivada = new SalaChat(mensaje.getSala(), cliente);
-
-		salasAbiertas.add(salaPrivada);
-		mapaSalas.put(salaPrivada.getName(), mensaje.getSala());
-		mapaSalasAbiertas.put(salaPrivada.getNombreSala(), salaPrivada);
-	}
+//	public void salaPrivadaCreada(MensajeACliente mensaje) {
+//		SalaChat salaPrivada = new SalaChat(mensaje.getSala(), cliente);
+//
+//		salasAbiertas.add(salaPrivada);
+//		mapaSalas.put(salaPrivada.getName(), mensaje.getSala());
+//		mapaSalasAbiertas.put(salaPrivada.getNombreSala(), salaPrivada);
+//	}
 
 	public void mostrarErrorPorPantalla(String descripcion, String titulo) {
 		JOptionPane.showMessageDialog(this, descripcion, titulo, JOptionPane.WARNING_MESSAGE);

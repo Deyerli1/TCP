@@ -8,9 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import road_fighter.Config;
-
-public class Servidor {
+public class Servidor{
 	int puerto;
 	ServerSocket server;
 	List<Socket> sockets;
@@ -27,35 +25,29 @@ public class Servidor {
 		this.mapaSalas = new HashMap<String, Sala>();
 		this.mapaNombreSocket = new HashMap<String, Socket>();
 		this.mapaSocketsObjectOuput = new HashMap<Socket, ObjectOutputStream>();
-
 		try {
 			server = new ServerSocket(puerto);
 		} catch (IOException e) {
 			System.out.println("Error en creacion de puertos");
 			e.printStackTrace();
 		}
+		System.out.println("constructor servidor");
 	}
 
 	public void run() {
 		try {
 			while (true) {
+			System.out.println("Servidor.run()");
 				Socket socket = server.accept();
 				System.out.println("Cliente conectado");
 				sockets.add(socket);
 				new HiloServidor(socket, sockets, mapaSocketsObjectOuput, mapaNombreSocket, salas, mapaSalas).start();
 			}
-
 		} catch (IOException e) {
 			System.out.println("Error en conexion con el cliente");
 			e.printStackTrace();
 		}
 
 	}
-
-	public static void main(String[] args) {
-		System.out.println("Servidor ejecutandose");
-		new Servidor(Config.puerto).run();
-	}
-
 }
 

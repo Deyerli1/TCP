@@ -108,7 +108,7 @@ public class MenuSceneHandler extends SceneHandler {
 		if(unJugador.isSelected()) {
 			r.startGame();
 		}else {//es multijugador
-			r.host(Config.puerto);
+
 		}
 	}
 	

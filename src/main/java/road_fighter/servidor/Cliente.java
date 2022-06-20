@@ -45,9 +45,7 @@ public class Cliente{
 	}
 
 	public void inicializarHiloCliente(Lobby ventana) {
-		System.out.println("inicio inicializarHiloCliente");
 		new HiloCliente(socket,entrada, ventana).start();
-		System.out.println("fin inicializarHiloCliente");
 	}
 
 	public static void main(String[] args) {

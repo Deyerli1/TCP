@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import road_fighter.RoadFighterGame;
+
 
 public class Sala implements Serializable {
 
@@ -15,6 +17,7 @@ public class Sala implements Serializable {
 	private Map<String,Long> tiempoUsuarios;
 	private boolean privada;
 	private List<String> historialMensajes = new ArrayList<String>();
+	private RoadFighterGame r;
 
 	public Sala(String nombreSala,boolean privada) {
 		this.nombreSala = nombreSala;
@@ -40,7 +43,6 @@ public class Sala implements Serializable {
 		tiempoUsuarios.put(nombreCliente, tiempoInicioSesion);
 	}
 
-
 	public void eliminarUsuario(String nombreUsuario) {
 		usuariosConectados.remove(nombreUsuario);
 		tiempoUsuarios.remove(nombreUsuario);
@@ -54,8 +56,6 @@ public class Sala implements Serializable {
 	public String toString() {
 		return "Sala [nombreSala=" + nombreSala + ", usuariosConectados=" + usuariosConectados + "]";
 	}
-
-
 
 	@Override
 	public int hashCode() {
@@ -91,6 +91,11 @@ public class Sala implements Serializable {
 	}
 	public boolean isPrivada() {
 		return privada;
+	}
+	
+	public void iniciarJuego() {
+		r = new RoadFighterGame();
+		r.iniciarJuego();
 	}
 
 }
