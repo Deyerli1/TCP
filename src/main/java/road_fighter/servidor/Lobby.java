@@ -192,6 +192,7 @@ public class Lobby extends JFrame {
 	}
 
 	private void conectarse() {
+		System.out.println("conectando");
 		String respuesta = JOptionPane.showInputDialog(this, "Ingrese nombre de usuario:", "");
 		if (respuesta != null && !respuesta.equals("")) {
 			crearUsuario(respuesta);
@@ -199,12 +200,13 @@ public class Lobby extends JFrame {
 	}
 
 	public void crearUsuario(String nombreCliente) {
+		System.out.println("creando usuario");
 		cliente = new Cliente(nombreCliente, "localhost", Config.puerto, this);
+		System.out.println("iniciando hilo");
 		cliente.inicializarHiloCliente(this);
 	}
 
 	public void activarBotones() {
-		
 		setTitle("Usuario:" + cliente.getNombre() + "- Lobby");
 		btnCrearSala.setEnabled(true);
 		listaSalas.setEnabled(true);

@@ -19,8 +19,10 @@ public class Cliente{
 		try {
 			socket = new Socket(ip, puerto);
 			salida=new ObjectOutputStream(socket.getOutputStream());
+			salida.flush();
 			MensajeAServidor msj= new MensajeAServidor(nombre,null,1);
 			enviarMensaje(msj); 
+
 		} catch (UnknownHostException e) {
 			System.out.println("Error host desconocido");
 			e.printStackTrace();
@@ -28,15 +30,19 @@ public class Cliente{
 			System.out.println("Error en conexion con el servidor");
 			e.printStackTrace();
 		}
+		System.out.println("cliente creado");
 	}
 
 	public void enviarMensaje(MensajeAServidor mensaje) {
+		System.out.println("Cliente.enviarMensaje");
 		if(!socket.isClosed()) {
 			try {
 				salida.reset();
 				salida.writeObject(mensaje);
-				if(mensaje.getTipo() == 0)
+				if(mensaje.getTipo() == 0) {
 					System.exit(0);
+				}
+				System.out.println("cliente.enviarMensaje 2");
 			} catch (IOException e) {
 				System.out.println("Error en envio de mensaje cliente");
 				e.printStackTrace();

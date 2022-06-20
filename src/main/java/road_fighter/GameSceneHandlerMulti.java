@@ -12,7 +12,6 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
-import javafx.util.Duration;
 import road_fighter.interfaces.Collidator;
 import road_fighter.interfaces.Collideable;
 import road_fighter.objects.Auto;
@@ -26,8 +25,6 @@ import road_fighter.objects.ObstaculoBuilder;
 import road_fighter.objects.Reproductor;
 import road_fighter.objects.VelocidadInfo;
 import road_fighter.servidor.Servidor;
-import road_fighter.states.AutoExplotado;
-import road_fighter.states.AutoNormal;
 import road_fighter.utils.GameObjectBuilder;
 
 public class GameSceneHandlerMulti extends SceneHandler {
@@ -58,6 +55,7 @@ public class GameSceneHandlerMulti extends SceneHandler {
 	public GameSceneHandlerMulti(RoadFighterGame r) {
 		super(r);
 		servidor = new Servidor(Config.puerto);
+		servidor.run();
 	}
 
 	protected void prepareScene() {

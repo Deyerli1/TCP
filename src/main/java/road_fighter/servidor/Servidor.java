@@ -31,7 +31,7 @@ public class Servidor{
 			System.out.println("Error en creacion de puertos");
 			e.printStackTrace();
 		}
-		System.out.println("constructor servidor");
+		System.out.println("servidor creado");
 	}
 
 	public void run() {

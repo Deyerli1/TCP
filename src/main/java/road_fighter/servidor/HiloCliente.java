@@ -9,9 +9,7 @@ public class HiloCliente extends Thread {
 	private Socket socket;
 
 	public HiloCliente(Socket socket, ObjectInputStream entrada, Lobby ventana) {
-		System.out.println("Constructor hiloCliente");
 		this.socket = socket;
-		System.out.println(this.socket);
 		this.entrada = entrada;
 		this.ventana = ventana;
 	}
@@ -20,13 +18,15 @@ public class HiloCliente extends Thread {
 		System.out.println("HiloCliente.run");
 		MensajeACliente mensaje;
 		try {
-			System.out.println(socket.getInputStream());
-			System.out.println("try");
 			
-			entrada = new ObjectInputStream(socket.getInputStream());		
+			System.out.println(socket.getInputStream());
+			System.out.println("try   ");
+			
+			entrada = new ObjectInputStream(socket.getInputStream());
 						
 			System.out.println(entrada);
 			System.out.println("aca no llega");
+			
 			int tipoMensaje=0;
 			while (tipoMensaje != -1 && tipoMensaje!=-2) {// Se cierra el hilo con un mensaje del servidor de tipo 1
 				mensaje = (MensajeACliente) entrada.readObject();

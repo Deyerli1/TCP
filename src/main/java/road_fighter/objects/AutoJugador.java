@@ -16,6 +16,8 @@ public class AutoJugador extends Auto {
 	private static final String fotoJugador = "file:src/main/resources/img/jugador/familySedan.png";
 	private static final int width = 35;
 	private static final int height = 70;
+	public NombreJugador nombreAuto;
+	public VelocidadInfo velInfo;
 	
 	public AutoJugador(String nombreJugador, int x, int y) {
 		super(x, y, width, height);
@@ -32,6 +34,9 @@ public class AutoJugador extends Auto {
 		collider.setY(y- colliderHeight/2);
 		collider.setStroke(Color.BLUE);
 		estado = new AutoNormal(this);
+		
+		nombreAuto = new NombreJugador(nombreJugador);
+		velInfo = new VelocidadInfo();
     }
 	
 	private void ganar() {
