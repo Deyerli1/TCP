@@ -17,7 +17,6 @@ public class Sala implements Serializable {
 	private Map<String,Long> tiempoUsuarios;
 	private boolean privada;
 	private List<String> historialMensajes = new ArrayList<String>();
-	private RoadFighterGame r;
 
 	public Sala(String nombreSala,boolean privada) {
 		this.nombreSala = nombreSala;
@@ -93,9 +92,8 @@ public class Sala implements Serializable {
 		return privada;
 	}
 	
-	public void iniciarJuego() {
-		r = new RoadFighterGame();
-		r.iniciarJuego();
+	public void iniciarJuego(RoadFighterGame r) {
+		r.iniciarJuegoMulti();
 	}
 
 }

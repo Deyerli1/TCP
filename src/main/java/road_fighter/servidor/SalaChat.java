@@ -103,7 +103,7 @@ public class SalaChat extends JFrame {
 			JMenuItem mntmNewMenuItem_2 = new JMenuItem("Crear sala privada...");
 			mntmNewMenuItem_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					crearSalaPrivada();
+					//crearSalaPrivada();
 				}
 			});
 			menuListaConexion.add(mntmNewMenuItem_2);
@@ -164,11 +164,13 @@ public class SalaChat extends JFrame {
 		setVisible(true);
 	}
 
-	protected void crearSalaPrivada() {
+	protected void iniciarJuego() {
 		// mensaje tipo 8:pide la lista de usuarios al servidor
-		MensajeAServidor msj = new MensajeAServidor(cliente.getNombre(), sala, 8);
+		MensajeAServidor msj = new MensajeAServidor(cliente.getNombre(), sala, 9);
 		cliente.enviarMensaje(msj);
 	}
+	
+
 
 	protected void guardarConversacion() {
 		JFileChooser fileChooser = new JFileChooser();
@@ -231,10 +233,6 @@ public class SalaChat extends JFrame {
 
 	}
 	
-	private void startGame() {
-		System.out.println("iniciando juego");
-	}
-
 	public String getNombreSala() {
 		return nombre;
 	}
@@ -331,8 +329,6 @@ public class SalaChat extends JFrame {
 		}
 	}
 	
-	private void iniciarJuego() {
-		sala.iniciarJuego();
-	}
+	
 }
 

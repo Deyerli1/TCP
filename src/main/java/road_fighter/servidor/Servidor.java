@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import road_fighter.RoadFighterGame;
+
 public class Servidor{
 	int puerto;
 	ServerSocket server;
@@ -17,8 +19,11 @@ public class Servidor{
 	Map<String, Sala> mapaSalas;
 	Map<Socket, ObjectOutputStream> mapaSocketsObjectOuput;
 	Map<String, Socket> mapaNombreSocket;
+	
+	public RoadFighterGame r;
 
-	public Servidor(int puerto) { 
+	public Servidor(int puerto, RoadFighterGame r) { 
+		this.r = r;
 		this.puerto = puerto;
 		this.sockets = new ArrayList<Socket>();
 		this.salas = new ArrayList<Sala>();
@@ -31,17 +36,15 @@ public class Servidor{
 			System.out.println("Error en creacion de puertos");
 			e.printStackTrace();
 		}
-		System.out.println("servidor creado");
 	}
 
 	public void run() {
 		try {
 			while (true) {
-			System.out.println("Servidor.run()");
 				Socket socket = server.accept();
 				System.out.println("Cliente conectado");
 				sockets.add(socket);
-				new HiloServidor(socket, sockets, mapaSocketsObjectOuput, mapaNombreSocket, salas, mapaSalas).start();
+				new HiloServidor(r, socket, sockets, mapaSocketsObjectOuput, mapaNombreSocket, salas, mapaSalas).start();
 			}
 		} catch (IOException e) {
 			System.out.println("Error en conexion con el cliente");

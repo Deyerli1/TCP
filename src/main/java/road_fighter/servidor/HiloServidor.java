@@ -8,6 +8,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javafx.application.Platform;
+import road_fighter.RoadFighterGame;
+
 public class HiloServidor extends Thread {
 	private Socket socket;
 	private List<Socket> sockets;
@@ -15,8 +18,9 @@ public class HiloServidor extends Thread {
 	private List<Sala> salas;
 	private Map<String, Socket> mapaNombreSocket;
 	private Map<String, Sala> mapaSalas;
+	public RoadFighterGame r;
 
-	public HiloServidor(Socket socket, List<Socket> sockets, Map<Socket, ObjectOutputStream> mapa,
+	public HiloServidor(RoadFighterGame r, Socket socket, List<Socket> sockets, Map<Socket, ObjectOutputStream> mapa,
 			Map<String, Socket> mapaNombreSocket, List<Sala> salas, Map<String, Sala> mapaSalas) {
 		this.socket = socket;
 		this.sockets = sockets;
@@ -24,6 +28,7 @@ public class HiloServidor extends Thread {
 		this.mapaNombreSocket = mapaNombreSocket;
 		this.mapaSalas = mapaSalas;
 		this.mapaSocketsObjectOuput = mapa;
+		this.r = r;
 	}
 
 	public void run() {
@@ -99,7 +104,7 @@ public class HiloServidor extends Thread {
 					enviarListaUsuariosSala(mensajeAServidor);
 					break;
 				case 9:// se crea la sala privada y se une a los usuarios
-					crearSalaPrivada(mensajeAServidor);
+					iniciarJuego(mensajeAServidor);
 					break;
 				case 10:// cuando un usuario sale de la sala privada, se quita al otro.
 					salirSalaPrivada(mensajeAServidor);
@@ -161,8 +166,8 @@ public class HiloServidor extends Thread {
 		}
 	}
 
-	private void crearSalaPrivada(MensajeAServidor mensaje) {
-		Sala sala = mensaje.getSala();
+	private void iniciarJuego(MensajeAServidor mensaje) {
+		/*Sala sala = mensaje.getSala();
 		mapaSalas.put(sala.getNombreSala(), sala);
 
 		// mensaje tipo 8:crea la sala privada
@@ -170,8 +175,8 @@ public class HiloServidor extends Thread {
 		MensajeACliente msj = new MensajeACliente(null, 8, sala);
 		for (String usuario : usuarios) {
 			enviarMensajeAUsuario(msj, usuario);
-		}
-
+		}*/
+		r.iniciarJuegoMulti();
 	}
 
 	private void enviarListaUsuariosSala(MensajeAServidor mensaje) {
@@ -293,7 +298,6 @@ public class HiloServidor extends Thread {
 				salida.writeObject(msj);
 				salida.flush();
 				salida.reset();
-
 			}
 		} catch (IOException e) {
 			System.out.println("Error envio mensaje actualizando sala");

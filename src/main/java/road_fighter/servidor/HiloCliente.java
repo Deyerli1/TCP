@@ -15,18 +15,10 @@ public class HiloCliente extends Thread {
 	}
 
 	public void run() {
-		System.out.println("HiloCliente.run");
 		MensajeACliente mensaje;
 		try {
-			
-			System.out.println(socket.getInputStream());
-			System.out.println("try   ");
-			
-			entrada = new ObjectInputStream(socket.getInputStream());
 						
-			System.out.println(entrada);
-			System.out.println("aca no llega");
-			
+			entrada = new ObjectInputStream(socket.getInputStream());			
 			int tipoMensaje=0;
 			while (tipoMensaje != -1 && tipoMensaje!=-2) {// Se cierra el hilo con un mensaje del servidor de tipo 1
 				mensaje = (MensajeACliente) entrada.readObject();
@@ -109,7 +101,6 @@ public class HiloCliente extends Thread {
 	}
 
 	private void clienteAceptado() {
-		System.out.println("cliente aceptado");
 		ventana.activarBotones();
 	}
 

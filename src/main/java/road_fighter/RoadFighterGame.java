@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import road_fighter.servidor.Lobby;
+import road_fighter.servidor.Servidor;
 
 public class RoadFighterGame extends Application {
 	private Stage stage;
@@ -41,12 +42,15 @@ public class RoadFighterGame extends Application {
 	public void startGameMulti() {
 		menuSceneHandler.unload();
 		Lobby l = new Lobby();
-		gameSceneHandlerMulti = new GameSceneHandlerMulti(this);
-		Scene scene = gameSceneHandlerMulti.getScene();
-		//stage.setScene(scene);
+		Servidor servidor = new Servidor(Config.puerto, this);
+		servidor.run();
 	}
 	
 	public void iniciarJuegoMulti() {
+		System.out.println("iniciando multi");
+		gameSceneHandlerMulti = new GameSceneHandlerMulti(this);
+		Scene scene = gameSceneHandlerMulti.getScene();
+		stage.setScene(scene);
 		gameSceneHandlerMulti.load(true);
 	}
 	

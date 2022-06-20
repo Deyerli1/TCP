@@ -54,8 +54,7 @@ public class GameSceneHandlerMulti extends SceneHandler {
 
 	public GameSceneHandlerMulti(RoadFighterGame r) {
 		super(r);
-		servidor = new Servidor(Config.puerto);
-		servidor.run();
+		
 	}
 
 	protected void prepareScene() {
@@ -113,9 +112,9 @@ public class GameSceneHandlerMulti extends SceneHandler {
 	}
 	
 	public void load(boolean fullStart) {
+		System.out.println("1");
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
-				
 		String nombreJugador = "pepito";
 		player.add(new AutoJugador(nombreJugador, 400, 600));
 		player.add(new AutoJugador(nombreJugador, 200, 600));
@@ -124,21 +123,23 @@ public class GameSceneHandlerMulti extends SceneHandler {
 		velInfo = new VelocidadInfo();
 		scene.setCamera(camera);
 		camera.translateYProperty().set(-100);//vista vertical
-		
+		System.out.println("2");
 		background = new Background(PATH_FONDO_GAME, -19200, MAP_WIDTH, MAP_HEIGHT);
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
 		meta = new Meta(18650);
 		reproductor = new Reproductor(Config.PATH_MUSICA);
 		nombreAuto = new NombreJugador(nombreJugador);
-
+		System.out.println("3");
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
 		gameOB.add(background, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor, nombreAuto);
+		System.out.println("4");
 		for(Auto a: player) {
+			System.out.println("5");
 			gameOB.add(a);
 		}
-		
+
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();

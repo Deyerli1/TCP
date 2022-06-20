@@ -27,21 +27,13 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
-import javax.swing.border.Border;
-import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import road_fighter.servidor.Cliente;
-import road_fighter.servidor.MensajeACliente;
-import road_fighter.servidor.MensajeAServidor;
-import road_fighter.servidor.Sala;
-import road_fighter.servidor.Servidor;
 import road_fighter.Config;
+import road_fighter.RoadFighterGame;
 
 public class Lobby extends JFrame {
 
@@ -63,7 +55,7 @@ public class Lobby extends JFrame {
 
 	private JTextPane textAreaInfoSala;
 	private List<SalaChat> salasAbiertas;
-
+	
 	/**
 	 * Create the frame.
 	 */
@@ -174,7 +166,7 @@ public class Lobby extends JFrame {
 		mapaSalas = new HashMap<String, Sala>();
 		mapaSalasAbiertas = new HashMap<String, SalaChat>();
 	}
-
+	
 	protected void borrarSala() {
 		String nombreSalaElegida = listaSalas.getSelectedValue();
 		Sala salaAEliminar = null;
@@ -192,7 +184,6 @@ public class Lobby extends JFrame {
 	}
 
 	private void conectarse() {
-		System.out.println("conectando");
 		String respuesta = JOptionPane.showInputDialog(this, "Ingrese nombre de usuario:", "");
 		if (respuesta != null && !respuesta.equals("")) {
 			crearUsuario(respuesta);
@@ -200,9 +191,7 @@ public class Lobby extends JFrame {
 	}
 
 	public void crearUsuario(String nombreCliente) {
-		System.out.println("creando usuario");
 		cliente = new Cliente(nombreCliente, "localhost", Config.puerto, this);
-		System.out.println("iniciando hilo");
 		cliente.inicializarHiloCliente(this);
 	}
 
