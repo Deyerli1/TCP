@@ -5,7 +5,7 @@ import road_fighter.objects.Auto;
 
 public class AutoExplotado extends AutoEstado{
 	
-	private static String imgPath = "file:src/main/resources/img/explotado.gif";
+	private static String imgPath = "file:src/main/resources/img/estados/explotado.gif";
 	
 	AutoExplotado(Auto auto) {
 		super(auto);

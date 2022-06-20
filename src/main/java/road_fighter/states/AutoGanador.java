@@ -5,7 +5,7 @@ import road_fighter.objects.Auto;
 
 public class AutoGanador extends AutoEstado{
 	
-	private static String imgPath = "file:src/main/resources/img/ganador.gif";
+	private static String imgPath = "file:src/main/resources/img/estados/ganador.gif";
 	
 	public AutoGanador(Auto auto) {
 		super(auto);

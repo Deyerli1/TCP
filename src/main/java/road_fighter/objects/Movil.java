@@ -4,7 +4,7 @@ import road_fighter.utils.GameObjectBuilder;
 
 public class Movil extends AutoNpc {
 
-	private static final String fotoMovil = "file:src/main/resources/img/MovilCamion.png";
+	private static final String fotoMovil = "file:src/main/resources/img/npcs/MovilCamion.png";
 	private static final int width = 40;
 	private static final int height = 100;
 	private static final int CERVEZA_COOLDOWN = 200;

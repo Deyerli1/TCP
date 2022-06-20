@@ -13,7 +13,7 @@ import road_fighter.states.AutoNormal;
 public class AutoJugador extends Auto {
 	 
 	private int topeHabilidadEspecial = 5;
-	private static final String fotoJugador = "file:src/main/resources/img/familySedan.png";
+	private static final String fotoJugador = "file:src/main/resources/img/jugador/familySedan.png";
 	private static final int width = 35;
 	private static final int height = 70;
 	

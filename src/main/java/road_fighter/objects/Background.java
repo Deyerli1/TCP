@@ -13,7 +13,7 @@ public class Background extends GameObject implements Renderable {
 	private final int mapHeight = 20000;
 
 	public Background() {
-		Image backgroundImage = new Image("file:src/main/resources/img/background.png", mapWidth, mapHeight, false, false);
+		Image backgroundImage = new Image("file:src/main/resources/img/fondos/background.png", mapWidth, mapHeight, false, false);
 		render = new ImageView(backgroundImage);
 		render.setY(-19200);
 	}

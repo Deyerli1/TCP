@@ -19,9 +19,9 @@ public class MenuSceneHandler extends SceneHandler {
 	private final int MENU_MAP_WIDTH = Config.baseWidth;
 	private final int MENU_MAP_HEIGHT = Config.baseHeight;
 	
-	private final String PATH_FONDO_MENU = "file:src/main/resources/img/backgroundMenu.png";
-	private final String PATH_VOLUMEN_MENU = "file:src/main/resources/img/music.png";
-	private final String PATH_UN_JUGADOR_MENU = "file:src/main/resources/img/singleplayer.png";
+	private final String PATH_FONDO_MENU = "file:src/main/resources/img/fondos/backgroundMenu.png";
+	private final String PATH_VOLUMEN_MENU = "file:src/main/resources/img/menu/music.png";
+	private final String PATH_UN_JUGADOR_MENU = "file:src/main/resources/img/menu/singleplayer.png";
 	private final String PATH_MUSICA_MENU = "src/main/resources/snd/ambient.mp3";
 	private Background background;
 	private Title title;
@@ -106,9 +106,11 @@ public class MenuSceneHandler extends SceneHandler {
 	
 	public void accionMenu() {
 		if(unJugador.isSelected()) {
+			System.out.println(">>>>>>>>>>>>>>> INICIANDO SINGLEPLAYER");
 			r.startGame();
 		}else {//es multijugador
-
+			System.out.println(">>>>>>>>>>>>>>> INICIANDO MULTIPLAYER");
+			r.startGameMulti();
 		}
 	}
 	

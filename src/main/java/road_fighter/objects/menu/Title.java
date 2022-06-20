@@ -21,7 +21,7 @@ public class Title extends GameObject implements Renderable {
 		private ImageView render;
 		
 		public Title() {
-			img = new Image("file:src/main/resources/img/title.png", TITLE_WIDTH, TITLE_HEIGHT, false, false);
+			img = new Image("file:src/main/resources/img/menu/title.png", TITLE_WIDTH, TITLE_HEIGHT, false, false);
 
 			render = new ImageView(img);
 			render.setViewOrder(1);

@@ -1,5 +1,6 @@
 package road_fighter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.animation.TranslateTransition;
@@ -24,19 +25,19 @@ import road_fighter.objects.NombreJugador;
 import road_fighter.objects.ObstaculoBuilder;
 import road_fighter.objects.Reproductor;
 import road_fighter.objects.VelocidadInfo;
+import road_fighter.servidor.Servidor;
 import road_fighter.states.AutoExplotado;
 import road_fighter.states.AutoNormal;
 import road_fighter.utils.GameObjectBuilder;
 
-
-public class GameSceneHandler extends SceneHandler {
+public class GameSceneHandlerMulti extends SceneHandler {
 	
 	private final int MAP_WIDTH = 800;
 	private final int MAP_HEIGHT = 20000;
 
 	private final String PATH_FONDO_GAME = "file:src/main/resources/img/fondos/background.png";
 	
-	private Auto player;
+	private List<AutoJugador> player = new ArrayList<AutoJugador>();
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
 	private Cordon cordonIzquierdo;
@@ -46,6 +47,7 @@ public class GameSceneHandler extends SceneHandler {
 	private VelocidadInfo velInfo;
 	private NombreJugador nombreAuto;
 	public ParallelCamera camera = new ParallelCamera();
+	private Servidor servidor;
 	
 
 	private boolean animacionActiva = false;
@@ -53,8 +55,9 @@ public class GameSceneHandler extends SceneHandler {
 	
 	private TranslateTransition tt = new TranslateTransition();
 
-	public GameSceneHandler(RoadFighterGame r) {
+	public GameSceneHandlerMulti(RoadFighterGame r) {
 		super(r);
+		servidor = new Servidor(Config.puerto);
 	}
 
 	protected void prepareScene() {
@@ -69,19 +72,19 @@ public class GameSceneHandler extends SceneHandler {
 				switch (e.getCode()) {
 				case W:
 					makeAction();
-					player.setAcelerar(true);
+					//player.setAcelerar(true);
 					break;
 				case A:
-					player.setDoblarIzquierda(true);
+					//player.setDoblarIzquierda(true);
 					break;
 				case D:
-					player.setDoblarDerecha(true);
+					//player.setDoblarDerecha(true);
 					break;
 				case ESCAPE:
 					System.exit(0);
 					break;
 				case SPACE:
-					player.habilidadEspecial();
+					//player.habilidadEspecial();
 				case R:
 					//TODO
 					//r.startGam();
@@ -95,14 +98,14 @@ public class GameSceneHandler extends SceneHandler {
 			public void handle(KeyEvent e) {
 				switch (e.getCode()) {
 				case W:
-					player.setAcelerar(false);
+					//player.setAcelerar(false);
 					
 					break;
 				case A:
-					player.setDoblarIzquierda(false);
+					//player.setDoblarIzquierda(false);
 					break;
 				case D:
-					player.setDoblarDerecha(false);
+					//player.setDoblarDerecha(false);
 					break;
 				default:
 				}
@@ -116,7 +119,8 @@ public class GameSceneHandler extends SceneHandler {
 		scene.setRoot(rootGroup);
 				
 		String nombreJugador = "pepito";
-		player = new AutoJugador(nombreJugador, 400, 600);
+		player.add(new AutoJugador(nombreJugador, 400, 600));
+		player.add(new AutoJugador(nombreJugador, 200, 600));
 		cordonIzquierdo = new Cordon(210);
 		cordonDerecho = new Cordon(572);
 		velInfo = new VelocidadInfo();
@@ -132,7 +136,11 @@ public class GameSceneHandler extends SceneHandler {
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor, nombreAuto);
+		gameOB.add(background, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor, nombreAuto);
+		for(Auto a: player) {
+			gameOB.add(a);
+		}
+		
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
@@ -160,7 +168,7 @@ public class GameSceneHandler extends SceneHandler {
 	
 	public void update(double delta) {
 		super.update(delta);
-		camera.translateYProperty().set(player.getY() - Config.baseHeight/2 - 200);
+		/*camera.translateYProperty().set(player.getY() - Config.baseHeight/2 - 200);
 		checkColliders();
 		Config.posicionJugador = player.getY();
 		if(!player.isGanador()) {
@@ -196,7 +204,7 @@ public class GameSceneHandler extends SceneHandler {
 		else {
 			obstaculoBuilder.stopBuilding();
 			npcBuilder.stopBuilding();
-		}
+		}*/
 	}
 	
 
