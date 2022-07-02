@@ -1,9 +1,13 @@
 package road_fighter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import road_fighter.servidor.Cliente;
 import road_fighter.servidor.Lobby;
 import road_fighter.servidor.Servidor;
 
@@ -39,19 +43,27 @@ public class RoadFighterGame extends Application {
 		gameSceneHandler.load(true);
 	}
 	
-	public void startGameMulti() {
+	public void hostGameMulti() {
 		menuSceneHandler.unload();
-		Lobby l = new Lobby();
+		Lobby l = new Lobby(this);
 		Servidor servidor = new Servidor(Config.puerto, this);
-		servidor.run();
+		servidor.setName("SERVIDOR");
+		System.out.println(servidor.getState() +" " + servidor.getName());
+		servidor.start();
+		System.out.println(servidor.getState());
+	
+	}
+	public void joinGameMulti() {
+		menuSceneHandler.unload();
+		Lobby l = new Lobby(this);
 	}
 	
-	public void iniciarJuegoMulti() {
-		System.out.println("iniciando multi");
-		gameSceneHandlerMulti = new GameSceneHandlerMulti(this);
-		Scene scene = gameSceneHandlerMulti.getScene();
+	public void iniciarJuegoMulti(List<Cliente> usuariosConectados) {
+		System.out.println("Entro?");
+		gameSceneHandler = new GameSceneHandler(this);
+		Scene scene = gameSceneHandler.getScene();
 		stage.setScene(scene);
-		gameSceneHandlerMulti.load(true);
+		gameSceneHandler.load(true,usuariosConectados);
 	}
 	
 }

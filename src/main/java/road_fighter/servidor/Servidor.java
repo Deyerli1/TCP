@@ -10,7 +10,7 @@ import java.util.Map;
 
 import road_fighter.RoadFighterGame;
 
-public class Servidor{
+public class Servidor extends Thread{
 	int puerto;
 	ServerSocket server;
 	List<Socket> sockets;

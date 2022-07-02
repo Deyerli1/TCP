@@ -41,6 +41,7 @@ public class Sala implements Serializable {
 		usuariosConectados.add(nombreCliente);
 		tiempoUsuarios.put(nombreCliente, tiempoInicioSesion);
 	}
+	
 
 	public void eliminarUsuario(String nombreUsuario) {
 		usuariosConectados.remove(nombreUsuario);
@@ -92,8 +93,17 @@ public class Sala implements Serializable {
 		return privada;
 	}
 	
+	
+	public List<Cliente> getClientesConectados() {
+		List<Cliente> players= new ArrayList<Cliente>();
+		for(String name : this.usuariosConectados) {
+			players.add(new Cliente(name));
+		}
+		return players;
+	}
+
 	public void iniciarJuego(RoadFighterGame r) {
-		r.iniciarJuegoMulti();
+		//r.iniciarJuegoMulti();
 	}
 
 }

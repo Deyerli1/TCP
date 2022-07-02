@@ -110,7 +110,8 @@ public class MenuSceneHandler extends SceneHandler {
 			//r.startGame();
 		}else {//es multijugador
 			System.out.println(">>>>>>>>>>>>>>> INICIANDO MULTIPLAYER");
-			r.startGameMulti();
+			//r.hostGameMulti();
+			r.joinGameMulti();
 		}
 	}
 	

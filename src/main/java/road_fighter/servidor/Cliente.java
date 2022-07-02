@@ -5,6 +5,9 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import road_fighter.objects.Auto;
+import road_fighter.objects.AutoJugador;
+
 public class Cliente{
 
 	String nombre;
@@ -12,10 +15,12 @@ public class Cliente{
 	private ObjectInputStream entrada;
 	private ObjectOutputStream salida;
 	private Lobby lobby;
+	private Auto player;
 	
 	public Cliente(String nombre,String ip, int puerto,Lobby lobby) {
 		this.nombre=nombre;
 		this.lobby=lobby;
+		//player = new AutoJugador(nombre, 400, 600); aca no hace falta??
 		try {
 			socket = new Socket(ip, puerto);
 			salida=new ObjectOutputStream(socket.getOutputStream());
@@ -30,6 +35,11 @@ public class Cliente{
 			System.out.println("Error en conexion con el servidor");
 			e.printStackTrace();
 		}
+	}
+	
+	public Cliente(String nombre) {
+		this.nombre=nombre;
+		player = new AutoJugador(nombre, 400, 600);
 	}
 
 	public void enviarMensaje(MensajeAServidor mensaje) {
@@ -63,5 +73,10 @@ public class Cliente{
 		return lobby;
 	}
 
+	public Auto getPlayer() {
+		return player;
+	}
+
+	
 }
 

@@ -32,7 +32,10 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
 import road_fighter.Config;
+import road_fighter.GameSceneHandler;
 import road_fighter.RoadFighterGame;
 
 public class Lobby extends JFrame {
@@ -52,20 +55,21 @@ public class Lobby extends JFrame {
 	private JPanel panelBotones;
 	private JPanel panelInfoSala;
 	JMenuItem btnDesconexion;
-
 	private JTextPane textAreaInfoSala;
 	private List<SalaChat> salasAbiertas;
+	private RoadFighterGame game;
 	
 	/**
 	 * Create the frame.
 	 */
-	public Lobby() { 
+	public Lobby(RoadFighterGame game) { 
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				desconectarse();
 			}
 		});
+		this.game=game;
 		this.setTitle("SimpsChat");
 		this.setIconImage(new ImageIcon("src/logo.png").getImage());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -343,6 +347,122 @@ public class Lobby extends JFrame {
 					JOptionPane.INFORMATION_MESSAGE);
 		}
 		return abierta;
+	}
+	public void iniciarJuego(MensajeACliente mensaje) {
+        Platform.runLater(new Runnable() {
+            @Override public void run() {
+            	game.iniciarJuegoMulti(mensaje.getSala().getClientesConectados());
+            }
+        });
+	}
+	
+	
+	public Lobby() { 
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				desconectarse();
+			}
+		});
+		this.setTitle("SimpsChat");
+		this.setIconImage(new ImageIcon("src/logo.png").getImage());
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setBounds(100, 100, 450, 300);
+		salasAbiertas = new ArrayList<SalaChat>();
+
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+
+		JMenu mnNewMenu = new JMenu("Conexion");
+		mnNewMenu.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+		menuBar.add(mnNewMenu);
+
+		menuItemConectarse = new JMenuItem("Conectarse");
+		menuItemConectarse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				conectarse();
+			}
+		});
+		mnNewMenu.add(menuItemConectarse);
+
+		btnDesconexion = new JMenuItem("Salir");
+		btnDesconexion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				desconectarse();
+				dispose();
+			}
+		});
+		mnNewMenu.add(btnDesconexion);
+		btnDesconexion.setEnabled(false);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(new BorderLayout(0, 0));
+
+		btnCrearSala = new JButton("\uD83D\uDCBB Crear Sala ");
+		btnCrearSala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ingresarNombreSalaACrear();
+			}
+		});
+		btnCrearSala.setEnabled(false);
+		contentPane.add(btnCrearSala, BorderLayout.SOUTH);
+
+		listaSalas = new JList<String>();
+		listaSalas.setBorder(new LineBorder(new Color(0, 0, 0)));
+		listaSalas.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				if (!listaSalas.getValueIsAdjusting() && !listaSalas.isSelectionEmpty())
+					mostrarInfoSala();
+			}
+
+		});
+		listaSalas.setEnabled(false);
+		listaSalas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listaSalas.setModel(listModel);
+		JScrollPane scroll = new JScrollPane(listaSalas);
+		contentPane.add(scroll, BorderLayout.CENTER);
+
+		panelBordeDerecho = new JPanel();
+		panelBordeDerecho.setBorder(new LineBorder(new Color(0, 0, 0)));
+		contentPane.add(panelBordeDerecho, BorderLayout.EAST);
+		panelBordeDerecho.setLayout(new GridLayout(0, 1, 0, 15));
+
+		panelBotones = new JPanel();
+		panelBordeDerecho.add(panelBotones);
+		panelBotones.setLayout(new GridLayout(0, 1, 0, 0));
+
+		btnUnirseASala = new JButton("\uD83D\uDEEB Unirse a sala");
+		panelBotones.add(btnUnirseASala);
+		btnUnirseASala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				unirseASala();
+			}
+		});
+
+		btnUnirseASala.setEnabled(false);
+
+		btnBorrarSala = new JButton("\u274C Borrar Sala");
+		panelBotones.add(btnBorrarSala);
+		btnBorrarSala.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				borrarSala();
+			}
+		});
+		btnBorrarSala.setEnabled(false);
+
+		panelInfoSala = new JPanel();
+		panelBordeDerecho.add(panelInfoSala);
+		panelInfoSala.setLayout(new BorderLayout(0, 0));
+
+		textAreaInfoSala = new JTextPane();
+		textAreaInfoSala.setBackground(Color.WHITE);
+		textAreaInfoSala.setEnabled(false);
+		textAreaInfoSala.setEditable(false);
+		panelInfoSala.add(textAreaInfoSala);
+		setVisible(true);
+		mapaSalas = new HashMap<String, Sala>();
+		mapaSalasAbiertas = new HashMap<String, SalaChat>();
 	}
 
 }

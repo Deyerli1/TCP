@@ -19,6 +19,7 @@ public class HiloServidor extends Thread {
 	private Map<String, Socket> mapaNombreSocket;
 	private Map<String, Sala> mapaSalas;
 	public RoadFighterGame r;
+	public static int threadNum = 0;
 
 	public HiloServidor(RoadFighterGame r, Socket socket, List<Socket> sockets, Map<Socket, ObjectOutputStream> mapa,
 			Map<String, Socket> mapaNombreSocket, List<Sala> salas, Map<String, Sala> mapaSalas) {
@@ -29,6 +30,8 @@ public class HiloServidor extends Thread {
 		this.mapaSalas = mapaSalas;
 		this.mapaSocketsObjectOuput = mapa;
 		this.r = r;
+		this.threadNum ++;
+		this.setName("HiloCliente"+" "+this.threadNum);
 	}
 
 	public void run() {
@@ -109,6 +112,7 @@ public class HiloServidor extends Thread {
 				case 10:// cuando un usuario sale de la sala privada, se quita al otro.
 					salirSalaPrivada(mensajeAServidor);
 					break;
+					
 				}
 				if (tipoMensaje != 0) {
 					actualizarSalas();// Se actualizan las salas en cada ciclo.
@@ -176,7 +180,7 @@ public class HiloServidor extends Thread {
 		for (String usuario : usuarios) {
 			enviarMensajeAUsuario(msj, usuario);
 		}*/
-		r.iniciarJuegoMulti();
+		//r.iniciarJuegoMulti();
 	}
 
 	private void enviarListaUsuariosSala(MensajeAServidor mensaje) {
@@ -191,6 +195,8 @@ public class HiloServidor extends Thread {
 		MensajeACliente msj = new MensajeACliente(cad, 7, salaActual);
 		enviarMensajeAUsuario(msj, mensaje.getTexto());
 	}
+	
+	
 
 	private void recibirPedidoTiemposSesion(MensajeAServidor mensaje) {
 		String sala = mensaje.getSala().getNombreSala();
@@ -258,10 +264,14 @@ public class HiloServidor extends Thread {
 		Sala salaActual = mapaSalas.get(sala.getNombreSala());
 		long tiempoInicioSesion = System.currentTimeMillis();
 		salaActual.agregarUsuario(mensajeServidor.getTexto(),tiempoInicioSesion);
-
+		System.out.println("doesn't break");
 		// mensaje tipo 3: une al usuario a la sala
 		MensajeACliente msj = new MensajeACliente(null, 3, salaActual);
 		enviarMensajeAUsuario(msj, mensajeServidor.getTexto());
+		if(sala.getCantUsuarios() >= 1) {
+			MensajeACliente iniciar_msj = new MensajeACliente(null, 7, salaActual);
+			enviarMensajeAUsuario(iniciar_msj, mensajeServidor.getTexto());
+		}
 
 	}
 

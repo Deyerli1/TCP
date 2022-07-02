@@ -1,5 +1,6 @@
 package road_fighter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javafx.animation.TranslateTransition;
@@ -24,6 +25,7 @@ import road_fighter.objects.NombreJugador;
 import road_fighter.objects.ObstaculoBuilder;
 import road_fighter.objects.Reproductor;
 import road_fighter.objects.VelocidadInfo;
+import road_fighter.servidor.Cliente;
 import road_fighter.states.AutoExplotado;
 import road_fighter.states.AutoNormal;
 import road_fighter.utils.GameObjectBuilder;
@@ -37,6 +39,7 @@ public class GameSceneHandler extends SceneHandler {
 	private final String PATH_FONDO_GAME = "file:src/main/resources/img/fondos/background.png";
 	
 	private Auto player;
+	private List<Cliente> usuariosConectados;
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
 	private Cordon cordonIzquierdo;
@@ -46,6 +49,7 @@ public class GameSceneHandler extends SceneHandler {
 	private VelocidadInfo velInfo;
 	private NombreJugador nombreAuto;
 	public ParallelCamera camera = new ParallelCamera();
+	public boolean online;
 	
 
 	private boolean animacionActiva = false;
@@ -133,6 +137,34 @@ public class GameSceneHandler extends SceneHandler {
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
 		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor, nombreAuto);
+		if (fullStart) {
+			addTimeEventsAnimationTimer();
+			addInputEvents();
+		}
+	}
+	
+	public void load(boolean fullStart, List<Cliente> usuariosConectados) {
+		Group rootGroup = new Group();
+		scene.setRoot(rootGroup);
+		cordonIzquierdo = new Cordon(210);
+		cordonDerecho = new Cordon(572);
+		velInfo = new VelocidadInfo();
+		scene.setCamera(camera);
+		camera.translateYProperty().set(-100);//vista vertical
+		background = new Background(PATH_FONDO_GAME, -19200, MAP_WIDTH, MAP_HEIGHT);
+		obstaculoBuilder = new ObstaculoBuilder();
+		npcBuilder = new NPCBuilder();
+		meta = new Meta(18650);
+		reproductor = new Reproductor(Config.PATH_MUSICA);
+		this.usuariosConectados = usuariosConectados;
+		
+		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
+		gameOB.setRootNode(rootGroup);
+		for(Cliente cliente : usuariosConectados) {
+			gameOB.add(cliente.getPlayer());
+		}
+		player = usuariosConectados.get(0).getPlayer();
+		gameOB.add(background, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();

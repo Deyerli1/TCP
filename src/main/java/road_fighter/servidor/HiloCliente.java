@@ -7,11 +7,14 @@ public class HiloCliente extends Thread {
 	ObjectInputStream entrada;
 	Lobby ventana;
 	private Socket socket;
+	public static int threadNum = 0;
 
 	public HiloCliente(Socket socket, ObjectInputStream entrada, Lobby ventana) {
 		this.socket = socket;
 		this.entrada = entrada;
 		this.ventana = ventana;
+		this.threadNum++;
+		this.setName("HiloCliente"+" "+this.threadNum);
 	}
 
 	public void run() {
@@ -49,7 +52,8 @@ public class HiloCliente extends Thread {
 					break;
 				case 7:
 					//7: recibe la lista de usuarios en la sala
-					recibirListaUsuarios(mensaje);
+					//recibirListaUsuarios(mensaje);
+					ventana.iniciarJuego(mensaje);
 					break;
 //				case 8:
 //					//8: creacion y apertura de sala privada
@@ -62,6 +66,10 @@ public class HiloCliente extends Thread {
 				case 10:
 					//10: ya existe una sala con ese nombre.
 					mostrarErrorPorPantalla("Elija otro nombre de sala", "Error en creacion de sala");
+					break;
+				case 11:
+					//11: Iniciar juego
+					
 					break;
 				}
 				if(tipoMensaje==-2) {
