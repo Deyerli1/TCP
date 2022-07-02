@@ -38,6 +38,7 @@ public class GameSceneHandler extends SceneHandler {
 	private final String PATH_FONDO_GAME = "file:src/main/resources/img/fondos/background.png";
 
 	private Auto player;
+	private Auto other_player;
 	private List<Cliente> usuariosConectados;
 	private Background background;
 	private ObstaculoBuilder obstaculoBuilder;
@@ -86,7 +87,19 @@ public class GameSceneHandler extends SceneHandler {
 					player.habilidadEspecial();
 				case R:
 					// TODO
-					// r.startGam();
+					// r.startGame();
+				case NUMPAD5:
+					makeAction();
+					other_player.setAcelerar(true);
+					break;
+				case NUMPAD4:
+					other_player.setDoblarIzquierda(true);
+					break;
+				case NUMPAD6:
+					other_player.setDoblarDerecha(true);
+					break;
+				case NUMPAD0:
+					other_player.habilidadEspecial();
 				default:
 				}
 			}
@@ -105,6 +118,16 @@ public class GameSceneHandler extends SceneHandler {
 					break;
 				case D:
 					player.setDoblarDerecha(false);
+					break;
+				case NUMPAD5:
+					other_player.setAcelerar(false);
+
+					break;
+				case NUMPAD4:
+					other_player.setDoblarIzquierda(false);
+					break;
+				case NUMPAD6:
+					other_player.setDoblarDerecha(false);
 					break;
 				default:
 				}
@@ -161,9 +184,11 @@ public class GameSceneHandler extends SceneHandler {
 		gameOB.setRootNode(rootGroup);
 		for (Cliente cliente : usuariosConectados) {
 			gameOB.add(cliente.getPlayer());
-			gameOB.add(new NombreJugador(cliente.getNombre()));
 			if (cliente.getNombre().equals(nombreJugador)) {
 				player = cliente.getPlayer();
+				gameOB.add(new NombreJugador(cliente.getNombre()));
+			}else {
+				other_player = cliente.getPlayer();
 			}
 		}
 		gameOB.add(background, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo,
