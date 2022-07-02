@@ -270,7 +270,9 @@ public class HiloServidor extends Thread {
 		enviarMensajeAUsuario(msj, mensajeServidor.getTexto());
 		if(sala.getCantUsuarios() >= 1) {
 			MensajeACliente iniciar_msj = new MensajeACliente(null, 7, salaActual);
-			enviarMensajeAUsuario(iniciar_msj, mensajeServidor.getTexto());
+			for(String usuario: salaActual.getUsuariosConectados()) {
+				enviarMensajeAUsuario(iniciar_msj, usuario);				
+			}
 		}
 
 	}

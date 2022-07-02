@@ -351,7 +351,7 @@ public class Lobby extends JFrame {
 	public void iniciarJuego(MensajeACliente mensaje) {
         Platform.runLater(new Runnable() {
             @Override public void run() {
-            	game.iniciarJuegoMulti(mensaje.getSala().getClientesConectados());
+            	game.iniciarJuegoMulti(mensaje.getSala().getClientesConectados(),cliente.getNombre());
             }
         });
 	}

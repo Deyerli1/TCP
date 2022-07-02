@@ -58,12 +58,12 @@ public class RoadFighterGame extends Application {
 		Lobby l = new Lobby(this);
 	}
 	
-	public void iniciarJuegoMulti(List<Cliente> usuariosConectados) {
+	public void iniciarJuegoMulti(List<Cliente> usuariosConectados,String nombreJugador) {
 		System.out.println("Entro?");
 		gameSceneHandler = new GameSceneHandler(this);
 		Scene scene = gameSceneHandler.getScene();
 		stage.setScene(scene);
-		gameSceneHandler.load(true,usuariosConectados);
+		gameSceneHandler.load(true,usuariosConectados, nombreJugador);
 	}
 	
 }

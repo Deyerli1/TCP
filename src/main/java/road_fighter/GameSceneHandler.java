@@ -30,14 +30,13 @@ import road_fighter.states.AutoExplotado;
 import road_fighter.states.AutoNormal;
 import road_fighter.utils.GameObjectBuilder;
 
-
 public class GameSceneHandler extends SceneHandler {
-	
+
 	private final int MAP_WIDTH = 800;
 	private final int MAP_HEIGHT = 20000;
 
 	private final String PATH_FONDO_GAME = "file:src/main/resources/img/fondos/background.png";
-	
+
 	private Auto player;
 	private List<Cliente> usuariosConectados;
 	private Background background;
@@ -50,11 +49,10 @@ public class GameSceneHandler extends SceneHandler {
 	private NombreJugador nombreAuto;
 	public ParallelCamera camera = new ParallelCamera();
 	public boolean online;
-	
 
 	private boolean animacionActiva = false;
 	private boolean started = false;
-	
+
 	private TranslateTransition tt = new TranslateTransition();
 
 	public GameSceneHandler(RoadFighterGame r) {
@@ -87,8 +85,8 @@ public class GameSceneHandler extends SceneHandler {
 				case SPACE:
 					player.habilidadEspecial();
 				case R:
-					//TODO
-					//r.startGam();
+					// TODO
+					// r.startGam();
 				default:
 				}
 			}
@@ -100,7 +98,7 @@ public class GameSceneHandler extends SceneHandler {
 				switch (e.getCode()) {
 				case W:
 					player.setAcelerar(false);
-					
+
 					break;
 				case A:
 					player.setDoblarIzquierda(false);
@@ -114,19 +112,19 @@ public class GameSceneHandler extends SceneHandler {
 		};
 
 	}
-	
+
 	public void load(boolean fullStart) {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
-				
+
 		String nombreJugador = "pepito";
 		player = new AutoJugador(nombreJugador, 400, 600);
 		cordonIzquierdo = new Cordon(210);
 		cordonDerecho = new Cordon(572);
 		velInfo = new VelocidadInfo();
 		scene.setCamera(camera);
-		camera.translateYProperty().set(-100);//vista vertical
-		
+		camera.translateYProperty().set(-100);// vista vertical
+
 		background = new Background(PATH_FONDO_GAME, -19200, MAP_WIDTH, MAP_HEIGHT);
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
@@ -136,46 +134,51 @@ public class GameSceneHandler extends SceneHandler {
 
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor, nombreAuto);
+		gameOB.add(background, player, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo,
+				reproductor, nombreAuto);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
 		}
 	}
-	
-	public void load(boolean fullStart, List<Cliente> usuariosConectados) {
+
+	public void load(boolean fullStart, List<Cliente> usuariosConectados, String nombreJugador) {
 		Group rootGroup = new Group();
 		scene.setRoot(rootGroup);
 		cordonIzquierdo = new Cordon(210);
 		cordonDerecho = new Cordon(572);
 		velInfo = new VelocidadInfo();
 		scene.setCamera(camera);
-		camera.translateYProperty().set(-100);//vista vertical
+		camera.translateYProperty().set(-100);// vista vertical
 		background = new Background(PATH_FONDO_GAME, -19200, MAP_WIDTH, MAP_HEIGHT);
 		obstaculoBuilder = new ObstaculoBuilder();
 		npcBuilder = new NPCBuilder();
 		meta = new Meta(18650);
 		reproductor = new Reproductor(Config.PATH_MUSICA);
 		this.usuariosConectados = usuariosConectados;
-		
+
 		GameObjectBuilder gameOB = GameObjectBuilder.getInstance();
 		gameOB.setRootNode(rootGroup);
-		for(Cliente cliente : usuariosConectados) {
+		for (Cliente cliente : usuariosConectados) {
 			gameOB.add(cliente.getPlayer());
+			gameOB.add(new NombreJugador(cliente.getNombre()));
+			if (cliente.getNombre().equals(nombreJugador)) {
+				player = cliente.getPlayer();
+			}
 		}
-		player = usuariosConectados.get(0).getPlayer();
-		gameOB.add(background, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo, reproductor);
+		gameOB.add(background, obstaculoBuilder, npcBuilder, cordonIzquierdo, cordonDerecho, meta, velInfo,
+				reproductor);
 		if (fullStart) {
 			addTimeEventsAnimationTimer();
 			addInputEvents();
 		}
 	}
-	
+
 	public void restart() {
 		cleanData();
 		load(false);
 	}
-	
+
 	private void cleanData() {
 		GameObjectBuilder.getInstance().removeAll();
 		started = false;
@@ -189,14 +192,14 @@ public class GameSceneHandler extends SceneHandler {
 			npcBuilder.startBuilding(2 * NANOS_IN_SECOND);
 		}
 	}
-	
+
 	public void update(double delta) {
 		super.update(delta);
-		camera.translateYProperty().set(player.getY() - Config.baseHeight/2 - 200);
+		camera.translateYProperty().set(player.getY() - Config.baseHeight / 2 - 200);
 		checkColliders();
 		Config.posicionJugador = player.getY();
-		if(!player.isGanador()) {
-			if(player.getEstado().getClass()  == AutoExplotado.class && !animacionActiva) {
+		if (!player.isGanador()) {
+			if (player.getEstado().getClass() == AutoExplotado.class && !animacionActiva) {
 				animacionActiva = true;
 				tt = new TranslateTransition(Duration.millis(50), scene.getRoot());
 				tt.setFromX(-20f);
@@ -207,9 +210,9 @@ public class GameSceneHandler extends SceneHandler {
 				tt.setOnFinished(event -> {
 					scene.getRoot().setTranslateX(0);
 				});
-			}else if(player.isBorracho() && !animacionActiva) {
+			} else if (player.isBorracho() && !animacionActiva) {
 				animacionActiva = true;
-				tt = new TranslateTransition( Duration.seconds(2), scene.getRoot());
+				tt = new TranslateTransition(Duration.seconds(2), scene.getRoot());
 				tt.setFromX(-20f);
 				tt.setByX(20f);
 				tt.setCycleCount(6);
@@ -219,18 +222,15 @@ public class GameSceneHandler extends SceneHandler {
 					scene.getRoot().setTranslateX(0);
 					tt.stop();
 				});
-			}
-			else if(player.getEstado().getClass() == AutoNormal.class) {
+			} else if (player.getEstado().getClass() == AutoNormal.class) {
 				animacionActiva = false;
 				player.setBorracho(false);
 			}
-		}
-		else {
+		} else {
 			obstaculoBuilder.stopBuilding();
 			npcBuilder.stopBuilding();
 		}
 	}
-	
 
 	private void checkColliders() {
 		List<Collidator> collidators = GameObjectBuilder.getInstance().getCollidators();
@@ -255,7 +255,7 @@ public class GameSceneHandler extends SceneHandler {
 				// XXX Si el substract es distinto???
 				// Check intersects
 				if (intersect.getBoundsInLocal().getWidth() != -1) {
-					collidator.collide(collideable); 
+					collidator.collide(collideable);
 				} else {
 					// Check contains
 					Bounds collideableBounds = collideable.getCollider().getBoundsInLocal();
@@ -267,10 +267,9 @@ public class GameSceneHandler extends SceneHandler {
 			}
 		}
 	}
-	
+
 	public void unload() {
 		cleanData();
 		super.unload();
 	}
 }
-

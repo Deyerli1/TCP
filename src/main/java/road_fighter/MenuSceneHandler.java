@@ -108,9 +108,9 @@ public class MenuSceneHandler extends SceneHandler {
 		if(unJugador.isSelected()) {
 			System.out.println(">>>>>>>>>>>>>>> INICIANDO SINGLEPLAYER");
 			//r.startGame();
+			r.hostGameMulti();
 		}else {//es multijugador
 			System.out.println(">>>>>>>>>>>>>>> INICIANDO MULTIPLAYER");
-			//r.hostGameMulti();
 			r.joinGameMulti();
 		}
 	}
